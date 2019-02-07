@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15357e93-79b8-4e42-8dfd-9a349f8911b5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/test/java/com/declaratie/declaratieapi/DeclaratieApiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/test/java/com/declaratie/declaratieapi/DeclaratieApiApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/declaratie-api-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/declaratie-api-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -101,8 +102,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="787" />
-    <option name="y" value="36" />
+    <option name="x" value="922" />
+    <option name="y" value="67" />
     <option name="width" value="1339" />
     <option name="height" value="921" />
   </component>
@@ -211,7 +212,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549551505477" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549559316418" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -304,15 +305,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1549544056725</updated>
-      <workItem from="1549544059596" duration="5996000" />
+      <workItem from="1549544059596" duration="6398000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5996000" />
+    <option name="totallyTimeSpent" value="6398000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="315" y="24" width="1339" height="921" extended-state="0" />
+    <frame x="922" y="67" width="1339" height="921" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
