@@ -9,8 +9,8 @@ import { HeroesComponent } from '../app/components/heroes/heroes.component';
 import { HeroDetailComponent } from '../app/components/hero-detail/hero-detail.component';
 import { MessagesComponent } from '../app/components/messages/messages.component';
 import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
+import { ProductComponent } from './components/product/product.component';
 
-// import { ProductsComponent } from './products/products.component';
 // import { UsersComponent } from './users/users.component';
 
 @NgModule({
@@ -20,8 +20,8 @@ import { DashboardComponent } from '../app/components/dashboard/dashboard.compon
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    // UsersComponent,
-    // ProductsComponent
+    ProductComponent,
+    // UsersComponent
   ],
   imports: [
     BrowserModule,
