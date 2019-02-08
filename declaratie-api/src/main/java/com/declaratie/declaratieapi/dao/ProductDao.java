@@ -26,7 +26,7 @@ public class ProductDao {
         }
     }
 
-    public List<Product> getStudents() {
+    public List<Product> getProducts() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             StringBuilder queryString = new StringBuilder("from Product");
             return session.createQuery(queryString.toString(), Product.class).list();

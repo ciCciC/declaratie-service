@@ -17,8 +17,8 @@ public class DeclaratieApiApplication {
 			productDao.saveStudent(product);
 		}
 
-		List<Product> students = productDao.getStudents();
-		students.forEach(p -> System.out.println(p.getName()));
+		List<Product> products = productDao.getProducts();
+		products.forEach(p -> System.out.println(p.getName()));
 
 		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
