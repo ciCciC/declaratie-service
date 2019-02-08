@@ -1,23 +1,23 @@
-//package com.declaration.microservice.declarationwebapp.Model;
 package com.declaratie.declaratieapi.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Product")
 public class Product {
 
     @Id
-    @Column
-    @GeneratedValue
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column
+
+    @Column(name = "name")
     private String name;
-    @Column
+
+    @Column(name = "type")
     private String type;
-    @Column
+
+    @Column(name = "price")
     private double price;
 //    private ProductEnum productType;
 

@@ -2,39 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15357e93-79b8-4e42-8dfd-9a349f8911b5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__javax_activation_javax_activation_api_1_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__javax_persistence_javax_persistence_api_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_dom4j_dom4j_2_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_0_4_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_hibernate_hibernate_core_5_3_7_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_hibernate_hibernate_entitymanager_5_3_7_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_javassist_javassist_3_23_1_GA.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_jboss_jandex_2_0_5_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_jboss_spec_javax_transaction_jboss_transaction_api_1_2_spec_1_1_1_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/enums/ProductEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IRest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/repository/ProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/repository/TestData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/models/Product.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/models/imodels/IProduct.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_1_2_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_springframework_security_spring_security_config_5_1_3_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_springframework_security_spring_security_core_5_1_3_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_springframework_security_spring_security_test_5_1_3_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__org_springframework_security_spring_security_web_5_1_3_RELEASE.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../declaratie-api/.idea/libraries/Maven__postgresql_postgresql_9_1_901_1_jdbc4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/util/HibernateUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/declaratie-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/declaratie-api.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/config/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/model/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/model/Product.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
     </list>
@@ -52,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/src/app/components/product/product.component.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -61,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/src/app/services/product/product.service.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="55" lean-forward="true" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+              <caret line="5" column="55" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -72,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/components/product/product.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="120">
+              <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -126,10 +106,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1080" />
-    <option name="y" value="-60" />
     <option name="width" value="1080" />
-    <option name="height" value="1110" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -137,8 +115,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,7 +154,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="hero-detail" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="declaratie-client" type="b2602c69:ProjectViewProjectNode" />
@@ -222,12 +198,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549632874509" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549648112483" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -324,14 +302,15 @@
       <workItem from="1549579701284" duration="370000" />
       <workItem from="1549614307036" duration="352000" />
       <workItem from="1549614810865" duration="11914000" />
+      <workItem from="1549645108225" duration="997000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19037000" />
+    <option name="totallyTimeSpent" value="20798000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1080" y="-60" width="1080" height="1110" extended-state="0" />
+    <frame x="0" y="0" width="1080" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
@@ -339,16 +318,16 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.3468208" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.35356456" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.2681729" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.2672234" />
       <window_info anchor="bottom" id="TypeScript" order="2" />
       <window_info anchor="bottom" id="Database Changes" order="3" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32985386" />
       <window_info anchor="bottom" id="Run" order="8" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
@@ -423,13 +402,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/models/Product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/models/Product.js" />
     <entry file="file://$PROJECT_DIR$/src/app/components/hero-detail/hero-detail.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -576,14 +549,14 @@
     <entry file="file://$PROJECT_DIR$/src/app/components/product/product.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/services/product/product.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="55" lean-forward="true" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+          <caret line="5" column="55" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
@@ -592,8 +565,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/product/product.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="120">
+          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>
