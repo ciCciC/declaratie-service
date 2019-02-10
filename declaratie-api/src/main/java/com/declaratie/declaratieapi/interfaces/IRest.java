@@ -7,6 +7,7 @@ public interface IRest<T> {
     T create(T t);
     T read(long id);
     T update(T t);
-    boolean delete(int id);
+    boolean delete(long id);
+    boolean delete(T t);
     List<T> getAll();
 }

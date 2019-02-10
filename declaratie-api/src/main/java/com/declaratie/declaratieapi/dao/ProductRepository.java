@@ -87,8 +87,58 @@ public class ProductRepository implements IRest<Product>{
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(long id) {
+        Transaction transaction = null;
+
+        boolean status = false;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            // delete the object
+            session.delete(this.read(id));
+
+            // commit transaction
+            transaction.commit();
+
+            status = true;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    @Override
+    public boolean delete(Product product) {
+
+        Transaction transaction = null;
+
+        boolean status = false;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            // delete the object
+            session.delete(product);
+
+            // commit transaction
+            transaction.commit();
+
+            status = true;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return status;
     }
 
     @Override

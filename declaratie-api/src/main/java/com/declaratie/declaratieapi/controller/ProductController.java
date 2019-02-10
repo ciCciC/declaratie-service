@@ -53,10 +53,9 @@ public class ProductController implements IController<Product, String> {
     public ResponseEntity<String> delete(@PathVariable("id") long id) {
         System.out.println("Delete product with ID = " + id);
 
-//        productRepository.deleteById(id);
+        boolean status = productRepository.delete(id);
 
-//        boolean status = testData.delete(id);
-        return this.getStatusResponse(false);
+        return this.getStatusResponse(status);
     }
 
     private ResponseEntity<String> getStatusResponse(boolean status){
