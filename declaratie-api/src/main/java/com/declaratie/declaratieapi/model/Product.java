@@ -25,9 +25,8 @@ public class Product {
         super();
     }
 
-    public Product(long id, String name, String type, double price){
+    public Product(String name, String type, double price){
         super();
-        this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
@@ -75,21 +74,4 @@ public class Product {
                 ", price=" + price +
                 '}';
     }
-
-    //    public ProductEnum getProductType() {
-//        return productType;
-//    }
-//
-//    public void setProductType(ProductEnum productType) {
-//        this.productType = productType;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Product{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", productType=" + productType +
-//                '}';
-//    }
 }

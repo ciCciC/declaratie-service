@@ -17,7 +17,7 @@ public class TestData {
 
     private void initProds(){
         for (int i = 0; i < 5; i++) {
-            Product tmp = new Product(i, "Razor"+i, "Laptop", 2500+i);
+            Product tmp = new Product("Razor"+i, "Laptop", 2500+i);
             this.products.add(tmp);
             tmp = null;
         }
