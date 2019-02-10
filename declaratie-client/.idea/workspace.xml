@@ -3,20 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="15357e93-79b8-4e42-8dfd-9a349f8911b5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IRest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IRest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/repository/TestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/TestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/controller/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/dao/ProductDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/interfaces/IRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/interfaces/IRest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/repository/ProductRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/repository/TestData.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -115,6 +101,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -198,8 +186,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -304,21 +290,23 @@
       <workItem from="1549614810865" duration="11914000" />
       <workItem from="1549645108225" duration="2161000" />
       <workItem from="1549746798947" duration="586000" />
+      <workItem from="1549791501474" duration="753000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22548000" />
+    <option name="totallyTimeSpent" value="23301000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.238921" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.19364162" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.2672234" />
