@@ -2,8 +2,7 @@ package com.declaratie.declaratieapi.controller;
 
 
 import com.declaratie.declaratieapi.model.Product;
-import com.declaratie.declaratieapi.repository.ProductRepository;
-import com.declaratie.declaratieapi.repository.TestData;
+import com.declaratie.declaratieapi.dao.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,25 +15,23 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductController {
 
-    private TestData testData = new TestData();
-
     @Autowired
     ProductRepository productRepository;
 
     @GetMapping("/product")
     public List<Product> index(){
-        return testData.getProductList();
+        return productRepository.getAll();
     }
 
     @PostMapping("/product/create")
     public ResponseEntity<String> create(Product product){
-        boolean status = testData.create(product);
+        boolean status = productRepository.create(product);
         return this.getStatusResponse(status);
     }
 
     @GetMapping("/product/{id}")
-    public Product read(@PathVariable("id") int id) {
-        Product tmp = new Product(823, "Razor", "Laptop", 2500);
+    public Product read(@PathVariable("id") long id) {
+        Product tmp = productRepository.read(id);
         return tmp;
     }
 
@@ -44,8 +41,8 @@ public class ProductController {
 
 //        productRepository.deleteById(id);
 
-        boolean status = testData.delete(id);
-        return this.getStatusResponse(status);
+//        boolean status = testData.delete(id);
+        return this.getStatusResponse(false);
     }
 
     private ResponseEntity<String> getStatusResponse(boolean status){

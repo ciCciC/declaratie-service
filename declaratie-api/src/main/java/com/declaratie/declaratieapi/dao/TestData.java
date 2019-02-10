@@ -1,4 +1,4 @@
-package com.declaratie.declaratieapi.repository;
+package com.declaratie.declaratieapi.dao;
 
 import com.declaratie.declaratieapi.model.Product;
 import org.springframework.stereotype.Repository;

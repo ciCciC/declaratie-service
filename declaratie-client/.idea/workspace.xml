@@ -3,8 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="15357e93-79b8-4e42-8dfd-9a349f8911b5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IRest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IRest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/repository/TestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/TestData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/controller/ProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/dao/ProductDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/interfaces/IRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/interfaces/IRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/repository/ProductRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/repository/TestData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -40,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/components/product/product.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="20" lean-forward="true" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+            <state relative-caret-position="390">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -186,14 +198,14 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549648640208" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549650455515" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -290,23 +302,23 @@
       <workItem from="1549579701284" duration="370000" />
       <workItem from="1549614307036" duration="352000" />
       <workItem from="1549614810865" duration="11914000" />
-      <workItem from="1549645108225" duration="1499000" />
+      <workItem from="1549645108225" duration="2161000" />
+      <workItem from="1549746798947" duration="586000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21300000" />
+    <option name="totallyTimeSpent" value="22548000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.23506744" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.238921" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.2672234" />
@@ -553,8 +565,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/product/product.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="20" lean-forward="true" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        <state relative-caret-position="390">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>
