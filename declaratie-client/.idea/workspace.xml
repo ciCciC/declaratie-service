@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15357e93-79b8-4e42-8dfd-9a349f8911b5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../declaratie-api/target/test-classes/com/declaratie/declaratieapi/dao/ProductRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-api/target/test-classes/com/declaratie/declaratieapi/dao/ProductRepositoryTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
