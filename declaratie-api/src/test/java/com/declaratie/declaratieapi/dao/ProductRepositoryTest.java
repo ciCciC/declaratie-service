@@ -29,12 +29,17 @@ public class ProductRepositoryTest {
     @Test
     public void create() {
 
-        Product dummyObject = new Product("Asus", "Laptop", 2000);
-        dummyObject.setId(1);
+        Product dummyObject = mock(Product.class);
 
-        when(productRepository.create(any(Product.class))).thenReturn(dummyObject);
+        // define return value for method getUniqueId()
+        when(dummyObject.getId()).thenReturn(43L);
+
+        // use mock in test....
+        assertEquals(dummyObject.getId(), 43L);
+
+//        when(productRepository.create(any(Product.class))).thenReturn(dummyObject);
 //
-        Product tmp = productRepository.create(dummyObject);
+//        Product tmp = productRepository.create(dummyObject);
 //
 //        Product target = productRepository.read(tmp.getId());
 //

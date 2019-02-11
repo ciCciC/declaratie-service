@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6cbd66c2-cbc5-44fa-87b7-f9d4501fa0b2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/declaratie/declaratieapi/DeclaratieApiApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/declaratie/declaratieapi/dao/ProductRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/declaratie/declaratieapi/dao/ProductRepositoryTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../declaratie-client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../declaratie-client/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -14,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/declaratie_api$ProductRepositoryTest_create.ic" NAME="ProductRepositoryTest.create Coverage Results" MODIFIED="1549835863891" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/declaratie_api$ProductRepositoryTest_create.ic" NAME="ProductRepositoryTest.create Coverage Results" MODIFIED="1549887593850" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.declaratie.declaratieapi.dao.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/declaratie_api$ProductRepositoryTest_read.ic" NAME="ProductRepositoryTest.read Coverage Results" MODIFIED="1549837629710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
@@ -50,8 +53,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="34" column="83" lean-forward="true" selection-start-line="34" selection-start-column="83" selection-end-line="34" selection-end-column="83" />
+            <state relative-caret-position="297">
+              <caret line="29" column="26" lean-forward="true" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="314">
+              <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,7 +77,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/controller/ProductControllerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
+            <state relative-caret-position="210">
               <caret line="14" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -132,8 +147,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="103" />
-    <option name="y" value="24" />
+    <option name="x" value="112" />
+    <option name="y" value="21" />
     <option name="width" value="1512" />
     <option name="height" value="991" />
   </component>
@@ -256,7 +271,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549886897073" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549894403608" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -291,7 +306,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.DeclaratieApiApplication">
+  <component name="RunManager" selected="JUnit.ProductRepositoryTest.create">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -421,9 +436,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProductRepositoryTest.create" />
         <item itemvalue="JUnit.ProductRepositoryTest.read" />
         <item itemvalue="JUnit.ProductRepositoryTest" />
-        <item itemvalue="JUnit.ProductRepositoryTest.create" />
         <item itemvalue="JUnit.ProductRepositoryTest.update" />
         <item itemvalue="JUnit.DeclaratieApiApplicationTests.contextLoads" />
       </list>
@@ -448,20 +463,11 @@
       <workItem from="1549821329319" duration="1973000" />
       <workItem from="1549828457682" duration="1101000" />
       <workItem from="1549832425091" duration="7608000" />
-      <workItem from="1549881182147" duration="1483000" />
+      <workItem from="1549881182147" duration="3188000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ProductRepositoryTest_create - 2019.02.10 at 22h 57m 52s.xml">
-      <configuration name="ProductRepositoryTest.create" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductRepositoryTest - 2019.02.10 at 22h 58m 16s.xml">
-      <configuration name="ProductRepositoryTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductRepositoryTest_read - 2019.02.10 at 22h 59m 04s.xml">
-      <configuration name="ProductRepositoryTest.read" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="ProductRepositoryTest_read - 2019.02.10 at 23h 13m 35s.xml">
       <configuration name="ProductRepositoryTest.read" configurationId="JUnit" />
     </history-entry>
@@ -483,12 +489,21 @@
     <history-entry file="ProductRepositoryTest_read - 2019.02.10 at 23h 27m 18s.xml">
       <configuration name="ProductRepositoryTest.read" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ProductRepositoryTest_create - 2019.02.11 at 13h 17m 03s.xml">
+      <configuration name="ProductRepositoryTest.create" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ProductRepositoryTest_create - 2019.02.11 at 13h 18m 11s.xml">
+      <configuration name="ProductRepositoryTest.create" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ProductRepositoryTest_create - 2019.02.11 at 13h 20m 16s.xml">
+      <configuration name="ProductRepositoryTest.create" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53135000" />
+    <option name="totallyTimeSpent" value="54840000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="103" y="24" width="1512" height="991" extended-state="0" />
+    <frame x="112" y="21" width="1512" height="991" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2387755" />
@@ -500,10 +515,10 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Builds - Bamboo" weight="0.5273973" />
-      <window_info active="true" anchor="bottom" id="Atlassian " visible="true" weight="0.40296805" />
+      <window_info anchor="bottom" id="Atlassian " weight="0.40296805" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32886723" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3219178" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3219178" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -526,7 +541,7 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49881235" weight="0.3292517" />
-      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.5011876" side_tool="true" weight="0.36666667" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.5011876" side_tool="true" visible="true" weight="0.26666668" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -735,16 +750,6 @@
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ecfcff34-bb53-4b06-a203-3b6ff496f51e/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -789,10 +794,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="34" column="83" lean-forward="true" selection-start-line="34" selection-start-column="83" selection-end-line="34" selection-end-column="83" />
+        <state relative-caret-position="314">
+          <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -801,8 +806,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/controller/ProductControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
+        <state relative-caret-position="210">
           <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/declaratie/declaratieapi/dao/ProductRepositoryTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="29" column="26" lean-forward="true" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
