@@ -1,33 +1,34 @@
 package com.declaratie.declaratieapi.util;
 
 import com.declaratie.declaratieapi.model.Product;
+import com.declaratie.declaratieapi.resourceManager.ResourceManager;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
+
+        Properties appProps = null;
+        String appConfigPath = ResourceManager.getCurrentThreatResource("application.properties");
+//        String appConfigPath = ResourceManager.getHarcodedGetPath();
+        System.out.println("Appconfig: " + appConfigPath);
+
         if (sessionFactory == null) {
             try {
+                appProps = new Properties();
+                appProps.load(new FileInputStream(appConfigPath));
+
                 Configuration configuration = new Configuration();
-                // Hibernate settings equivalent to hibernate.cfg.xml's properties
-//                Proberen niet hardcoded dus later aanpassen
-                Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "org.postgresql.Driver");
-                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/postgres");
-                settings.put(Environment.USER, "postgres");
-                settings.put(Environment.PASS, "Vatan4444ever");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-                settings.put(Environment.SHOW_SQL, "true");
-                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
-                configuration.setProperties(settings);
+                configuration.setProperties(appProps);
                 configuration.addAnnotatedClass(Product.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

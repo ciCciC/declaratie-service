@@ -13,22 +13,31 @@ import java.util.List;
 public class ProductRepository implements IRest<Product>{
 
     @Override
-    public boolean create(Product product) {
+    public Product create(Product product) {
         Transaction transaction = null;
+
+        Product status = null;
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
+
             // save the object
             session.save(product);
+
             // commit transaction
             transaction.commit();
+
+            status = product;
+
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             e.printStackTrace();
         }
-        return false;
+
+        return status;
     }
 
     @Override
@@ -51,27 +60,85 @@ public class ProductRepository implements IRest<Product>{
     }
 
     @Override
-    public boolean update(Product product) {
-//        Transaction transaction = null;
-//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//            // start a transaction
-//            transaction = session.beginTransaction();
-//            // save the object
-//            session.save(product);
-//            // commit transaction
-//            transaction.commit();
-//        } catch (Exception e) {
-//            if (transaction != null) {
-//                transaction.rollback();
-//            }
-//            e.printStackTrace();
-//        }
-        return false;
+    public Product update(Product product) {
+        Transaction transaction = null;
+
+        Product status = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            // update the object
+            session.saveOrUpdate(product);
+
+            // commit transaction
+            transaction.commit();
+
+            status = product;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return status;
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(long id) {
+        Transaction transaction = null;
+
+        boolean status = false;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            // delete the object
+            session.delete(this.read(id));
+
+            // commit transaction
+            transaction.commit();
+
+            status = true;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    @Override
+    public boolean delete(Product product) {
+
+        Transaction transaction = null;
+
+        boolean status = false;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            // delete the object
+            session.delete(product);
+
+            // commit transaction
+            transaction.commit();
+
+            status = true;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return status;
     }
 
     @Override
