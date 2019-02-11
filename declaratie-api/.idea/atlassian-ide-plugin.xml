@@ -1,0 +1,19 @@
+<atlassian-ide-plugin>
+  <project-configuration id="1">
+    <servers id="2">
+      <bamboo id="3">
+        <server-id id="4">195181e8-d698-4c74-b826-3415d6f10431</server-id>
+        <name>ci.quintor</name>
+        <url>https://185.103.17.149:443</url>
+        <shared>false</shared>
+        <use-favourites>false</use-favourites>
+        <show-branches>true</show-branches>
+        <my-branches-only>false</my-branches-only>
+        <bamboo2>true</bamboo2>
+        <plans id="5">
+          <plan id="6" key="DEC-DP" grouped="0" />
+        </plans>
+      </bamboo>
+    </servers>
+  </project-configuration>
+</atlassian-ide-plugin>

@@ -29,12 +29,12 @@ public class ProductRepositoryTest {
     @Test
     public void create() {
 
-//        toCreate = new Product();
-//        toCreate.setName("Sony");
-//        toCreate.setType("Mobile");
-//        toCreate.setPrice(3000);
+        Product dummyObject = new Product("Asus", "Laptop", 2000);
+        dummyObject.setId(1);
+
+        when(productRepository.create(any(Product.class))).thenReturn(dummyObject);
 //
-//        Product tmp = productRepository.create(toCreate);
+        Product tmp = productRepository.create(dummyObject);
 //
 //        Product target = productRepository.read(tmp.getId());
 //
