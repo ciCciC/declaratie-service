@@ -8,14 +8,15 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class ProductRepositoryTest {
 
     @Mock
@@ -23,31 +24,31 @@ public class ProductRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
+        System.out.println("Before");
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void create() {
+        System.out.println("Create");
 
-        Product dummyObject = mock(Product.class);
+        Product dummyObject = spy(Product.class);
+        dummyObject.setId(1L);
+        dummyObject.setName("Asus");
+        dummyObject.setType("Laptop");
+        dummyObject.setPrice(2100);
 
-        // define return value for method getUniqueId()
-        when(dummyObject.getId()).thenReturn(43L);
+        when(productRepository.create(dummyObject)).thenReturn(true);
 
-        // use mock in test....
-        assertEquals(dummyObject.getId(), 43L);
+        boolean result = productRepository.create(dummyObject);
 
-//        when(productRepository.create(any(Product.class))).thenReturn(dummyObject);
-//
-//        Product tmp = productRepository.create(dummyObject);
-//
-//        Product target = productRepository.read(tmp.getId());
-//
-//        assertTrue("Test create process: ", toCreate.getId() == target.getId());
+        assertEquals(true, result);
     }
 
     @Test
     public void read() {
+        System.out.println("Read");
+
         Product dummyObject = new Product("Sony", "Mobile", 3000);
         dummyObject.setId(1);
 
@@ -61,6 +62,8 @@ public class ProductRepositoryTest {
 
     @Test
     public void update() {
+        System.out.println("Update");
+
 //        toCreate = new Product();
 //        toCreate.setName("Sony");
 //        toCreate.setType("Mobile");

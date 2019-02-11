@@ -13,14 +13,17 @@ import java.util.List;
 public class ProductRepository implements IRest<Product>{
 
     @Override
-    public Product create(Product product) {
+    public boolean create(Product product) {
         Transaction transaction = null;
 
-        Product status = null;
+        boolean status = false;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
+
+//            if(session.contains(product))
+//                return false;
 
             // save the object
             session.save(product);
@@ -28,7 +31,7 @@ public class ProductRepository implements IRest<Product>{
             // commit transaction
             transaction.commit();
 
-            status = product;
+            status = true;
 
         } catch (Exception e) {
             if (transaction != null) {
