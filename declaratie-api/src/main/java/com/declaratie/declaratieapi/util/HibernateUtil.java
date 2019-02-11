@@ -18,8 +18,8 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
 
         Properties appProps = null;
-//        String appConfigPath = ResourceManager.getCurrentThreatResource("application.properties");
-        String appConfigPath = ResourceManager.getHarcodedGetPath();
+        String appConfigPath = ResourceManager.getCurrentThreatResource("application.properties");
+//        String appConfigPath = ResourceManager.getHarcodedGetPath();
         System.out.println("Appconfig: " + appConfigPath);
 
         if (sessionFactory == null) {
