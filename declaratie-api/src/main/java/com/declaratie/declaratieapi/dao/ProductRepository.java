@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -22,8 +23,8 @@ public class ProductRepository implements IRest<Product>{
             // start a transaction
             transaction = session.beginTransaction();
 
-//            if(session.contains(product))
-//                return false;
+            if(session.contains(product))
+                return false;
 
             // save the object
             session.save(product);
@@ -102,6 +103,10 @@ public class ProductRepository implements IRest<Product>{
             // delete the object
             session.delete(this.read(id));
 
+            if(!session.contains(id)){
+                throw new RuntimeException("PrimaryKey ["+id+"] doesn't exists");
+            }
+
             // commit transaction
             transaction.commit();
 
@@ -142,6 +147,28 @@ public class ProductRepository implements IRest<Product>{
             e.printStackTrace();
         }
         return status;
+    }
+
+    public int afterDelete(long id){
+        this.delete(id);
+        return this.getSize();
+    }
+
+    public List<Product> addBatch(List<Product> products){
+
+        List<Product> addedOnces = new LinkedList<>();
+
+        for (Product p : products) {
+            boolean status = this.create(p);
+            if(status){
+                addedOnces.add(p);
+            }
+        }
+        return addedOnces;
+    }
+
+    public int getSize(){
+        return getAll().size();
     }
 
     @Override

@@ -33,6 +33,14 @@ public class Product {
 //        this.productType = productType;
     }
 
+    public Product(long id, String name, String type, double price){
+        super();
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+    }
+
     public long getId() {
         return id;
     }
