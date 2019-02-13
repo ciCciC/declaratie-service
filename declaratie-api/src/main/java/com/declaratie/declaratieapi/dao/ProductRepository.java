@@ -7,20 +7,24 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
 public class ProductRepository implements IRest<Product>{
 
     @Override
-    public Product create(Product product) {
+    public boolean create(Product product) {
         Transaction transaction = null;
 
-        Product status = null;
+        boolean status = false;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
+
+            if(session.contains(product))
+                return false;
 
             // save the object
             session.save(product);
@@ -28,7 +32,7 @@ public class ProductRepository implements IRest<Product>{
             // commit transaction
             transaction.commit();
 
-            status = product;
+            status = true;
 
         } catch (Exception e) {
             if (transaction != null) {
@@ -96,6 +100,12 @@ public class ProductRepository implements IRest<Product>{
             // start a transaction
             transaction = session.beginTransaction();
 
+//            Product tmp = this.read(id);
+//
+//            if(tmp == null){
+//                throw new RuntimeException("PrimaryKey ["+id+"] doesn't exists");
+//            }
+
             // delete the object
             session.delete(this.read(id));
 
@@ -139,6 +149,28 @@ public class ProductRepository implements IRest<Product>{
             e.printStackTrace();
         }
         return status;
+    }
+
+    public int afterDelete(long id){
+        this.delete(id);
+        return this.getSize();
+    }
+
+    public List<Product> addBatch(List<Product> products){
+
+        List<Product> addedOnces = new LinkedList<>();
+
+        for (Product p : products) {
+            boolean status = this.create(p);
+            if(status){
+                addedOnces.add(p);
+            }
+        }
+        return addedOnces;
+    }
+
+    public int getSize(){
+        return getAll().size();
     }
 
     @Override

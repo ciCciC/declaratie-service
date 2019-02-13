@@ -37,6 +37,6 @@ public class DeclaratieApiApplication {
 		System.out.println("After: " + tmp2.toString());
 
 
-//		SpringApplication.run(DeclaratieApiApplication.class, args);
+		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
 }

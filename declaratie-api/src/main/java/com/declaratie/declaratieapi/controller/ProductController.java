@@ -28,8 +28,8 @@ public class ProductController implements IController<Product, String> {
     @ResponseStatus(HttpStatus.CREATED)
     @Override
     public ResponseEntity<String> create(Product product){
-//        boolean status = productRepository.create(product);
-        return this.getStatusResponse(false);
+        boolean status = productRepository.create(product);
+        return this.getStatusResponse(status);
     }
 
     @GetMapping("/product/{id}")
