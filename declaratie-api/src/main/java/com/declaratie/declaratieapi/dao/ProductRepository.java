@@ -100,12 +100,14 @@ public class ProductRepository implements IRest<Product>{
             // start a transaction
             transaction = session.beginTransaction();
 
+//            Product tmp = this.read(id);
+//
+//            if(tmp == null){
+//                throw new RuntimeException("PrimaryKey ["+id+"] doesn't exists");
+//            }
+
             // delete the object
             session.delete(this.read(id));
-
-            if(!session.contains(id)){
-                throw new RuntimeException("PrimaryKey ["+id+"] doesn't exists");
-            }
 
             // commit transaction
             transaction.commit();
