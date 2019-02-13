@@ -27,3 +27,8 @@ nav a:hover {
 nav a.active {
   color: #039be5;
 }
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}

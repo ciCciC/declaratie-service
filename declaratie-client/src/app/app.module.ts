@@ -11,7 +11,12 @@ import { MessagesComponent } from '../app/components/messages/messages.component
 import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
 import { ProductComponent } from './components/product/product.component';
 
-// import { UsersComponent } from './users/users.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {MaterialModule} from './material/material.module';
+
+// Dit is om de animatie uit te zetten
+// import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,14 +25,15 @@ import { ProductComponent } from './components/product/product.component';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    ProductComponent,
-    // UsersComponent
+    ProductComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
