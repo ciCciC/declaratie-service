@@ -1,0 +1,17 @@
+<mat-accordion>
+  <div cdkDropList class="example-box" (cdkDropListDropped)="drop($event)">
+    <mat-expansion-panel cdkDragLockAxis="x" *ngFor="let data of datasource index as i" cdkDrag>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{data.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{data.commentaar}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-declaratie-create>loading</app-declaratie-create>
+
+    </mat-expansion-panel>
+  </div>
+</mat-accordion>
