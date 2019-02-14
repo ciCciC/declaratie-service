@@ -14,6 +14,8 @@ import { ProductComponent } from './components/product/product.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {MaterialModule} from './material/material.module';
+import { DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
+import { DeclaratieCreateComponent } from './components/declaratie-create/declaratie-create.component';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,7 +27,9 @@ import {MaterialModule} from './material/material.module';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    ProductComponent
+    ProductComponent,
+    DeclarationTableComponent,
+    DeclaratieCreateComponent
   ],
   imports: [
     BrowserModule,
