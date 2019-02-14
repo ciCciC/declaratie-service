@@ -18,7 +18,7 @@
 
   <!-- Position Column -->
   <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <th mat-header-cell *matHeaderCellDef> ID </th>
     <td mat-cell *matCellDef="let element"> {{element.position}} </td>
   </ng-container>
 
@@ -43,7 +43,17 @@
   <!-- status Column -->
   <ng-container matColumnDef="status">
     <th mat-header-cell *matHeaderCellDef> Status </th>
-    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    <!--<td mat-cell *matCellDef="let element"> {{element.status}} </td>-->
+    <
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="element.status; else loggedOut">
+        <mat-spinner class="spinnerStatus" [diameter]="40" [strokeWidth]="5" color="warn">loading</mat-spinner>
+      </div>
+      <ng-template #loggedOut>
+        Goedgekeurd
+      </ng-template>
+    </td>
+
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

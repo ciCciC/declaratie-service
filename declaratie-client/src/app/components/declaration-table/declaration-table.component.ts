@@ -35,6 +35,8 @@ export class DeclarationTableComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
+  panelOpenState = false;
+
   constructor() { }
   initFakeData() {
     for (let i = 0; i < 10; i++) {

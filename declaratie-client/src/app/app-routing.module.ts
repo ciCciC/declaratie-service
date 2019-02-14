@@ -7,16 +7,18 @@ import {ProductComponent} from '../app/components/product/product.component';
 import {AppComponent} from './components/app/app.component';
 import {DeclarationTableComponent} from './components/declaration-table/declaration-table.component';
 import {DeclaratieCreateComponent} from './components/declaratie-create/declaratie-create.component';
+import {DeclarationStepperComponent} from './components/declaration-stepper/declaration-stepper.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/app', pathMatch: 'full' },
+  { path: '', redirectTo: '/declarationtable', pathMatch: 'full' },
   { path: 'app', component: AppComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'product', component: ProductComponent },
   { path: 'declarationtable', component: DeclarationTableComponent },
-  { path: 'declarationcreate', component: DeclaratieCreateComponent }
+  { path: 'declarationcreate', component: DeclaratieCreateComponent },
+  { path: 'declarationstepper', component: DeclarationStepperComponent }
 ];
 
 @NgModule({

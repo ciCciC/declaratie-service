@@ -1,23 +1,47 @@
-<div class="example-container">
-  <mat-form-field>
+<form class="example-container">
+
+  <mat-form-field class="example-full-width" appearance="outline">
     <mat-label>Declaratie naam</mat-label>
-    <input matInput placeholder="invoeren">
+    <input matInput placeholder="Declaratie naam">
   </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Werknemer num.</mat-label>
+    <input matInput placeholder="nummer">
+  </mat-form-field>
+
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Voornaam">
+    </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Achternaam">
+    </mat-form-field></td>
+  </tr></table>
 
   <mat-form-field>
-    <textarea matInput placeholder="Price"></textarea>
+    <input matInput placeholder="Date" type="date" class="example-right-align">
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Commentaar</mat-label>
-    <input matInput placeholder="invoeren">
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td>
+      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>€</mat-label>
+      <input matInput #euro ng-maxlength="5" placeholder="0" type="number">
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="example-full-width" appearance="outline">
+      <input matInput #eurocent ng-maxlength="2" placeholder="00" type="number">
+      </mat-form-field>
+    </td>
+  </tr></table>
+
+  <mat-form-field class="example-full-width">
+    <input matInput #message maxlength="256" placeholder="Bericht">
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Select">
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
+    <mat-hint align="start"><strong>Vul hier een bericht in</strong> </mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -25,6 +49,4 @@
     <input matInput placeholder="True">
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
-</div>
-
-<img src="https://regmedia.co.uk/2013/03/04/invader.jpg?x=442&y=293&crop=1" alt="Italian Trulli">
+</form>

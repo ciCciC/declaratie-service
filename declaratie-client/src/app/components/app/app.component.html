@@ -1,22 +1,32 @@
-<h1>{{title}}</h1>
+<mat-toolbar color="primary">
+  <h1>{{title}}</h1>
+</mat-toolbar>
 
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-  <a routerLink="/product">Product</a>
-  <a routerLink="/declarationtable">Declaration table</a>
-  <a routerLink="/declarationcreate">Declaration create</a>
-</nav>
+<mat-toolbar color="primary">
+    <mat-chip-list>
+      <mat-chip color="accent" selected routerLink="/declarationtable">Declaration status</mat-chip>
+    </mat-chip-list>
 
-<h3>Raised Buttons</h3>
-<div class="example-button-row">
-  <button mat-raised-button>Basic</button>
-  <button mat-raised-button color="primary">Primary</button>
-  <button mat-raised-button color="accent">Accent</button>
-  <button mat-raised-button color="warn">Warn</button>
-  <button mat-raised-button disabled>Disabled</button>
-  <a mat-raised-button routerLink=".">Link</a>
-</div>
+    <span class="example-fill-remaining-space"></span>
+
+    <mat-chip-list>
+      <mat-chip color="accent" selected routerLink="/declarationstepper">
+        Declaration create
+        <span class="example-spacer"></span>
+        <mat-icon class="example-icon">add_circle_outline</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
+    <span class="example-fill-remaining-space"></span>
+
+    <mat-chip-list>
+      <mat-chip color="accent" selected>
+        Lijst
+        <span class="example-spacer"></span>
+        <mat-icon class="example-icon">shopping_cart</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
+</mat-toolbar>
 
 <router-outlet></router-outlet>
-<!--<app-messages></app-messages>-->
