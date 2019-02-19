@@ -1,15 +1,11 @@
 package com.declaratie.declaratieapi;
 
 import com.declaratie.declaratieapi.dao.ProductRepository;
-import com.declaratie.declaratieapi.model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.declaratie.declaratieapi.entity.Product;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.Environment;
 
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
 
 @SpringBootApplication
 public class DeclaratieApiApplication {

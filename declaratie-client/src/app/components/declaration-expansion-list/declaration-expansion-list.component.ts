@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {PeriodicElement} from '../declaration-table/declaration-table.component';
 
 import {CdkDragDrop, moveItemInArray, CdkDragMove} from '@angular/cdk/drag-drop';
+// import {MAT_DIALOG_DATA, MatDialogRef, MatDialog} from '@angular/material';
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', price: 1.0079, commentaar: 'H', status: true},
@@ -26,7 +27,8 @@ export class DeclarationExpansionListComponent implements OnInit {
   panelOpenState = false;
   datasource = ELEMENT_DATA;
 
-  constructor() { }
+  constructor() {
+  }
 
   initFakeData() {
     for (let i = 0; i < 10; i++) {

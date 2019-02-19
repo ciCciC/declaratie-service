@@ -1,4 +1,4 @@
-package com.declaratie.declaratieapi.model;
+package com.declaratie.declaratieapi.entity;
 
 import javax.persistence.*;
 
