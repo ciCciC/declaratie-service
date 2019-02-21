@@ -1,0 +1,33 @@
+<button mat-raised-button (click)="isBatchmode = !isBatchmode" id="toggle-linear">
+  {{!isBatchmode ? 'Enable batch mode' : 'Disable batch mode'}}
+</button>
+<mat-horizontal-stepper [linear]="isBatchmode" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Vul je gegevens in</ng-template>
+        <app-declaratie-create>loading</app-declaratie-create>
+      <div>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Upload een bestand</ng-template>
+      <app-declaration-photo-upload>loading</app-declaration-photo-upload>
+      <div>
+        <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Afronden</ng-template>
+    Declaratie is nu afgerond.
+    <mat-spinner></mat-spinner>
+    <div>
+      <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+      <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

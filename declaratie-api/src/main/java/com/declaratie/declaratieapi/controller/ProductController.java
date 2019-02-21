@@ -2,7 +2,7 @@ package com.declaratie.declaratieapi.controller;
 
 
 import com.declaratie.declaratieapi.interfaces.IController;
-import com.declaratie.declaratieapi.model.Product;
+import com.declaratie.declaratieapi.entity.Product;
 import com.declaratie.declaratieapi.dao.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

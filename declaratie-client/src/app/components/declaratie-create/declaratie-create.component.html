@@ -1,0 +1,47 @@
+<form class="example-container">
+
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Declaratie naam</mat-label>
+    <input matInput placeholder="Declaratie naam">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Werknemer num.</mat-label>
+    <input matInput placeholder="nummer">
+  </mat-form-field>
+
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Voornaam">
+    </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Achternaam">
+    </mat-form-field></td>
+  </tr></table>
+
+  <mat-form-field>
+    <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" readonly>
+  </mat-form-field>
+  <mat-datepicker #picker></mat-datepicker>
+
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td>
+      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>€</mat-label>
+      <input matInput #euro ng-maxlength="5" placeholder="0" type="number">
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="example-full-width" appearance="outline">
+      <input matInput #eurocent ng-maxlength="2" placeholder="00" type="number">
+      </mat-form-field>
+    </td>
+  </tr></table>
+
+  <mat-form-field class="example-full-width">
+    <input matInput #message maxlength="256" placeholder="Bericht">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint align="start"><strong>Vul hier een bericht in</strong> </mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+  </mat-form-field>
+</form>

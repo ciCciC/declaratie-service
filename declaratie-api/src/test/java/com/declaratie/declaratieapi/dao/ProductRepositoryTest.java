@@ -1,6 +1,6 @@
 package com.declaratie.declaratieapi.dao;
 
-import com.declaratie.declaratieapi.model.Product;
+import com.declaratie.declaratieapi.entity.Product;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

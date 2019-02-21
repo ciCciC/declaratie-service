@@ -1,7 +1,7 @@
 package com.declaratie.declaratieapi.dao;
 
 import com.declaratie.declaratieapi.interfaces.IRest;
-import com.declaratie.declaratieapi.model.Product;
+import com.declaratie.declaratieapi.entity.Product;
 import com.declaratie.declaratieapi.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
