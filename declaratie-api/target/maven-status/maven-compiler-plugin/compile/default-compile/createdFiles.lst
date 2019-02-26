@@ -1,0 +1,9 @@
+com/declaratie/declaratieapi/util/HibernateUtil.class
+com/declaratie/declaratieapi/interfaces/IRest.class
+com/declaratie/declaratieapi/resourceManager/ResourceManager.class
+com/declaratie/declaratieapi/entity/Product.class
+com/declaratie/declaratieapi/DeclaratieApiApplication.class
+com/declaratie/declaratieapi/enums/ProductEnum.class
+com/declaratie/declaratieapi/interfaces/IController.class
+com/declaratie/declaratieapi/controller/ProductController.class
+com/declaratie/declaratieapi/dao/ProductRepository.class

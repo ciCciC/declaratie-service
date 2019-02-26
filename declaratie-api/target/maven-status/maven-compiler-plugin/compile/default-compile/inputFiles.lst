@@ -1,1 +1,10 @@
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/entity/Product.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/ProductController.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/config/SecurityConfig.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/util/HibernateUtil.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/enums/ProductEnum.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/dao/ProductRepository.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/resourceManager/ResourceManager.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IRest.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java
+/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IController.java
