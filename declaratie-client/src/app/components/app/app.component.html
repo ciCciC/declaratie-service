@@ -2,31 +2,31 @@
   <h1>{{title}}</h1>
 </mat-toolbar>
 
-<mat-toolbar color="primary">
+<!--<mat-toolbar color="primary">-->
+    <!--<mat-chip-list>-->
+      <!--<mat-chip color="accent" selected routerLink="/declarationtable">Declaration status</mat-chip>-->
+    <!--</mat-chip-list>-->
+
+    <!--<span class="example-fill-remaining-space"></span>-->
+
+    <!--<mat-chip-list>-->
+      <!--<mat-chip color="accent" selected routerLink="/declarationstepper">-->
+        <!--Declaration create-->
+        <!--<span class="example-spacer"></span>-->
+        <!--<mat-icon class="example-icon">add_circle_outline</mat-icon>-->
+      <!--</mat-chip>-->
+    <!--</mat-chip-list>-->
+
+    <!--<span class="example-fill-remaining-space"></span>-->
+
     <mat-chip-list>
-      <mat-chip color="accent" selected routerLink="/declarationtable">Declaration status</mat-chip>
-    </mat-chip-list>
-
-    <span class="example-fill-remaining-space"></span>
-
-    <mat-chip-list>
-      <mat-chip color="accent" selected routerLink="/declarationstepper">
-        Declaration create
-        <span class="example-spacer"></span>
-        <mat-icon class="example-icon">add_circle_outline</mat-icon>
-      </mat-chip>
-    </mat-chip-list>
-
-    <span class="example-fill-remaining-space"></span>
-
-    <mat-chip-list>
-      <mat-chip color="accent" selected routerLink="/declarationexpansionlist">
-        Lijst
+      <mat-chip color="accent" selected routerLink="/declarationcreate">
+        declarationcreate
         <span class="example-spacer"></span>
         <mat-icon class="example-icon">shopping_cart</mat-icon>
       </mat-chip>
     </mat-chip-list>
 
-</mat-toolbar>
+<!--</mat-toolbar>-->
 
 <router-outlet></router-outlet>
