@@ -1,5 +1,6 @@
 import {IDeclaration} from './imodels/IDeclaration';
 import {DeclarationFile} from './DeclarationFile';
+import {Status} from '../../app/models/Status';
 
 export class Declaration implements IDeclaration {
   id: number;

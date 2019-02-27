@@ -1,4 +1,5 @@
 import {DeclarationFile} from '../DeclarationFile';
+import {Status} from '../Status';
 
 export interface IDeclaration {
   id: number;

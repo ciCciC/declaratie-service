@@ -1,4 +1,4 @@
-enum Status {
+export enum Status {
   INPROGRESS,
   SUBMITTED,
   REJECTED,
