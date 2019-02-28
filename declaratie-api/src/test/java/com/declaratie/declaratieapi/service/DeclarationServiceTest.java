@@ -5,7 +5,6 @@ import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StatusEnum;
 
 import org.junit.Test;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -40,41 +40,12 @@ public class DeclarationServiceTest {
 
     }
 
+    /***
+     * Tests the return of a new declaration
+     */
     @Test
-    public void create() {
-        System.out.println("Test: create");
-
-        /***
-         * Soms moeten we echte afhankelijkheidsmethoden aanroepen,
-         * maar we willen nog steeds interacties met die afhankelijkheid verifiëren of volgen, daarvoor gebruiken we een SPY.
-         */
-
-        Date date = new Date();
-        Declaration dummyObject = spy(Declaration.class);
-        dummyObject.setDescription("Dit is mijn description");
-        dummyObject.setAmount(120);
-        dummyObject.setDate(date);
-        dummyObject.setStatusEnum(StatusEnum.SUBMITTED);
-        dummyObject.setEmp_comment("Employee");
-        dummyObject.setMan_comment("Manager");
-        dummyObject.setEmp_id(12);
-
-        when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
-
-        Declaration result = declarationService.create(dummyObject);
-
-        assertEquals("Dit is mijn description", result.getDescription());
-        assertEquals(120.0, result.getAmount(), 0);
-        assertEquals(date, result.getDate());
-        assertEquals(StatusEnum.SUBMITTED, result.getStatusEnum());
-        assertEquals("Employee", result.getEmp_comment());
-        assertEquals("Manager", result.getMan_comment());
-        assertEquals(12, result.getEmp_id());
-    }
-
-    @Test
-    public void testCreate_returnsNewDeclaration(){
-        System.out.println("Test: testCreate_returnsNewDeclaration");
+    public void create_returnsNewDeclaration(){
+        System.out.println("Test: create_returnsNewDeclaration");
         when(this.declarationRepository.save(any(Declaration.class))).thenReturn(new Declaration());
 
         Declaration declaration = new Declaration();
@@ -82,9 +53,12 @@ public class DeclarationServiceTest {
         assertThat(this.declarationService.create(declaration), is(notNullValue()));
     }
 
+    /***
+     * Tests if the new declaration has been added
+     */
     @Test
-    public void create_checkListSize(){
-        System.out.println("Test: create_checkListSize");
+    public void A1_create_checkListSize(){
+        System.out.println("Test: A1_create_checkListSize");
 
         List<Declaration> declarationList = new ArrayList<>();
         declarationList.add(new Declaration("Dit is mijn description", new Date(), 120,
@@ -98,6 +72,42 @@ public class DeclarationServiceTest {
         assertEquals(expected, result);
 
         this.printStatus(""+expected, ""+result);
+    }
+
+    /***
+     * Tests the value of the actual and expected variables
+     */
+    @Test
+    public void A2_create() {
+        System.out.println("Test: A2_create");
+
+        /***
+         * Soms moeten we echte afhankelijkheidsmethoden aanroepen,
+         * maar we willen nog steeds interacties met die afhankelijkheid verifiëren of volgen, daarvoor gebruiken we een SPY.
+         */
+
+        Date date = new GregorianCalendar(2019, 4, 30).getTime();
+
+        Declaration dummyObject = spy(Declaration.class);
+        dummyObject.setDescription("auto");
+        dummyObject.setAmount(1500);
+        dummyObject.setDate(date);
+        dummyObject.setStatusEnum(StatusEnum.SUBMITTED);
+        dummyObject.setEmp_comment("Wel");
+        dummyObject.setMan_comment("Ja");
+        dummyObject.setEmp_id(2);
+
+        when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
+
+        Declaration result = declarationService.create(dummyObject);
+
+        assertEquals("auto", result.getDescription());
+        assertEquals(1500, result.getAmount(), 0);
+        assertEquals(date, result.getDate());
+        assertEquals(StatusEnum.SUBMITTED, result.getStatusEnum());
+        assertEquals("Wel", result.getEmp_comment());
+        assertEquals("Ja", result.getMan_comment());
+        assertEquals(2, result.getEmp_id());
     }
 
 //    @Test
