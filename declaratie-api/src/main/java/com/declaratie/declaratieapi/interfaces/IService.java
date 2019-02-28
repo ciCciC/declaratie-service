@@ -2,9 +2,9 @@ package com.declaratie.declaratieapi.interfaces;
 
 import java.util.List;
 
-public interface IRest<T> {
+public interface IService<T> {
 
-    boolean create(T t);
+    T create(T t);
     T read(long id);
     T update(T t);
     boolean delete(long id);

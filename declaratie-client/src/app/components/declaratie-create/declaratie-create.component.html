@@ -38,21 +38,21 @@
       <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>€</mat-label>
       <input formControlName="bigNum" matInput #euro ng-maxlength="5"
-             name="bigNum" placeholder="0" type="number" required>
+             name="bigNum" placeholder="0" type="number">
       </mat-form-field>
     </td>
     <td>
       <mat-form-field class="dec-full-width" appearance="outline">
       <input formControlName="smallNum" matInput #eurocent ng-maxlength="2"
-             name="smallNum" placeholder="00" type="number" required>
+             name="smallNum" placeholder="00" type="number">
       </mat-form-field>
     </td>
   </tr></table>
 
   <mat-form-field class="dec-full-width">
     <mat-label>Medewerker bericht | {{empMessage.value.length}} / 256</mat-label>
-    <input formControlName="empMessage" matInput #empMessage
-           name="empMessage" maxlength="256" placeholder="Vul hier een bericht in" required>
+    <input formControlName="empMessage" matInput #empMessage id="empMessage"
+           name="empMessage" maxlength="256" placeholder="Vul hier een bericht in">
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
 
@@ -64,5 +64,7 @@
       <button mat-raised-button dec-button-row [disabled]="!createForm.valid" color="primary">Indienen</button>
     </td>
   </tr></table>
+
+  <!--<button mat-raised-button dec-button-row (click)="clickMe()" color="primary">Click Me!</button>-->
 
 </form>

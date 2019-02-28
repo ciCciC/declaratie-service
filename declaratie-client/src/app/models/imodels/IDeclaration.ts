@@ -1,13 +1,13 @@
 import {DeclarationFile} from '../DeclarationFile';
-import {Status} from '../Status';
+import {StatusEnum} from '../StatusEnum';
 
 export interface IDeclaration {
   id: number;
   description: string;
   date: string;
   amount: number;
-  status: Status;
-  files: DeclarationFile[];
+  status: string;
+  files: string;
   man_comment: string;
   emp_comment: string;
   emp_id: number;

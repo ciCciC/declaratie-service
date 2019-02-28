@@ -3,13 +3,14 @@ import {Observable, of} from 'rxjs';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
 import {IService} from '../iservice/IService';
 import {Declaration} from '../../models/Declaration';
-import {catchError} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
+import {log} from 'util';
+import {ITestme} from '../../models/imodels/ITestme';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
+    'Content-Type':  'application/json'
   })
 };
 
@@ -23,12 +24,7 @@ export class DeclarationService implements IService<IDeclaration> {
   constructor(private http: HttpClient) { }
 
   create(t: IDeclaration): Observable<IDeclaration> {
-    return this.http.post<IDeclaration>(this.baseUrl + '/', t, httpOptions).pipe(
-      catchError(err => {
-          console.log(err);
-          return of(null);
-      })
-    );
+    return this.http.post<IDeclaration>(this.baseUrl + '/create', t, httpOptions);
   }
 
   delete(any): boolean {
