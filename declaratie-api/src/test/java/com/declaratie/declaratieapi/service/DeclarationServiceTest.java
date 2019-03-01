@@ -55,6 +55,7 @@ public class DeclarationServiceTest {
 
     /***
      * Tests if the new declaration has been added
+     * A1 = verwijzing naar de acceptatie ID in testrapportage
      */
     @Test
     public void A1_create_checkListSize(){
@@ -76,6 +77,7 @@ public class DeclarationServiceTest {
 
     /***
      * Tests the value of the actual and expected variables
+     * A2 = verwijzing naar de acceptatie ID in testrapportage
      */
     @Test
     public void A2_create() {
