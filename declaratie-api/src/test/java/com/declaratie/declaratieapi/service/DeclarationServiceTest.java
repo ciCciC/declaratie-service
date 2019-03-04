@@ -58,8 +58,8 @@ public class DeclarationServiceTest {
      * A1 = verwijzing naar de acceptatie ID in testrapportage
      */
     @Test
-    public void A1_create_checkListSize(){
-        System.out.println("Test: A1_create_checkListSize");
+    public void A1_SR11_create_checkListSize(){
+        System.out.println("Test: A1_SR11_create_checkListSize");
 
         List<Declaration> declarationList = new ArrayList<>();
         declarationList.add(new Declaration("Dit is mijn description", new Date(), 120,
@@ -78,10 +78,11 @@ public class DeclarationServiceTest {
     /***
      * Tests the value of the actual and expected variables
      * A2 = verwijzing naar de acceptatie ID in testrapportage
+     * SR11 = functioneel requirement
      */
     @Test
-    public void A2_create() {
-        System.out.println("Test: A2_create");
+    public void A2_SR11_create_actual_values_expected_values() {
+        System.out.println("Test: A2_SR11_create_actual_values_expected_values");
 
         /***
          * Soms moeten we echte afhankelijkheidsmethoden aanroepen,

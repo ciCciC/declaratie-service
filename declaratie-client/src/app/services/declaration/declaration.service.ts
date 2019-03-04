@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {IService} from '../iservice/IService';
 import {Declaration} from '../../models/Declaration';
-import {catchError, tap} from 'rxjs/operators';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
-import {log} from 'util';
-import {ITestme} from '../../models/imodels/ITestme';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -42,6 +39,18 @@ export class DeclarationService implements IService<IDeclaration> {
   update(t: Declaration): boolean {
     return false;
   }
+
+  // read(id): Observable<any> {
+  //   return this.http.get(`${this.baseUrl}/${id}`);
+  // }
+  //
+  // delete(id: number): Observable<any> {
+  //   return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  // }
+  //
+  // getAll(): Observable<any> {
+  //   return this.http.get(`${this.baseUrl}`);
+  // }
 
 
 }

@@ -1,23 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Declaration} from '../../models/Declaration';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Employee} from '../../models/Employee';
-import {DeclarationFile} from '../../models/DeclarationFile';
 import {StatusEnum} from '../../models/StatusEnum';
 import { Location } from '@angular/common';
 import {DeclarationService} from '../../services/declaration/declaration.service';
-import {ITestme} from '../../models/imodels/ITestme';
-import {catchError, tap} from 'rxjs/operators';
-import {of, Subscription} from 'rxjs';
-import {IDeclaration} from '../../models/imodels/IDeclaration';
+import {Subscription} from 'rxjs';
+import {textInputValidator} from '../validators/textInputValidator';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 @Component({
   selector: 'app-declaratie-create',
@@ -26,45 +16,47 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class DeclaratieCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
-  matcher: MyErrorStateMatcher;
   employee: Employee;
   disabled = true;
   minDate: Date;
   maxDate: Date;
   maxDaysRange = 5;
   maxDesc = 30;
-  name: ITestme = {fname: '', lname: ''};
   declarationSub: Subscription;
+  controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
 
-  constructor(private location: Location, private declarationService: DeclarationService) {
-    this.initEmployee();
+  constructor(private fb: FormBuilder, private location: Location,
+              private declarationService: DeclarationService) {
+    this.exampleEmployee();
     this.minDate = new Date(Date.now());
     this.maxDate = new Date(Date.now());
     this.maxDate.setDate(this.maxDate.getDate() + this.maxDaysRange);
-    this.createForm = new FormGroup({
+    this.createForm = this.fb.group({
       description: new FormControl('', [
         Validators.required,
-        Validators.maxLength(this.maxDesc)
+        Validators.maxLength(this.maxDesc),
+        textInputValidator
       ]),
       empID: new FormControl({value: this.employee.id, disabled: this.disabled}),
       fname: new FormControl({value: this.employee.fname, disabled: this.disabled}, [
-        Validators.required, Validators.maxLength(this.maxDesc)]),
+        Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
       lname: new FormControl({value: this.employee.lname, disabled: this.disabled}, [
-        Validators.required, Validators.maxLength(this.maxDesc)]),
+        Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
       serDate: new FormControl((new Date()).toISOString(), [Validators.required]),
       bigNum: new FormControl('', [
-        Validators.required, Validators.maxLength(3)]),
+        Validators.required, Validators.max(3000), Validators.min(0)]),
       smallNum: new FormControl('', [
-        Validators.required, Validators.maxLength(2)]),
+        Validators.required, Validators.max(99), Validators.min(0)]),
       empMessage: new FormControl('', [
-        Validators.required, Validators.maxLength(255)])
+        Validators.required,
+        Validators.maxLength(255),
+        textInputValidator
+      ])
     });
-
-    this.matcher = new MyErrorStateMatcher();
 
   }
 
-  private initEmployee() {
+  private exampleEmployee() {
     this.employee = new Employee();
     this.employee.id = 1;
     this.employee.fname = 'Carlos';
@@ -72,14 +64,8 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
   }
 
   createDeclaration(createFormValue) {
-    // this.date = this.serializedDate.value;
-    // alert(this.date.toString());
-    // const aa = +(this.bigNum + '.' + this.smallNum);
-    // this.declaration.amount = aa;
-    // alert(this.declaration.amount);
-    // alert(this.description.value.toString());
 
-    if (this.createForm.valid) {
+    if (this.createForm.valid && this.examInputSecurity()) {
       this.executeDeclarationCreation(createFormValue);
     }
   }
@@ -102,24 +88,37 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
       files: ''
     };
 
-    this.declarationSub = this.declarationService.create(declaration).subscribe(data => console.log(data));
+    alert(JSON.stringify(declaration));
+
+    // this.declarationSub = this.declarationService.create(declaration).subscribe(data => console.log(data));
   }
 
-  // clickMe() {
-  //   const declaration: IDeclaration = {
-  //     id: null,
-  //     description: 'Car costs',
-  //     date: new Date(Date.now()).toISOString(),
-  //     emp_id: this.employee.id,
-  //     status: StatusEnum.SUBMITTED,
-  //     amount: 100.55,
-  //     emp_comment: 'Employee comment',
-  //     man_comment: '',
-  //     files: ''
-  //   };
-  //
-  //   this.declarationSub = this.declarationService.create(declaration).subscribe(data => console.log(data));
-  // }
+  get formControllers(): any[] {
+    const toreturn = [];
+
+    for (const conName of this.controllerForCheck) {
+      toreturn.push(this.createForm.get(conName));
+    }
+
+    return toreturn;
+  }
+
+  private get maxSize() {
+    return this.formControllers.length - 1;
+  }
+
+  private examInputSecurity() {
+    let status = false;
+    for (const conName of this.formControllers) {
+      if (conName.invalid && conName.errors.lets_be_friends) {
+        status = false;
+        break;
+      } else {
+        status = true;
+      }
+    }
+    return status;
+  }
 
   ngOnInit() {
   }

@@ -36,15 +36,6 @@ public class DeclaratieApiApplicationTests {
 	@Autowired
 	private DeclarationRepository declarationRepository;
 
-
-	/***
-	 * Een standaard contextload test
-	 */
-	@Test
-	public void contextLoads() {
-		assertTrue("First test should be true", 1 == 1);
-	}
-
 	/***
 	 * Hier wordt gebruik gemaakt van H2 database voor het uitvoeren van testen. Hier ligt de aandacht bij het toevoegen van een declaratie en opvragen van
 	 * de zojuist toegevoegde declaratie. Dus om te zien of de declaratie wel wordt toegevoegd aan de database.
@@ -52,22 +43,43 @@ public class DeclaratieApiApplicationTests {
 	 * A1 = verwijzing naar de acceptatie ID in testrapportage
 	 */
 	@Test
-	public void A1_SaveAndRetreiveDeclaration_thenOK() {
-		System.out.println("Integratietest: A1_SaveAndRetreiveDeclaration_thenOK");
+	public void A1_create_saveAndRetrieveDeclaration_thenOK() {
+		System.out.println("Integratietest: A1_create_saveAndRetrieveDeclaration_thenOK");
 
 		Date date = new GregorianCalendar(2019, 4, 30).getTime();
 
-		Declaration declarationEntity = declarationRepository.save(new Declaration("Dit is mijn description", date, 120,
+		/**
+		 * Nieuwe declaratie
+		 */
+		Declaration addedDeclaration = declarationRepository.save(new Declaration("Dit is mijn description", date, 120,
 				"Employee", "Manager", StatusEnum.SUBMITTED, 12));
 
-		Declaration foundEntity = declarationRepository
-				.findById(declarationEntity.getId())
+
+		/**
+		 * Declaratie uit de in-memory database
+		 */
+		Declaration nieuweDeclaratie = declarationRepository
+				.findById(addedDeclaration.getId())
 				.orElse(null);
 
-		assertNotNull(foundEntity);
-		assertEquals(declarationEntity.getId().longValue(), foundEntity.getId().longValue());
+		int declaratiesLijstSize = 1;
 
-		System.out.println("Expected: " + declarationEntity.getId().longValue() + ",\t" + "Actual: " + foundEntity.getId().longValue());
+		/***
+		 * Controle op null waarde
+		 */
+		assertNotNull(nieuweDeclaratie);
+
+		/**
+		 * Controle op Id
+		 */
+		assertEquals(addedDeclaration.getId().longValue(), nieuweDeclaratie.getId().longValue());
+
+		/**
+		 * Controle declaratiesLijstSize
+		 */
+		assertEquals(declaratiesLijstSize, declarationRepository.findAll().size());
+
+		System.out.println("Expected: " + nieuweDeclaratie.getId().longValue() + ",\t" + "Actual: " + nieuweDeclaratie.getId().longValue());
 	}
 
 }
