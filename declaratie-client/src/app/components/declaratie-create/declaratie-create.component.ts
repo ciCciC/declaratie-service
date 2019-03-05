@@ -5,7 +5,6 @@ import {Employee} from '../../models/Employee';
 import {StatusEnum} from '../../models/StatusEnum';
 import { Location } from '@angular/common';
 import {DeclarationService} from '../../services/declaration/declaration.service';
-import {Subscription} from 'rxjs';
 import {textInputValidator} from '../validators/textInputValidator';
 
 
@@ -22,7 +21,6 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
   maxDate: Date;
   maxDaysRange = 5;
   maxDesc = 30;
-  declarationSub: Subscription;
   controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
 
   constructor(private fb: FormBuilder, private location: Location,
@@ -48,7 +46,6 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
       smallNum: new FormControl('', [
         Validators.required, Validators.max(99), Validators.min(0)]),
       empMessage: new FormControl('', [
-        Validators.required,
         Validators.maxLength(255),
         textInputValidator
       ])
@@ -75,7 +72,7 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  private executeDeclarationCreation = (createFormValue) => {
+  private executeDeclarationCreation(createFormValue) {
     const declaration: Declaration = {
       id: null,
       description: createFormValue.description,
@@ -88,9 +85,9 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
       files: ''
     };
 
-    alert(JSON.stringify(declaration));
-
-    // this.declarationSub = this.declarationService.create(declaration).subscribe(data => console.log(data));
+    this.declarationService.create(declaration).subscribe(data => {
+      console.log('Added: ' + JSON.stringify(data));
+    }, error => console.log(error));
   }
 
   get formControllers(): any[] {
@@ -124,7 +121,6 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.declarationSub.unsubscribe();
   }
 
 }
