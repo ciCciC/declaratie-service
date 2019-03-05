@@ -1,47 +1,78 @@
-<form class="example-container">
+<form name="declarationForm" [formGroup]="createForm" (ngSubmit)="createDeclaration(createForm.value); createForm.reset()" class="declaration-container">
 
-  <mat-form-field class="example-full-width" appearance="outline">
-    <mat-label>Declaratie naam</mat-label>
-    <input matInput placeholder="Declaratie naam">
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Declaratie omschrijving</mat-label>
+    <input formControlName="description" matInput placeholder="omschrijving"
+           id="description" name="description">
+
+    <mat-hint align="begin" *ngIf="formControllers[2].invalid && formControllers[2].errors.lets_be_friends">
+      Lets be friends
+      <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>
+    </mat-hint>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width" appearance="outline">
-    <mat-label>Werknemer num.</mat-label>
-    <input matInput placeholder="nummer">
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Medewerker ID</mat-label>
+    <input formControlName="empID" matInput id="emp_id" name="emp_id">
   </mat-form-field>
 
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><mat-form-field class="example-full-width">
-      <input matInput placeholder="Voornaam">
-    </mat-form-field></td>
-    <td><mat-form-field class="example-full-width">
-      <input matInput placeholder="Achternaam">
-    </mat-form-field></td>
+  <table class="dec-full-width" cellspacing="0"><tr>
+    <td>
+      <mat-form-field class="dec-full-width" appearance="outline">
+        <mat-label>Voornaam</mat-label>
+        <input formControlName="fname" matInput id="Voornaam" name="Voornaam">
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="dec-full-width" appearance="outline">
+        <mat-label>Achternaam</mat-label>
+        <input formControlName="lname" matInput id="Achternaam" name="Achternaam">
+      </mat-form-field>
+    </td>
   </tr></table>
 
   <mat-form-field>
-    <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" readonly>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Datum" (focus)="picker.open()"
+           formControlName="serDate" name="serDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <mat-datepicker #picker></mat-datepicker>
 
-  <table class="example-full-width" cellspacing="0"><tr>
+  <table class="dec-full-width" cellspacing="0"><tr>
     <td>
-      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>€</mat-label>
-      <input matInput #euro ng-maxlength="5" placeholder="0" type="number">
+      <input formControlName="bigNum" matInput #euro ng-maxlength="5"
+             name="bigNum" placeholder="0" type="number">
       </mat-form-field>
     </td>
     <td>
-      <mat-form-field class="example-full-width" appearance="outline">
-      <input matInput #eurocent ng-maxlength="2" placeholder="00" type="number">
+      <mat-form-field class="dec-full-width" appearance="outline">
+        <input formControlName="smallNum" matInput #eurocent ng-maxlength="2"
+               name="smallNum" placeholder="00" type="number">
+        <mat-hint align="end" *ngIf="eurocent.value.length > 2">Vul 2 cijfers in</mat-hint>
       </mat-form-field>
     </td>
   </tr></table>
 
-  <mat-form-field class="example-full-width">
-    <input matInput #message maxlength="256" placeholder="Bericht">
-    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <mat-hint align="start"><strong>Vul hier een bericht in</strong> </mat-hint>
-    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+  <mat-form-field class="dec-full-width">
+    <mat-label>Medewerker bericht | {{empMessage.value.length}} / 256</mat-label>
+      <input formControlName="empMessage" matInput #empMessage id="empMessage"
+             name="empMessage" maxlength="256" placeholder="Vul hier een bericht in">
+
+      <mat-hint align="begin" *ngIf="formControllers[maxSize].invalid && formControllers[maxSize].errors.lets_be_friends">
+        Lets be friends
+        <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>
+      </mat-hint>
   </mat-form-field>
+
+  <table class="dec-full-width" cellspacing="0"><tr>
+    <td>
+      <button mat-raised-button dec-button-row color="warn" (click)="onCancel()">Annuleren</button>
+    </td>
+    <td>
+      <button mat-raised-button dec-button-row [disabled]="!createForm.valid" color="primary">Indienen</button>
+    </td>
+  </tr></table>
+
 </form>

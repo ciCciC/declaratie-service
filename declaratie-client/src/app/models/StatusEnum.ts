@@ -1,0 +1,6 @@
+export enum StatusEnum {
+  INPROGRESS = 'INPROGRESS',
+  SUBMITTED = 'SUBMITTED',
+  REJECTED = 'REJECTED',
+  APPROVED = 'APPROVED'
+}
