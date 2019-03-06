@@ -1,3 +1,3 @@
-com/declaratie/declaratieapi/controller/ProductControllerTest.class
-com/declaratie/declaratieapi/dao/ProductRepositoryTest.class
-com/declaratie/declaratieapi/DeclaratieApiApplicationTests.class
+com/declaratie/declaratieapi/service/DeclarationServiceTest.class
+com/declaratie/declaratieapi/util/H2TestJpaConfig.class
+com/declaratie/declaratieapi/DeclaratieApiApplicationIntegrationTests.class

@@ -56,6 +56,7 @@ public class DeclarationServiceTest {
     /***
      * Tests if the new declaration has been added
      * A1 = verwijzing naar de acceptatie ID in testrapportage
+     * SR11 = Systeem requirement ID
      */
     @Test
     public void A1_SR11_create_checkListSize(){
@@ -78,7 +79,7 @@ public class DeclarationServiceTest {
     /***
      * Tests the value of the actual and expected variables
      * A2 = verwijzing naar de acceptatie ID in testrapportage
-     * SR11 = functioneel requirement
+     * SR11 = Systeem requirement
      */
     @Test
     public void A2_SR11_create_actual_values_expected_values() {

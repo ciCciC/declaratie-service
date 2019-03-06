@@ -41,9 +41,10 @@ public class DeclaratieApiApplicationIntegrationTests {
 	 * de zojuist toegevoegde declaratie. Dus om te zien of de declaratie wel wordt toegevoegd aan de database.
 	 *
 	 * A1 = verwijzing naar de acceptatie ID in testrapportage
+	 * SR11 = System requirement ID
 	 */
 	@Test
-	public void A1_INTEGRATION_TEST_create_saveAndRetrieveDeclaration() {
+	public void A1_SR11_INTEGRATION_TEST_create_saveAndRetrieveDeclaration() {
 		System.out.println("Integratietest: A1_INTEGRATION_TEST_create_saveAndRetrieveDeclaration");
 
 		/**

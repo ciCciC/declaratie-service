@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  declaration-api-service:
+    image: springapi-postgres
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - declaration-database
+    environment:
+      - spring.datasource.url=jdbc:postgresql://10.30.199.162:32769/declarationdb?autoReconnect=true&useSSL=false
+      - spring.datasource.username=admin
+      - spring.datasource.password=admin
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+      - spring.jpa.hibernate.ddl-auto=update
+  declaration-database:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 32769:5432
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=declarationdb
