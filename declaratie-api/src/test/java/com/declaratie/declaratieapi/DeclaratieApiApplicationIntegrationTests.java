@@ -25,7 +25,7 @@ import java.util.GregorianCalendar;
 		DeclaratieApiApplication.class,
 		H2TestJpaConfig.class})
 @ActiveProfiles("test")
-public class DeclaratieApiApplicationTests {
+public class DeclaratieApiApplicationIntegrationTests {
 	/***
 	 * Hier wordt voornamelijk de integratie test uitgevoerd.
 	 */
@@ -43,8 +43,13 @@ public class DeclaratieApiApplicationTests {
 	 * A1 = verwijzing naar de acceptatie ID in testrapportage
 	 */
 	@Test
-	public void A1_create_saveAndRetrieveDeclaration_thenOK() {
-		System.out.println("Integratietest: A1_create_saveAndRetrieveDeclaration_thenOK");
+	public void A1_INTEGRATION_TEST_create_saveAndRetrieveDeclaration() {
+		System.out.println("Integratietest: A1_INTEGRATION_TEST_create_saveAndRetrieveDeclaration");
+
+		/**
+		 * Dit om de initialisatie in DeclaratieApiApplication class eerst te verwijderen.
+		 */
+		declarationRepository.deleteAll();
 
 		Date date = new GregorianCalendar(2019, 4, 30).getTime();
 
@@ -79,7 +84,7 @@ public class DeclaratieApiApplicationTests {
 		 */
 		assertEquals(declaratiesLijstSize, declarationRepository.findAll().size());
 
-		System.out.println("Expected: " + nieuweDeclaratie.getId().longValue() + ",\t" + "Actual: " + nieuweDeclaratie.getId().longValue());
+		System.out.println("ID -> Expected: " + nieuweDeclaratie.getId().longValue() + ",\t" + "Actual: " + nieuweDeclaratie.getId().longValue());
 	}
 
 }

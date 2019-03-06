@@ -1,7 +1,6 @@
 package com.declaratie.declaratieapi.controller;
 
-import com.declaratie.declaratieapi.CopyManager.CopyDeclaration;
-import com.declaratie.declaratieapi.dao.DeclarationRepository;
+import com.declaratie.declaratieapi.copyManager.CopyDeclaration;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.interfaces.IController;
 import com.declaratie.declaratieapi.model.DeclarationModel;
@@ -9,6 +8,9 @@ import com.declaratie.declaratieapi.service.DeclarationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,22 +27,17 @@ public class DeclarationController implements IController<DeclarationModel, Decl
      * @return returns created declaration
      */
     @PostMapping("/declaration/create")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @Override
     public Declaration create(@RequestBody DeclarationModel declarationModel) {
 
-        Declaration status = CopyDeclaration.declarationModel_To_declaration(declarationModel);
+        Declaration status = null;
 
-//        if(declaration.getId() != null){
-//            if(declarationRepository.existsById(declaration.getId())){
-//                status = null;
-//            }else{
-//                status = declarationRepository.save(declaration);
-//
-//            }
-//        }
+        if(declarationModel.getId() == null){
+            status = declarationService.create(CopyDeclaration.declarationModel_To_declaration(declarationModel));
+        }
 
-        return status = declarationService.create(status);
+        return status;
     }
 
     @Override
@@ -56,5 +53,14 @@ public class DeclarationController implements IController<DeclarationModel, Decl
     @Override
     public Declaration delete(long id) {
         return null;
+    }
+
+    @GetMapping("/declaration/all")
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public List<DeclarationModel> getAll() {
+        return this.declarationService.getAll().stream()
+                .map(data -> CopyDeclaration.declaration_To_declarationModel(data))
+                .collect(Collectors.toList());
     }
 }

@@ -28,8 +28,8 @@ export class DeclarationService implements IService<IDeclaration> {
     return false;
   }
 
-  getAll(): Observable<Declaration[]> {
-    return undefined;
+  getAll(): Observable<IDeclaration[]> {
+    return this.http.get<IDeclaration[]>(this.baseUrl + '/all', httpOptions);
   }
 
   read(any): Observable<Declaration> {

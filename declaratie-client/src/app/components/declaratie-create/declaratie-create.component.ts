@@ -6,6 +6,7 @@ import {StatusEnum} from '../../models/StatusEnum';
 import { Location } from '@angular/common';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {textInputValidator} from '../validators/textInputValidator';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
   controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
 
   constructor(private fb: FormBuilder, private location: Location,
-              private declarationService: DeclarationService) {
+              private router: Router, private declarationService: DeclarationService) {
     this.exampleEmployee();
     this.minDate = new Date(Date.now());
     this.maxDate = new Date(Date.now());
@@ -72,6 +73,10 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
+  private backToList() {
+    this.router.navigate(['/declarationtable']);
+  }
+
   private executeDeclarationCreation(createFormValue) {
     const declaration: Declaration = {
       id: null,
@@ -87,6 +92,7 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
 
     this.declarationService.create(declaration).subscribe(data => {
       console.log('Added: ' + JSON.stringify(data));
+      this.backToList();
     }, error => console.log(error));
   }
 
