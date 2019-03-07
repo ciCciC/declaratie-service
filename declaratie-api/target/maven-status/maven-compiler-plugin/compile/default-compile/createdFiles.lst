@@ -1,6 +1,3 @@
-com/declaratie/declaratieapi/util/HibernateUtil.class
-com/declaratie/declaratieapi/copyManager/CopyDeclaration.class
-com/declaratie/declaratieapi/resourceManager/ResourceManager.class
 com/declaratie/declaratieapi/DeclaratieApiApplication.class
 com/declaratie/declaratieapi/interfaces/IController.class
 com/declaratie/declaratieapi/service/DeclarationService.class
