@@ -111,8 +111,8 @@ public class Declaration {
         return status;
     }
 
-    public void setStatusEnum(StatusEnum statusEnum) {
-        this.status = statusEnum;
+    public void setStatusEnum(StatusEnum status) {
+        this.status = status;
     }
 
     public long getEmp_id() {

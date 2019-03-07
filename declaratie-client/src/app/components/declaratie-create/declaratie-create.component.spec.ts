@@ -30,7 +30,26 @@ describe('DeclaratieCreateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('form should be valid', () => {
+    component.createForm.get('description').setValue('This is my description');
+    component.createForm.get('serDate').setValue(new Date());
+    component.createForm.get('bigNum').setValue(100);
+    component.createForm.get('smallNum').setValue(50);
+    component.createForm.get('empMessage').setValue('I like beer');
+
+    expect(component.createForm.valid).toEqual(true);
+    expect(component.createForm.get('description').value).toEqual('This is my description');
+  });
+
+  it('form should be invalid', () => {
+    component.createForm.get('description').setValue('');
+    component.createForm.get('empMessage').setValue('');
+
+    expect(component.createForm.valid).toEqual(false);
+    expect(component.createForm.get('description').value).toEqual('');
   });
 });

@@ -9,9 +9,9 @@ import java.util.List;
 public interface IController<T, R> {
 
     R create(T t);
-    R read(long id);
-    R update(long id, T t);
-    R delete(long id);
+    R read(Long id);
+    R update(Long id, T t);
+    R delete(Long id);
 
-    List<T> getAll();
+    ResponseEntity<List<T>> getAll();
 }

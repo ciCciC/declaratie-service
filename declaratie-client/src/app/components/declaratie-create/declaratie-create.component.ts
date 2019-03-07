@@ -97,13 +97,13 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
   }
 
   get formControllers(): any[] {
-    const toreturn = [];
+    const toReturn = [];
 
     for (const conName of this.controllerForCheck) {
-      toreturn.push(this.createForm.get(conName));
+      toReturn.push(this.createForm.get(conName));
     }
 
-    return toreturn;
+    return toReturn;
   }
 
   private get maxSize() {

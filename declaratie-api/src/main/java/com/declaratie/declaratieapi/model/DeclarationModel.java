@@ -1,5 +1,8 @@
 package com.declaratie.declaratieapi.model;
 
+import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.enums.StatusEnum;
+
 import java.util.Date;
 
 public class DeclarationModel {
@@ -11,7 +14,7 @@ public class DeclarationModel {
     private String emp_comment;
     private String man_comment;
     private String status;
-    private long emp_id;
+    private Long emp_id;
 
     public DeclarationModel() {
         this.id = 0L;
@@ -21,10 +24,10 @@ public class DeclarationModel {
         this.emp_comment = "";
         this.man_comment = "";
         this.status = "";
-        this.emp_id = 0;
+        this.emp_id = 0L;
     }
 
-    public DeclarationModel(Long id, String description, Date date, double amount, String emp_comment, String man_comment, String status, long emp_id) {
+    public DeclarationModel(Long id, String description, Date date, double amount, String emp_comment, String man_comment, String status, Long emp_id) {
         this.id = id;
         this.description = description;
         this.date = date;
@@ -33,6 +36,22 @@ public class DeclarationModel {
         this.man_comment = man_comment;
         this.status = status;
         this.emp_id = emp_id;
+    }
+
+    public DeclarationModel(Declaration declaration){
+        this.id = declaration.getId();
+        this.description = declaration.getDescription();
+        this.date = declaration.getDate();
+        this.amount = declaration.getAmount();
+        this.emp_comment = declaration.getEmp_comment();
+        this.man_comment = declaration.getMan_comment();
+        this.status = declaration.getStatusEnum().name();
+        this.emp_id = declaration.getEmp_id();
+    }
+
+    public Declaration toDeclaration(){
+        return new Declaration(this.description, this.date, this.amount, this.emp_comment, this.man_comment,
+                StatusEnum.valueOf(this.status), this.emp_id);
     }
 
     public Long getId() {
@@ -91,11 +110,11 @@ public class DeclarationModel {
         this.status = status;
     }
 
-    public long getEmp_id() {
+    public Long getEmp_id() {
         return emp_id;
     }
 
-    public void setEmp_id(long emp_id) {
+    public void setEmp_id(Long emp_id) {
         this.emp_id = emp_id;
     }
 
