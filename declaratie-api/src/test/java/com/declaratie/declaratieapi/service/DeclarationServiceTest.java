@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
@@ -129,10 +130,54 @@ public class DeclarationServiceTest {
 //    @Test
 //    public void delete1() {
 //    }
-//
-//    @Test
-//    public void getAll() {
-//    }
+
+    /***
+     * Tests the value of the actual and expected variables
+     * A5 = verwijzing naar de acceptatie ID in testrapportage
+     * SR13 = Systeem requirement
+     * TG = testgeval 1
+     */
+    @Test
+    public void A5_SR13_TG1_system_can_get_declaration_list() {
+        System.out.println("Test: A5_SR13_TG1_system_can_get_declaration_list");
+
+        List<Declaration> declarationsList = new ArrayList<>();
+
+        Stream.of("Benzine", "Eten", "Boek", "Administratie", "Computer").forEach(description -> {
+            Declaration declaration = new Declaration(description, new Date(), 120,
+                    "Employee", "Manager houdt van bier", StatusEnum.SUBMITTED, 12);
+            declarationsList.add(declaration);
+        });
+
+        when(declarationRepository.findAll()).thenReturn(declarationsList);
+
+        List<Declaration> result = declarationService.getAll();
+        int expected = 5;
+
+        assertEquals(expected, result.size());
+
+        this.printStatus(""+expected, ""+result.size());
+    }
+
+    /***
+     * Tests the value of the actual and expected variables
+     * A5 = verwijzing naar de acceptatie ID in testrapportage
+     * SR13 = Systeem requirement
+     * TG = testgeval 2
+     */
+    @Test
+    public void A5_SR13_TG2_system_can_get_declaration_list() {
+        System.out.println("Test: A5_SR13_TG2_system_can_get_declaration_list");
+
+        when(declarationRepository.findAll()).thenReturn(null);
+
+        boolean result = declarationService.getAll() == null;
+        boolean expected = true;
+
+        assertEquals(expected, result);
+
+        this.printStatus(""+expected, ""+result);
+    }
 
     private void printStatus(String expected, String actual){
         System.out.println("Expected: " + expected + ",\t" + "Actual: " + actual);
