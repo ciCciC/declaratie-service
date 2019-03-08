@@ -126,10 +126,6 @@ public class DeclarationServiceTest {
 //    @Test
 //    public void delete() {
 //    }
-//
-//    @Test
-//    public void delete1() {
-//    }
 
     /***
      * Tests the value of the actual and expected variables

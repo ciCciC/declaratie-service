@@ -19,7 +19,6 @@ public class Product {
 
     @Column(name = "price")
     private double price;
-//    private ProductEnum productType;
 
     public Product(){
         super();
@@ -30,7 +29,6 @@ public class Product {
         this.name = name;
         this.type = type;
         this.price = price;
-//        this.productType = productType;
     }
 
     public Product(long id, String name, String type, double price){

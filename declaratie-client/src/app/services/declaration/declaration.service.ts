@@ -50,9 +50,5 @@ export class DeclarationService implements IService<IDeclaration> {
   //   return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   // }
   //
-  // getAll(): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}`);
-  // }
-
 
 }

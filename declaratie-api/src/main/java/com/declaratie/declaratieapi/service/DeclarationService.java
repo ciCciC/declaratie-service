@@ -52,4 +52,8 @@ public class DeclarationService implements IService<Declaration> {
     public Optional<Declaration> findById(Long id){
         return this.declarationRepository.findById(id);
     }
+
+    public void deleteAll(){
+        this.declarationRepository.deleteAll();
+    }
 }

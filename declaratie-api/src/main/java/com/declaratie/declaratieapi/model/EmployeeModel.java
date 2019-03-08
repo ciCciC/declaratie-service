@@ -13,7 +13,6 @@ public class EmployeeModel {
      * The manager might not exist in manager
      */
     public EmployeeModel(){
-
     }
 
     /***
