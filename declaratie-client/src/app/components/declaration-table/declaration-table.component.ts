@@ -18,8 +18,8 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   // displayedColumns: string[] = ['id', 'description', 'date', 'amount', 'status', 'files', 'man_comment', 'emp_comment', 'emp_id'];
   displayedColumns: string[] = ['id', 'description', 'amount', 'date', 'emp_comment', 'status'];
-  // dataSource: Observable<IDeclaration[]>;
-  dataSource: MatTableDataSource<Declaration>;
+  dataSource: Observable<IDeclaration[]>;
+  // dataSource: MatTableDataSource<Declaration>;
   // selection: SelectionModel<IDeclaration>;
 
   // panelOpenState = false;
@@ -27,13 +27,14 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   constructor(private declarationService: DeclarationService) { }
 
   getDeclarationsList() {
-    this.declarationService.getAll().subscribe(data => {
-      this.dataSource.data = data;
-    }, error => console.log(error));
+    // this.declarationService.getAll().subscribe(data => {
+    //   this.dataSource = data;
+    // }, error => console.log(error));
+    this.dataSource = this.declarationService.getAll();
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<Declaration>();
+    // this.dataSource = new MatTableDataSource<Declaration>();
     this.getDeclarationsList();
 
     // this.selection = new SelectionModel<IDeclaration>(true, []);
