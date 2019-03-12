@@ -37,7 +37,12 @@ public class DeclarationService implements IService<Declaration> {
 
     @Override
     public boolean delete(Declaration declaration) {
-        return false;
+        if(this.declarationRepository.existsById(declaration.getId())){
+            this.declarationRepository.delete(declaration);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

@@ -2,9 +2,8 @@ package com.declaratie.declaratieapi;
 
 import static org.junit.Assert.assertTrue;
 
-import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
-import com.declaratie.declaratieapi.enums.StatusEnum;
+import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
 import org.junit.Test;
@@ -62,7 +61,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 * Nieuwe declaratie
 		 */
 		Declaration addedDeclaration = declarationService.create(new Declaration("Dit is mijn description", date, 120,
-				"Employee", "Manager", StatusEnum.SUBMITTED, 12));
+				"Employee", "Manager", StateEnum.SUBMITTED, 12));
 
 		/**
 		 * Declaratie uit de in-memory database
@@ -112,7 +111,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 */
 		Stream.of("Benzine", "Eten", "Boek", "Administratie", "Computer").forEach(description -> {
 			Declaration declaration = new Declaration(description, new Date(), 120,
-					"Employee", "Manager houdt van bier", StatusEnum.SUBMITTED, 12);
+					"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
 			declarationService.create(declaration);
 		});
 

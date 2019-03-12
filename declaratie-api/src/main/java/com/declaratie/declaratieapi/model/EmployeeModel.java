@@ -1,16 +1,19 @@
 package com.declaratie.declaratieapi.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EmployeeModel {
 
-    private Long id;
+    private long id;
     private String fname;
     private String lname;
-    private String type;
     private String bankAccountNumber;
-    private EmployeeModel manager;
+    private String role;
+    private List<DeclarationModel> declarationModels;
 
     /***
-     * The manager might not exist in manager
+     *
      */
     public EmployeeModel(){
     }
@@ -20,24 +23,22 @@ public class EmployeeModel {
      * @param id employee id
      * @param fname firstname employee
      * @param lname lastname employee
-     * @param type type of employee
      * @param bankAccountNumber bankAccountNumber of employee
-     * @param manager the manager of employee
+     * @param role manager or employee
      */
-    public EmployeeModel(Long id, String fname, String lname, String type, String bankAccountNumber, EmployeeModel manager) {
+    public EmployeeModel(long id, String fname, String lname, String bankAccountNumber, String role) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
-        this.type = type;
         this.bankAccountNumber = bankAccountNumber;
-        this.manager = manager;
+        this.role = role;
     }
 
     /***
      * Gets the Id
      * @return Long this returns the Id of the employee
      */
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -45,7 +46,7 @@ public class EmployeeModel {
      * Sets the Id
      * @param id for setting employee id
      */
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -82,22 +83,6 @@ public class EmployeeModel {
     }
 
     /***
-     * Gets the type
-     * @return String for getting the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /***
-     * Sets the type
-     * @param type for setting the type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /***
      * Gets the bankaccountnumber
      * @return String for getting the bankaccountnumber
      */
@@ -114,19 +99,33 @@ public class EmployeeModel {
     }
 
     /***
-     * Gets the Manager
-     * @return EmployeeModel for getting the Manager
+     * Gets the employee function
+     * @return roleEnum for getting the employee function
      */
-    public EmployeeModel getManager() {
-        return manager;
+    public String getRole() {
+        return this.role;
     }
 
     /***
-     * Sets the Manager
-     * @param manager for setting the Manager
+     * Sets the employee function
+     * @param role for setting the employee function
      */
-    public void setManager(EmployeeModel manager) {
-        this.manager = manager;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void addDeclarationModel(DeclarationModel declarationModel){
+        if(!this.declarationModels.contains(declarationModel)){
+            this.declarationModels.add(declarationModel);
+        }
+    }
+
+    public List<DeclarationModel> getDeclarationModels() {
+        return declarationModels;
+    }
+
+    public void setDeclarationModels(ArrayList<DeclarationModel> declarationModels) {
+        this.declarationModels = declarationModels;
     }
 
     @Override
@@ -135,9 +134,8 @@ public class EmployeeModel {
                 "id=" + id +
                 ", fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
-                ", type='" + type + '\'' +
                 ", bankAccountNumber='" + bankAccountNumber + '\'' +
-                ", manager=" + manager +
+                ", role=" + role +
                 '}';
     }
 }

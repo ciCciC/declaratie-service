@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
+import {numberInputValidator} from '../validators/numberInputValidator';
 
 
 @Component({
@@ -49,6 +50,10 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
       empMessage: new FormControl('', [
         Validators.maxLength(255),
         textInputValidator
+      ]),
+      bedrag: new FormControl('', [
+        // Validators.required, Validators.min(0), Validators.pattern('[0-9,]*'),
+        Validators.required, Validators.min(0)
       ])
     });
 

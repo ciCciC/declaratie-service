@@ -2,7 +2,7 @@ package com.declaratie.declaratieapi.service;
 
 import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
-import com.declaratie.declaratieapi.enums.StatusEnum;
+import com.declaratie.declaratieapi.enums.StateEnum;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,7 +65,7 @@ public class DeclarationServiceTest {
 
         List<Declaration> declarationList = new ArrayList<>();
         declarationList.add(new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StatusEnum.SUBMITTED, 12));
+                "Employee", "Manager", StateEnum.SUBMITTED, 12));
 
         when(declarationRepository.findAll()).thenReturn(declarationList);
 
@@ -97,7 +97,7 @@ public class DeclarationServiceTest {
         dummyObject.setDescription("auto");
         dummyObject.setAmount(1500);
         dummyObject.setDate(date);
-        dummyObject.setStatusEnum(StatusEnum.SUBMITTED);
+        dummyObject.setStatusEnum(StateEnum.SUBMITTED);
         dummyObject.setEmp_comment("Wel");
         dummyObject.setMan_comment("Ja");
         dummyObject.setEmp_id(2);
@@ -109,7 +109,7 @@ public class DeclarationServiceTest {
         assertEquals("auto", result.getDescription());
         assertEquals(1500, result.getAmount(), 0);
         assertEquals(date, result.getDate());
-        assertEquals(StatusEnum.SUBMITTED, result.getStatusEnum());
+        assertEquals(StateEnum.SUBMITTED, result.getStatusEnum());
         assertEquals("Wel", result.getEmp_comment());
         assertEquals("Ja", result.getMan_comment());
         assertEquals(2, result.getEmp_id());
@@ -141,7 +141,7 @@ public class DeclarationServiceTest {
 
         Stream.of("Benzine", "Eten", "Boek", "Administratie", "Computer").forEach(description -> {
             Declaration declaration = new Declaration(description, new Date(), 120,
-                    "Employee", "Manager houdt van bier", StatusEnum.SUBMITTED, 12);
+                    "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
             declarationsList.add(declaration);
         });
 

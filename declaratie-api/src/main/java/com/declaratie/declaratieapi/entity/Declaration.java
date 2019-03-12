@@ -1,20 +1,17 @@
 package com.declaratie.declaratieapi.entity;
-import com.declaratie.declaratieapi.enums.StatusEnum;
+import com.declaratie.declaratieapi.enums.StateEnum;
 
 import javax.persistence.*;
-import java.sql.Blob;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "Declaration")
 public class Declaration {
 
     public Declaration(){
-        super();
     }
 
-    public Declaration(String description, Date date, double amount, String emp_comment, String man_comment, StatusEnum status, long emp_id) {
-        super();
+    public Declaration(String description, Date date, double amount, String emp_comment, String man_comment, StateEnum status, long emp_id) {
         this.description = description;
         this.date = date;
         this.amount = amount;
@@ -22,42 +19,38 @@ public class Declaration {
         this.man_comment = man_comment;
         this.status = status;
         this.emp_id = emp_id;
+        this.files = new HashSet<>();
     }
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private double amount;
 
-    @Column(name = "emp_comment", nullable = true)
+    @Column(name = "emp_comment")
     private String emp_comment;
 
-    @Column(name = "man_comment", nullable = true)
+    @Column(name = "man_comment")
     private String man_comment;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private StatusEnum status;
+    @Column(name = "status", nullable = false)
+    private StateEnum status;
 
-    @Column(name = "emp_id")
+    @Column(name = "emp_id", nullable = false)
     private long emp_id;
 
-//    @Column(name = "image")
-//    private Blob image;
-
-//    @Column(name = "files")
-//    private ArrayList<DeclarationFile> files;
-
+    @OneToMany(mappedBy = "declaration_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<DeclarationFile> files;
 
     public Long getId() {
         return id;
@@ -107,11 +100,11 @@ public class Declaration {
         this.man_comment = man_comment;
     }
 
-    public StatusEnum getStatusEnum() {
+    public StateEnum getStatusEnum() {
         return status;
     }
 
-    public void setStatusEnum(StatusEnum status) {
+    public void setStatusEnum(StateEnum status) {
         this.status = status;
     }
 
@@ -121,6 +114,31 @@ public class Declaration {
 
     public void setEmp_id(long emp_id) {
         this.emp_id = emp_id;
+    }
+
+    public void addDeclarationFile(DeclarationFile declarationFile){
+        this.files.add(declarationFile);
+    }
+
+    public Set<DeclarationFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<DeclarationFile> files) {
+        this.files = files;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Declaration that = (Declaration) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
