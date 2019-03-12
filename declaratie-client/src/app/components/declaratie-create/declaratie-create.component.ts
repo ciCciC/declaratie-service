@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
-import {numberInputValidator} from '../validators/numberInputValidator';
 
 
 @Component({
@@ -43,17 +42,11 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
       lname: new FormControl({value: this.employee.lname, disabled: this.disabled}, [
         Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
       serDate: new FormControl((new Date()).toISOString(), [Validators.required]),
-      bigNum: new FormControl('', [
+      amount: new FormControl('', [
         Validators.required, Validators.max(3000), Validators.min(0)]),
-      smallNum: new FormControl('', [
-        Validators.required, Validators.max(99), Validators.min(0)]),
       empMessage: new FormControl('', [
         Validators.maxLength(255),
         textInputValidator
-      ]),
-      bedrag: new FormControl('', [
-        // Validators.required, Validators.min(0), Validators.pattern('[0-9,]*'),
-        Validators.required, Validators.min(0)
       ])
     });
 
@@ -89,7 +82,7 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
       date: createFormValue.serDate,
       emp_id: this.employee.id,
       status: StatusEnum.SUBMITTED,
-      amount: Number(createFormValue.bigNum + '.' + String(createFormValue.smallNum).substring(0, 2)),
+      amount: createFormValue.amount,
       emp_comment: createFormValue.empMessage,
       man_comment: '',
       files: ''
@@ -111,7 +104,7 @@ export class DeclaratieCreateComponent implements OnInit, OnDestroy {
     return toReturn;
   }
 
-  private get maxSize() {
+  get maxSize() {
     return this.formControllers.length - 1;
   }
 

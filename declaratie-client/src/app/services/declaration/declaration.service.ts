@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {IService} from '../iservice/IService';
 import {Declaration} from '../../models/Declaration';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {RestEnum} from '../../models/RestEnum';
+import {DECLARATIONS} from '../../mocks/mock-declarations';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -38,8 +39,12 @@ export class DeclarationService implements IService<IDeclaration> {
     return false;
   }
 
+  // getAll(): Observable<IDeclaration[]> {
+  //   return this.http.get<IDeclaration[]>(this.baseUrl + '/' + this.crudOperations.all, httpOptions);
+  // }
+
   getAll(): Observable<IDeclaration[]> {
-    return this.http.get<IDeclaration[]>(this.baseUrl + '/' + this.crudOperations.all, httpOptions);
+    return of(DECLARATIONS);
   }
 
   // read(id): Observable<any> {

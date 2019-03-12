@@ -1,23 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeclarationTableComponent } from './declaration-table.component';
-import {MatTableModule} from '@angular/material';
+import {MatPaginator, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {of} from 'rxjs';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe(DeclarationTableComponent.name, () => {
 
   let component, container: DeclarationTableComponent;
-  let collaborator: DeclarationService;
   let fixture: ComponentFixture<DeclarationTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         MatTableModule,
-        HttpClientTestingModule
+        MatSortModule,
+        MatPaginatorModule,
+        HttpClientTestingModule,
+        BrowserAnimationsModule
       ],
       declarations: [ DeclarationTableComponent ]
     })
@@ -44,6 +47,7 @@ describe(DeclarationTableComponent.name, () => {
      */
 
     // Arrange : undefined is dummy
+    let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService);
     collaborator.getAll = () => of(DECLARATIONS);
@@ -52,22 +56,23 @@ describe(DeclarationTableComponent.name, () => {
     container.ngOnInit();
 
     // Assert
-    container.dataSource.subscribe((declarations) => {
-      expect(declarations.length).toEqual(DECLARATIONS.length);
-    });
+    expect(container.dataSource.data.length).toEqual(DECLARATIONS.length);
 
   });
 
   it('A6_SR12_shouldGetListOfDeclarations', () => {
     /**
-     * Hier wordt Spy gebruikt om te testen of de methode wordt aangeroepen van DeclarationTableComponent.
+     * Hier wordt Spy gebruikt om te testen of de methode wordt aangeroepen
+     * van DeclarationTableComponent.
      *
      * Solitary unit-test, gebruikt geen real instances van dependencies
      */
 
     // Arrange : undefined is dummy
+    let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
-    container = new DeclarationTableComponent(collaborator);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService);
+
     const spy = spyOn(container, 'getDeclarationsList');
 
     // Act

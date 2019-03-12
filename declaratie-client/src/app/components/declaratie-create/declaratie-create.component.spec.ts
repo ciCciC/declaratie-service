@@ -18,8 +18,9 @@ describe('DeclaratieCreateComponent', () => {
         BrowserAnimationsModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        HttpClientTestingModule],
-      declarations: [ DeclaratieCreateComponent ],
+        HttpClientTestingModule
+      ],
+      declarations: [ DeclaratieCreateComponent ]
     })
     .compileComponents();
   }));
@@ -37,8 +38,7 @@ describe('DeclaratieCreateComponent', () => {
   it('form should be valid', () => {
     component.createForm.get('description').setValue('This is my description');
     component.createForm.get('serDate').setValue(new Date());
-    component.createForm.get('bigNum').setValue(100);
-    component.createForm.get('smallNum').setValue(50);
+    component.createForm.get('amount').setValue(100.50);
     component.createForm.get('empMessage').setValue('I like beer');
 
     expect(component.createForm.valid).toEqual(true);

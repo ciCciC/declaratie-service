@@ -6,6 +6,8 @@ import {DeclaratieCreateComponent} from '../declaratie-create/declaratie-create.
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../material/material.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DeclarationExpansionListComponent', () => {
   let component: DeclarationExpansionListComponent;
@@ -20,6 +22,8 @@ describe('DeclarationExpansionListComponent', () => {
         MatDatepickerModule,
         ReactiveFormsModule,
         MaterialModule,
+        BrowserAnimationsModule,
+        RouterTestingModule,
         HttpClientTestingModule
       ],
       declarations: [ DeclarationExpansionListComponent, DeclaratieCreateComponent ]
