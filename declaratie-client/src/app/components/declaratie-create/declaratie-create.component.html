@@ -46,34 +46,15 @@
 
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Bedrag</mat-label>
-      <input formControlName="amount" matInput #euro ng-maxlength="5"
+      <input formControlName="amount" matInput #euro
              name="amount" placeholder="0,00" type="number">
-      <mat-hint align="end" *ngIf="euro.value.length < 1">Vul een positief getal in</mat-hint>
+      <mat-hint align="begin" *ngIf="euro.value < 0">Vul een positief getal in</mat-hint>
     </mat-form-field>
 
-    <!--<table class="dec-full-width" cellspacing="0">-->
-      <!--<tr>-->
-        <!--<td>-->
-          <!--<mat-form-field class="dec-full-width" appearance="outline">-->
-            <!--<mat-label>€</mat-label>-->
-            <!--<input formControlName="bigNum" matInput #euro ng-maxlength="5"-->
-                   <!--name="bigNum" placeholder="0" type="number">-->
-          <!--</mat-form-field>-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<mat-form-field class="dec-full-width" appearance="outline">-->
-            <!--<input formControlName="smallNum" matInput #eurocent ng-maxlength="2"-->
-                   <!--name="smallNum" placeholder="00" type="number">-->
-            <!--<mat-hint align="end" *ngIf="eurocent.value.length > 2">Vul 2 cijfers in</mat-hint>-->
-          <!--</mat-form-field>-->
-        <!--</td>-->
-      <!--</tr>-->
-    <!--</table>-->
-
     <mat-form-field class="dec-full-width">
-      <mat-label>Medewerker bericht | {{empMessage.value.length}} / 256</mat-label>
+      <mat-label>Medewerker bericht | {{empMessage.value.length}} / 255</mat-label>
       <input formControlName="empMessage" matInput #empMessage id="empMessage"
-             name="empMessage" maxlength="256" placeholder="Vul hier een bericht in">
+             name="empMessage" placeholder="Vul hier een bericht in">
 
       <mat-hint align="begin"
                 *ngIf="formControllers[maxSize].invalid && formControllers[maxSize].errors.lets_be_friends">

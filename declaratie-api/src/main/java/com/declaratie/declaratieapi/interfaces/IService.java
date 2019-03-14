@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface IService<T> {
 
-    T create(T t);
+    T create(T t) throws Exception;
     T read(long id);
     T update(T t);
     boolean delete(long id);
     boolean delete(T t);
 
-    List<T> getAll();
+    List<T> getAll() throws Exception;
 }

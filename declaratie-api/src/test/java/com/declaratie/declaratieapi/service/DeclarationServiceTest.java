@@ -4,6 +4,8 @@ import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
 
+import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
+import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -43,15 +45,21 @@ public class DeclarationServiceTest {
 
     /***
      * Tests the return of a new declaration
+     * SR11 = Systeem requirement ID
      */
     @Test
-    public void create_returnsNewDeclaration(){
-        System.out.println("Test: create_returnsNewDeclaration");
+    public void A1_SR11_create_returnsNewDeclaration(){
+        System.out.println("Test: A1_SR11_create_returnsNewDeclaration");
         when(this.declarationRepository.save(any(Declaration.class))).thenReturn(new Declaration());
 
         Declaration declaration = new Declaration();
 
-        assertThat(this.declarationService.create(declaration), is(notNullValue()));
+        try{
+            this.declarationService.create(declaration);
+            assertThat(this.declarationService.create(declaration), is(notNullValue()));
+        }catch (UnprocessableDeclarationException ex){
+            System.out.println("Declaratie kan niet aangemaakt worden.");
+        }
     }
 
     /***
@@ -60,8 +68,8 @@ public class DeclarationServiceTest {
      * SR11 = Systeem requirement ID
      */
     @Test
-    public void A1_SR11_create_checkListSize(){
-        System.out.println("Test: A1_SR11_create_checkListSize");
+    public void A1_SR11_create_then_check_list_size(){
+        System.out.println("Test: A1_SR11_create_then_check_list_size");
 
         List<Declaration> declarationList = new ArrayList<>();
         declarationList.add(new Declaration("Dit is mijn description", new Date(), 120,
@@ -69,7 +77,14 @@ public class DeclarationServiceTest {
 
         when(declarationRepository.findAll()).thenReturn(declarationList);
 
-        int result = declarationService.getAll().size();
+        int result = 0;
+
+        try{
+            result = declarationService.getAll().size();
+        }catch (DeclarationNotFoundException ex){
+            System.out.println("Declaratie lijst bestaat niet.");
+        }
+
         int expected = 1;
 
         assertEquals(expected, result);
@@ -104,7 +119,13 @@ public class DeclarationServiceTest {
 
         when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
 
-        Declaration result = declarationService.create(dummyObject);
+        Declaration result = null;
+
+        try{
+            result = declarationService.create(dummyObject);
+        }catch (UnprocessableDeclarationException ex){
+            System.out.println("Declaratie kan niet aangemaakt worden.");
+        }
 
         assertEquals("auto", result.getDescription());
         assertEquals(1500, result.getAmount(), 0);
@@ -147,7 +168,14 @@ public class DeclarationServiceTest {
 
         when(declarationRepository.findAll()).thenReturn(declarationsList);
 
-        List<Declaration> result = declarationService.getAll();
+        List<Declaration> result = null;
+
+        try{
+            result = declarationService.getAll();
+        }catch (DeclarationNotFoundException ex){
+            System.out.println("Declaratie lijst bestaat niet.");
+        }
+
         int expected = 5;
 
         assertEquals(expected, result.size());
@@ -162,12 +190,20 @@ public class DeclarationServiceTest {
      * TG = testgeval 2
      */
     @Test
-    public void A5_SR13_TG2_system_can_get_declaration_list() {
-        System.out.println("Test: A5_SR13_TG2_system_can_get_declaration_list");
+    public void A5_SR13_TG2_get_declaration_list_is_null() {
+        System.out.println("Test: A5_SR13_TG2_get_declaration_list_is_null");
 
         when(declarationRepository.findAll()).thenReturn(null);
 
-        boolean result = declarationService.getAll() == null;
+        boolean result = true;
+
+        try{
+            declarationService.getAll();
+            result = false;
+        }catch (Exception ex){
+            System.out.println("Declaratie lijst bestaat niet.");
+        }
+
         boolean expected = true;
 
         assertEquals(expected, result);
@@ -175,6 +211,11 @@ public class DeclarationServiceTest {
         this.printStatus(""+expected, ""+result);
     }
 
+    /***
+     * Voor het printen van de expected en actual waardes
+     * @param expected voor expected waarde
+     * @param actual voor actual waarde
+     */
     private void printStatus(String expected, String actual){
         System.out.println("Expected: " + expected + ",\t" + "Actual: " + actual);
     }

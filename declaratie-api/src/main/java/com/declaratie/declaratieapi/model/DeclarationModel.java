@@ -2,12 +2,13 @@ package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import com.declaratie.declaratieapi.interfaces.IContainable;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class DeclarationModel {
+public class DeclarationModel implements IContainable {
 
     private Long id;
     private String description;
@@ -122,5 +123,10 @@ public class DeclarationModel {
                 ", state=" + state +
                 ", emp_id=" + emp_id +
                 '}';
+    }
+
+    @Override
+    public String getContent() {
+        return this.toString();
     }
 }

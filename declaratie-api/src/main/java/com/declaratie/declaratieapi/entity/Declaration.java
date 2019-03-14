@@ -19,7 +19,7 @@ public class Declaration {
         this.man_comment = man_comment;
         this.status = status;
         this.emp_id = emp_id;
-        this.files = new HashSet<>();
+        this.files = new ArrayList<>();
     }
 
     @Id
@@ -49,8 +49,8 @@ public class Declaration {
     @Column(name = "emp_id", nullable = false)
     private long emp_id;
 
-    @OneToMany(mappedBy = "declaration_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<DeclarationFile> files;
+    @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DeclarationFile> files;
 
     public Long getId() {
         return id;
@@ -118,13 +118,14 @@ public class Declaration {
 
     public void addDeclarationFile(DeclarationFile declarationFile){
         this.files.add(declarationFile);
+        declarationFile.setDeclaration_id(this);
     }
 
-    public Set<DeclarationFile> getFiles() {
+    public List<DeclarationFile> getFiles() {
         return files;
     }
 
-    public void setFiles(Set<DeclarationFile> files) {
+    public void setFiles(List<DeclarationFile> files) {
         this.files = files;
     }
 

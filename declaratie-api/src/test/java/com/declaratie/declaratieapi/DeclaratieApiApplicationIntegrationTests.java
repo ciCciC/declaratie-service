@@ -1,9 +1,9 @@
 package com.declaratie.declaratieapi;
 
-import static org.junit.Assert.assertTrue;
-
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
+import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
 import org.junit.Test;
@@ -60,8 +60,14 @@ public class DeclaratieApiApplicationIntegrationTests {
 		/**
 		 * Nieuwe declaratie
 		 */
-		Declaration addedDeclaration = declarationService.create(new Declaration("Dit is mijn description", date, 120,
-				"Employee", "Manager", StateEnum.SUBMITTED, 12));
+		Declaration addedDeclaration = null;
+
+		try {
+			addedDeclaration = declarationService.create(new Declaration("Dit is mijn description", date, 120,
+					"Employee", "Manager", StateEnum.SUBMITTED, 12));
+		}catch (UnprocessableDeclarationException ex){
+			System.out.println("Declaratie kan niet aangemaakt worden.");
+		}
 
 		/**
 		 * Declaratie uit de in-memory database
@@ -85,7 +91,11 @@ public class DeclaratieApiApplicationIntegrationTests {
 		/**
 		 * Controle declaratiesLijstSize
 		 */
-		assertEquals(declaratiesLijstSize, declarationService.getAll().size());
+		try{
+			assertEquals(declaratiesLijstSize, declarationService.getAll().size());
+		}catch (DeclarationNotFoundException ex){
+			System.out.println("Declaration lijst bestaat niet in de database");
+		}
 
 		System.out.println("ID -> Expected: " + nieuweDeclaratie.getId().longValue() + ",\t"
 				+ "Actual: " + nieuweDeclaratie.getId().longValue());
@@ -112,10 +122,20 @@ public class DeclaratieApiApplicationIntegrationTests {
 		Stream.of("Benzine", "Eten", "Boek", "Administratie", "Computer").forEach(description -> {
 			Declaration declaration = new Declaration(description, new Date(), 120,
 					"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
-			declarationService.create(declaration);
+			try {
+				declarationService.create(declaration);
+			}catch (UnprocessableDeclarationException ex){
+				System.out.println("Declaratie kan niet aangemaakt worden.");
+			}
 		});
 
-		List<Declaration> ophalenLijst = declarationService.getAll();
+		List<Declaration> ophalenLijst = null;
+
+		try{
+			ophalenLijst = declarationService.getAll();
+		}catch (DeclarationNotFoundException ex){
+			System.out.println("Declaration lijst bestaat niet in de database");
+		}
 
 		int declaratiesLijstSize = 5;
 

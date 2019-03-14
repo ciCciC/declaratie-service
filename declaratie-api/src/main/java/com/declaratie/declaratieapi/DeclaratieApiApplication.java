@@ -6,6 +6,7 @@ import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.FileTypeEnum;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -31,7 +32,7 @@ public class DeclaratieApiApplication {
 	}
 
 	@Bean
-	ApplicationRunner initSomeExampleList(DeclarationService declarationService, DeclarationFileRepository declarationFileRepository) {
+	ApplicationRunner initSomeExampleList(DeclarationService declarationService) {
 		return args -> {
 			Stream.of("Benzine", "Eten", "Boek", "Administratie materiaal", "Make up",
 					"Bier", "Ferrari", "Computer").forEach(description -> {
@@ -41,15 +42,16 @@ public class DeclaratieApiApplication {
 
 				byte [] tmp = new byte []{111, 127};
 
-				Declaration dec = declarationService.create(declaration);
+				try{
+					declaration.addDeclarationFile(new DeclarationFile(FileTypeEnum.jpeg, tmp));
+					declaration.addDeclarationFile(new DeclarationFile(FileTypeEnum.png, tmp));
 
-				dec.addDeclarationFile(new DeclarationFile(FileTypeEnum.jpeg, tmp, dec));
-				dec.addDeclarationFile(new DeclarationFile(FileTypeEnum.png, tmp, dec));
+					Declaration dec = declarationService.create(declaration);
 
-				declarationService.create(dec);
+				}catch(UnprocessableDeclarationException ex){
+					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
+				}
 			});
-
-			declarationService.getAll().forEach(System.out::println);
 		};
 	}
 

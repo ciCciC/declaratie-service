@@ -14,10 +14,9 @@ public class DeclarationFile {
     public DeclarationFile() {
     }
 
-    public DeclarationFile(FileTypeEnum filetype, byte[] file, Declaration dec) {
+    public DeclarationFile(FileTypeEnum filetype, byte[] file) {
         this.filetype = filetype;
         this.file = file;
-        this.declaration_id = dec;
     }
 
     @Id
@@ -25,8 +24,8 @@ public class DeclarationFile {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "declaration_id", referencedColumnName = "id")
-    private Declaration declaration_id;
+    @JoinColumn(name = "declaration_id")
+    private Declaration declaration;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "filetype")
@@ -37,11 +36,11 @@ public class DeclarationFile {
     private byte[] file;
 
     public Declaration getDeclaration_id() {
-        return this.declaration_id;
+        return this.declaration;
     }
 
     public void setDeclaration_id(Declaration declaration_id) {
-        this.declaration_id = declaration_id;
+        this.declaration = declaration_id;
     }
 
     public FileTypeEnum getFiletype() {
@@ -73,13 +72,13 @@ public class DeclarationFile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeclarationFile that = (DeclarationFile) o;
-        return declaration_id.equals(that.declaration_id) &&
+        return declaration.equals(that.declaration) &&
                 Arrays.equals(file, that.file);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(declaration_id);
+        int result = Objects.hash(declaration);
         result = 31 * result + Arrays.hashCode(file);
         return result;
     }
