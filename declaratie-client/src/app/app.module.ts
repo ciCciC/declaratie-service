@@ -9,7 +9,7 @@ import { AppComponent } from '../app/components/app/app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {MaterialModule} from './material/material.module';
-import { DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
+import {DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
 import { DeclaratieCreateComponent } from './components/declaratie-create/declaratie-create.component';
 import { DeclarationStepperComponent } from './components/declaration-stepper/declaration-stepper.component';
 import { DeclarationPhotoUploadComponent } from './components/declaration-photo-upload/declaration-photo-upload.component';

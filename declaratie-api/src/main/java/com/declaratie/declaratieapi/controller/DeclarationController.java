@@ -119,6 +119,25 @@ public class DeclarationController implements IController<DeclarationModel, Long
         }
     }
 
+    @GetMapping("/declaration/all/{id}")
+    public ResponseEntity<List<DeclarationModel>> getAll(@PathVariable("id") int id) {
+        logger.info(this.callMessage("getAll()"));
+
+        if(id == 0){
+            try{
+                logger.info("Returning declarations");
+                return new ResponseEntity<>(this.declarationService.getAll().stream()
+                        .map(DeclarationModel::new)
+                        .collect(Collectors.toList()), HttpStatus.OK);
+            }catch(DeclarationNotFoundException ex){
+                logger.info("No declarations found");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found", ex);
+            }
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found");
+        }
+    }
+
     private String callMessage(String methodname){
         return "Called -> DeclarationController : " + methodname;
     }

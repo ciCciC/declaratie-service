@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeclarationTableComponent } from './declaration-table.component';
-import {MatPaginator, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
+import {MatDialog, MatPaginator, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
@@ -49,7 +49,8 @@ describe(DeclarationTableComponent.name, () => {
     // Arrange : undefined is dummy
     let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService);
+    const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
     collaborator.getAll = () => of(DECLARATIONS);
 
     // Act
@@ -71,7 +72,8 @@ describe(DeclarationTableComponent.name, () => {
     // Arrange : undefined is dummy
     let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService);
+    const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
 
     const spy = spyOn(container, 'getDeclarationsList');
 
