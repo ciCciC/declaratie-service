@@ -14,7 +14,6 @@ export class DeclaratieCreatePo {
   }
 
   getDate() {
-    // return element(by.id('#mat-input-4'));
     return element(by.name('serDate'));
   }
 
@@ -37,9 +36,5 @@ export class DeclaratieCreatePo {
         browser.actions().sendKeys(Key.BACK_SPACE).perform();
       }
     });
-
-    // for (const time of times) {
-    //   browser.actions().sendKeys(Key.BACK_SPACE).perform();
-    // }
   }
 }

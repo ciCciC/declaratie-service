@@ -1,4 +1,3 @@
-import {DeclarationFile} from '../DeclarationFile';
 import {StatusEnum} from '../StatusEnum';
 
 export interface IDeclaration {
@@ -6,7 +5,7 @@ export interface IDeclaration {
   description: string;
   date: string;
   amount: number;
-  status: string;
+  status: StatusEnum;
   files: string;
   man_comment: string;
   emp_comment: string;
