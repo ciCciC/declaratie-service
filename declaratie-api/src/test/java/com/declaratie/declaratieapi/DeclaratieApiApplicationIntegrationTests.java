@@ -6,6 +6,7 @@ import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationExc
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,10 +46,11 @@ public class DeclaratieApiApplicationIntegrationTests {
 	 *
 	 * A1 = verwijzing naar de acceptatie ID in testrapportage
 	 * SR11 = System requirement ID
+	 * TG2 = verwijzing naar het testgeval in het testrapport
 	 */
 	@Test
-	public void A1_SR11_INTEGRATION_TEST_create_saveAndRetrieveDeclaration() {
-		System.out.println("Integratietest: A1_INTEGRATION_TEST_create_saveAndRetrieveDeclaration");
+	public void A1_SR11_TG1_INTEGRATION_TEST_deMedewerkerKanEenDeclaratieToevoegen() {
+		System.out.println("Integratietest: A1_SR11_TG1_INTEGRATION_TEST_deMedewerkerKanEenDeclaratieToevoegen");
 
 		/**
 		 * Dit om de initialisatie in DeclaratieApiApplication class eerst te verwijderen.
@@ -99,6 +101,97 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		System.out.println("ID -> Expected: " + nieuweDeclaratie.getId().longValue() + ",\t"
 				+ "Actual: " + nieuweDeclaratie.getId().longValue());
+	}
+
+	/***
+	 * Hier ligt de aandacht bij het toevoegen van een declaratie en opvragen van
+	 * de zojuist toegevoegde declaratie. Dus om te zien of de declaratie wel wordt toegevoegd aan de database.
+	 *
+	 * A1 = verwijzing naar de acceptatie ID in testrapportage
+	 * SR11 = System requirement ID
+	 * TG2 = verwijzing naar het testgeval in het testrapport
+	 */
+	@Test
+	public void A1_SR11_TG2_INTEGRATION_TEST_deMedewerkerKanEenDeclaratieToevoegen() {
+		System.out.println("Integratietest: A1_SR11_TG2_INTEGRATION_TEST_deMedewerkerKanEenDeclaratieToevoegen");
+
+		/**
+		 * Dit om de initialisatie in DeclaratieApiApplication class eerst te verwijderen.
+		 */
+		declarationService.deleteAll();
+
+		/**
+		 * Nieuwe declaratie
+		 */
+		Declaration nieuweDeclaratie = null;
+
+		try {
+			nieuweDeclaratie = declarationService.create(null);
+
+		}catch (UnprocessableDeclarationException ex){
+			System.out.println("Declaratie kan niet aangemaakt worden.");
+		}
+
+		/***
+		 * Controle op null waarde
+		 */
+		Assert.assertNull(nieuweDeclaratie);
+
+		System.out.println("ID -> Expected: null" + ",\t"
+				+ "Actual: " + String.valueOf(nieuweDeclaratie));
+	}
+
+	/***
+	 * Hier ligt de aandacht bij het toevoegen van een declaratie en opvragen van
+	 * de zojuist toegevoegde declaratie. Dus om te zien of de declaratie wel wordt toegevoegd aan de database.
+	 *
+	 * A1 = verwijzing naar de acceptatie ID in testrapportage
+	 * SR11 = System requirement ID
+	 * TG3 = verwijzing naar het testgeval in het testrapport
+	 */
+	@Test
+	public void A1_SR11_TG3_INTEGRATION_TEST_deMedewerkerKanEenDeclaratieToevoegen() {
+		System.out.println("Integratietest: A1_SR11_TG3_INTEGRATION_TEST_deMedewerkerKanEenDeclaratieToevoegen");
+
+		/**
+		 * Dit om de initialisatie in DeclaratieApiApplication class eerst te verwijderen.
+		 */
+		declarationService.deleteAll();
+
+		Date date = new GregorianCalendar(2019, 4, 30).getTime();
+
+		/**
+		 * Nieuwe declaratie
+		 */
+		Declaration nieuweDeclaratie = null;
+
+		try {
+			nieuweDeclaratie = declarationService.create(new Declaration("Dit is mijn description", date, 120,
+					"Employee", "Manager", StateEnum.SUBMITTED, 12));
+		}catch (UnprocessableDeclarationException ex){
+			System.out.println("Declaratie kan niet aangemaakt worden.");
+		}
+
+		int declaratiesLijstSize = 1;
+		int actualsize = 0;
+
+		/***
+		 * Controle op null waarde
+		 */
+		assertNotNull(nieuweDeclaratie);
+
+		/**
+		 * Controle declaratiesLijstSize
+		 */
+		try{
+			actualsize = declarationService.getAll().size();
+			assertEquals(declaratiesLijstSize, actualsize);
+		}catch (DeclarationNotFoundException ex){
+			System.out.println("Declaration lijst bestaat niet in de database");
+		}
+
+		System.out.println("ID -> Expected: " + declaratiesLijstSize + ",\t"
+				+ "Actual: " + actualsize);
 	}
 
 	/***

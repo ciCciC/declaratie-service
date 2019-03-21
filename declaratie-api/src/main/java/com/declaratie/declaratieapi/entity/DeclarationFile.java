@@ -82,4 +82,14 @@ public class DeclarationFile {
         result = 31 * result + Arrays.hashCode(file);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "DeclarationFile{" +
+                "id=" + id +
+                ", declaration=" + declaration +
+                ", filetype=" + filetype +
+                ", file=" + Arrays.toString(file) +
+                '}';
+    }
 }

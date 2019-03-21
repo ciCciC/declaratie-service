@@ -2,13 +2,12 @@ package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
-import com.declaratie.declaratieapi.interfaces.IContainable;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class DeclarationModel implements IContainable {
+public class DeclarationModel {
 
     private Long id;
     private String description;
@@ -112,6 +111,27 @@ public class DeclarationModel implements IContainable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeclarationModel that = (DeclarationModel) o;
+        return Double.compare(that.amount, amount) == 0 &&
+                id.equals(that.id) &&
+                description.equals(that.description) &&
+                date.equals(that.date) &&
+                emp_comment.equals(that.emp_comment) &&
+                man_comment.equals(that.man_comment) &&
+                state.equals(that.state) &&
+                emp_id.equals(that.emp_id) &&
+                files.equals(that.files);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, date, amount, emp_comment, man_comment, state, emp_id, files);
+    }
+
+    @Override
     public String toString() {
         return "DeclarationModel{" +
                 "id=" + id +
@@ -123,10 +143,5 @@ public class DeclarationModel implements IContainable {
                 ", state=" + state +
                 ", emp_id=" + emp_id +
                 '}';
-    }
-
-    @Override
-    public String getContent() {
-        return this.toString();
     }
 }

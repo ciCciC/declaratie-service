@@ -14,8 +14,6 @@ public class ContentUtils {
             model.setMan_comment(REPLACE_XSS_CHARS(model.getMan_comment()));
 
         model.setState(REPLACE_XSS_CHARS(model.getState()));
-
-        System.out.println(model);
     }
 
     private static String REPLACE_XSS_CHARS(String value){

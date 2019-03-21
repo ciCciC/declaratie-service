@@ -1,6 +1,9 @@
 package com.declaratie.declaratieapi.enums;
 
 public enum RoleEnum {
-    EMPLOYEE,
+    RECRUITER,
+    CONSULTANT,
+    DIRECTIE,
+    EVENTORGANIZER,
     MANAGER
 }

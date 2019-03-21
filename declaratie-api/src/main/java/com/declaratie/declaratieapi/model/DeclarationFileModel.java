@@ -3,6 +3,9 @@ package com.declaratie.declaratieapi.model;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class DeclarationFileModel {
 
     private Long id;
@@ -42,5 +45,33 @@ public class DeclarationFileModel {
 
     public void setFile(byte[] file) {
         this.file = file;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeclarationFileModel that = (DeclarationFileModel) o;
+        return id.equals(that.id) &&
+                filetype.equals(that.filetype) &&
+                Arrays.equals(file, that.file) &&
+                declaration.equals(that.declaration);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, filetype, declaration);
+        result = 31 * result + Arrays.hashCode(file);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DeclarationFileModel{" +
+                "id=" + id +
+                ", filetype='" + filetype + '\'' +
+                ", file=" + Arrays.toString(file) +
+                ", declaration=" + declaration +
+                '}';
     }
 }

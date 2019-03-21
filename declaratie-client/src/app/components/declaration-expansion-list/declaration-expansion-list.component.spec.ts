@@ -2,12 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeclarationExpansionListComponent } from './declaration-expansion-list.component';
 import {MatDatepickerModule, MatExpansionModule, MatFormFieldModule, MatIconModule} from '@angular/material';
-import {DeclaratieCreateComponent} from '../declaratie-create/declaratie-create.component';
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../material/material.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DeclarationCreateComponent} from '../declaration-create/declaration-create.component';
 
 describe('DeclarationExpansionListComponent', () => {
   let component: DeclarationExpansionListComponent;
@@ -26,7 +27,7 @@ describe('DeclarationExpansionListComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ DeclarationExpansionListComponent, DeclaratieCreateComponent ]
+      declarations: [ DeclarationExpansionListComponent, DeclarationCreateComponent ]
     })
     .compileComponents();
   }));

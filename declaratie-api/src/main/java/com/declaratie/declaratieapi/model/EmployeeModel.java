@@ -2,6 +2,7 @@ package com.declaratie.declaratieapi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EmployeeModel {
 
@@ -126,6 +127,24 @@ public class EmployeeModel {
 
     public void setDeclarationModels(ArrayList<DeclarationModel> declarationModels) {
         this.declarationModels = declarationModels;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeModel that = (EmployeeModel) o;
+        return id == that.id &&
+                fname.equals(that.fname) &&
+                lname.equals(that.lname) &&
+                bankAccountNumber.equals(that.bankAccountNumber) &&
+                role.equals(that.role) &&
+                declarationModels.equals(that.declarationModels);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fname, lname, bankAccountNumber, role, declarationModels);
     }
 
     @Override

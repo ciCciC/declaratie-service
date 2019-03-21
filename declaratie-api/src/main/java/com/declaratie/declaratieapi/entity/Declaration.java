@@ -1,7 +1,9 @@
 package com.declaratie.declaratieapi.entity;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.*;
 
 @Entity
@@ -11,13 +13,13 @@ public class Declaration {
     public Declaration(){
     }
 
-    public Declaration(String description, Date date, double amount, String emp_comment, String man_comment, StateEnum status, long emp_id) {
+    public Declaration(String description, Date date, double amount, String emp_comment, String man_comment, StateEnum state, long emp_id) {
         this.description = description;
         this.date = date;
         this.amount = amount;
         this.emp_comment = emp_comment;
         this.man_comment = man_comment;
-        this.status = status;
+        this.state = state;
         this.emp_id = emp_id;
         this.files = new ArrayList<>();
     }
@@ -27,6 +29,7 @@ public class Declaration {
     private Long id;
 
     @Column(name = "description", nullable = false)
+    @Length(min = 1, max = 255)
     private String description;
 
     @Temporal(TemporalType.DATE)
@@ -34,6 +37,7 @@ public class Declaration {
     private Date date;
 
     @Column(name = "amount", nullable = false)
+    @Min(0)
     private double amount;
 
     @Column(name = "emp_comment")
@@ -43,8 +47,8 @@ public class Declaration {
     private String man_comment;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private StateEnum status;
+    @Column(name = "state", nullable = false)
+    private StateEnum state;
 
     @Column(name = "emp_id", nullable = false)
     private long emp_id;
@@ -101,11 +105,11 @@ public class Declaration {
     }
 
     public StateEnum getStatusEnum() {
-        return status;
+        return state;
     }
 
-    public void setStatusEnum(StateEnum status) {
-        this.status = status;
+    public void setStatusEnum(StateEnum state) {
+        this.state = state;
     }
 
     public long getEmp_id() {
@@ -151,7 +155,7 @@ public class Declaration {
                 ", amount=" + amount +
                 ", emp_comment='" + emp_comment + '\'' +
                 ", man_comment='" + man_comment + '\'' +
-                ", status=" + status +
+                ", state=" + state +
                 ", emp_id=" + emp_id +
                 '}';
     }

@@ -1,7 +1,6 @@
 package com.declaratie.declaratieapi;
 
 import com.declaratie.declaratieapi.controller.DeclarationController;
-import com.declaratie.declaratieapi.dao.DeclarationFileRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.FileTypeEnum;
@@ -12,11 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
-import org.slf4j.Logger;
-
 import java.util.stream.Stream;
 
 @SpringBootApplication

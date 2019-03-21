@@ -4,16 +4,16 @@ import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
-import com.declaratie.declaratieapi.interfaces.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DeclarationService implements IService<Declaration> {
+public class DeclarationService {
 
     private DeclarationRepository declarationRepository;
 
@@ -22,13 +22,18 @@ public class DeclarationService implements IService<Declaration> {
         this.declarationRepository = declarationRepository;
     }
 
-    @Override
     public Declaration create(Declaration declaration) throws UnprocessableDeclarationException {
 
-        try{
+        if(declaration == null)
+            throw new UnprocessableDeclarationException("Declaration is not processable - null");
+
+        try {
             return this.declarationRepository.save(declaration);
-        }catch (DataIntegrityViolationException ex){
-            throw new UnprocessableDeclarationException("Declaration is not processable in repository");
+        }catch (TransactionSystemException e) {
+            throw new UnprocessableDeclarationException("Declaration is not processable in repository - constraint violation");
+
+        }catch (DataIntegrityViolationException e){
+            throw new UnprocessableDeclarationException("Declaration is not processable in repository - data integrity");
         }
     }
 
@@ -41,22 +46,18 @@ public class DeclarationService implements IService<Declaration> {
         }
     }
 
-    @Override
     public Declaration read(long id) {
         return null;
     }
 
-    @Override
     public Declaration update(Declaration declaration) {
         return null;
     }
 
-    @Override
     public boolean delete(long id) {
         return false;
     }
 
-    @Override
     public boolean delete(Declaration declaration) {
         if(this.declarationRepository.existsById(declaration.getId())){
             this.declarationRepository.delete(declaration);
@@ -66,7 +67,6 @@ public class DeclarationService implements IService<Declaration> {
         }
     }
 
-    @Override
     public List<Declaration> getAll() throws DeclarationNotFoundException {
 
         if(this.declarationRepository.findAll().isEmpty()){

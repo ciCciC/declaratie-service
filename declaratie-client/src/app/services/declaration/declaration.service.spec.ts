@@ -24,7 +24,7 @@ describe(DeclarationService.name, () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be create ' + DeclarationService.name, () => {
+  it('should create ' + DeclarationService.name, () => {
     const service: DeclarationService = TestBed.get(DeclarationService);
     expect(service).toBeTruthy();
   });
@@ -60,32 +60,32 @@ describe(DeclarationService.name, () => {
 
   });
 
-  describe('GetAll call', () => {
-
-    it('A6_SR12_shouldReturnListOfDeclarations : ', () => {
-      declarationService = new DeclarationService(undefined);
-
-      let response;
-
-      spyOn(declarationService, 'getAll').and.returnValues(of(DECLARATIONS));
-
-      declarationService.getAll().subscribe( data => {
-        response = data;
-      });
-
-      expect(response).toEqual(DECLARATIONS);
-      expect(response.length).toBe(DECLARATIONS.length);
-    });
-
-    it('A6_SR12_shouldCallGetAll : ', () => {
-      declarationService = new DeclarationService(undefined);
-      const spy_getAll = spyOn(declarationService, 'getAll').and.returnValues(of(DECLARATIONS));
-
-      declarationService.getAll();
-
-      expect(spy_getAll).toHaveBeenCalled();
-    });
-
-  });
+  // describe('GetAll call', () => {
+  //
+  //   it('A6_SR12_shouldReturnListOfDeclarations : ', () => {
+  //     declarationService = new DeclarationService(undefined);
+  //
+  //     let response;
+  //
+  //     spyOn(declarationService, 'getAll').and.returnValues(of(DECLARATIONS));
+  //
+  //     declarationService.getAll().subscribe( data => {
+  //       response = data;
+  //     });
+  //
+  //     expect(response).toEqual(DECLARATIONS);
+  //     expect(response.length).toBe(DECLARATIONS.length);
+  //   });
+  //
+  //   it('A6_SR12_shouldCallGetAll : ', () => {
+  //     declarationService = new DeclarationService(undefined);
+  //     const spy_getAll = spyOn(declarationService, 'getAll').and.returnValues(of(DECLARATIONS));
+  //
+  //     declarationService.getAll();
+  //
+  //     expect(spy_getAll).toHaveBeenCalled();
+  //   });
+  //
+  // });
 
 });

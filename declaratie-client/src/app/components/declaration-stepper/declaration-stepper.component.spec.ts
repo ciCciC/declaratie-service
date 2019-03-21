@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatDatepickerModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatStepperModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
-import {DeclaratieCreateComponent} from '../declaratie-create/declaratie-create.component';
+import {DeclarationCreateComponent} from '../declaration-create/declaration-create.component';
 import {DeclarationPhotoUploadComponent} from '../declaration-photo-upload/declaration-photo-upload.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,7 +30,7 @@ describe('DeclarationStepperComponent', () => {
         MatIconModule,
         MatDatepickerModule
       ],
-      declarations: [ DeclarationStepperComponent, DeclaratieCreateComponent, DeclarationPhotoUploadComponent ],
+      declarations: [ DeclarationStepperComponent, DeclarationCreateComponent, DeclarationPhotoUploadComponent ],
       providers: [DeclarationService]
     })
     .compileComponents();

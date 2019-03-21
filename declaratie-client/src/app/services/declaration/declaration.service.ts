@@ -39,13 +39,13 @@ export class DeclarationService implements IService<IDeclaration> {
     return false;
   }
 
-  getAll(): Observable<IDeclaration[]> {
-    return this.http.get<IDeclaration[]>(this.baseUrl + '/' + this.crudOperations.all + '/1', httpOptions);
-  }
-
   // getAll(): Observable<IDeclaration[]> {
-  //   return of(DECLARATIONS);
+  //   return this.http.get<IDeclaration[]>(this.baseUrl + '/' + this.crudOperations.all + '/1', httpOptions);
   // }
+
+  getAll(): Observable<IDeclaration[]> {
+    return of(DECLARATIONS);
+  }
 
   // read(id): Observable<any> {
   //   return this.http.get(`${this.baseUrl}/${id}`);
