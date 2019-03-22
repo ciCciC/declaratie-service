@@ -1,0 +1,45 @@
+.declaration-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.declaration-container > * {
+  width: 100%;
+}
+
+.dec-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.dec-full-width {
+  width: 100%;
+}
+
+.dec-button-row button,
+.dec-button-row a {
+  margin-right: 8px;
+}
+
+.myClose:hover{
+  color:red;
+}
+
+.myDelete{
+  background-color: rgba(255, 0, 0, 0.8);
+  color:white;
+}
+
+.myDelete:hover{
+  background-color:red;
+}
+
+.myEdit{
+  background-color: rgba(126, 63, 242, 0.91);
+  color:white;
+}
+
+.myEdit:hover{
+  background-color:#7e3ff2;
+}

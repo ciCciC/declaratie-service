@@ -16,6 +16,7 @@ import { DeclarationPhotoUploadComponent } from './components/declaration-photo-
 import { DeclarationExpansionListComponent } from './components/declaration-expansion-list/declaration-expansion-list.component';
 import {DeclarationService} from './services/declaration/declaration.service';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
+import { DeclarationViewComponent } from './components/declaration-view/declaration-view.component';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -27,7 +28,8 @@ import {DeclarationCreateComponent} from './components/declaration-create/declar
     DeclarationCreateComponent,
     DeclarationStepperComponent,
     DeclarationPhotoUploadComponent,
-    DeclarationExpansionListComponent
+    DeclarationExpansionListComponent,
+    DeclarationViewComponent
   ],
   imports: [
     BrowserModule,

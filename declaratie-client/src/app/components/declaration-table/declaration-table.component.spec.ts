@@ -1,7 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeclarationTableComponent } from './declaration-table.component';
-import {MatDialog, MatDialogModule, MatPaginator, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatIconModule,
+  MatPaginator,
+  MatPaginatorModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
@@ -16,6 +24,7 @@ describe(DeclarationTableComponent.name, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        MatIconModule,
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,

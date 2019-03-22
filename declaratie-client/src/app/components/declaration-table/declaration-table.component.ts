@@ -29,10 +29,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   constructor(private declarationService: DeclarationService, private dialog: MatDialog) { }
 
   getDeclarationsList() {
-    // this.declarationService.getAll().subscribe(data => {
-    //   this.dataSource.data = data;
-    //   this.displayedColumns = Declaration.getPropertyNamesForTableComponent();
-    // }, error => console.log(error));
 
     this.declarationService.getAll().subscribe(data => {
       this.dataSource.data = data;
@@ -47,6 +43,15 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   initTableColumnNames() {
     this.displayedColumns = Declaration.getPropertyNamesForTableComponent();
+    this.displayedColumns.push('action');
+  }
+
+  toDelete() {
+    alert('pressed DELETE');
+  }
+
+  createClick() {
+    alert('pressed AANMAKEN');
   }
 
   ngOnInit() {
