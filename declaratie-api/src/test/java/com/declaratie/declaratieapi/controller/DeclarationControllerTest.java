@@ -2,6 +2,8 @@ package com.declaratie.declaratieapi.controller;
 
 import com.declaratie.declaratieapi.DeclaratieApiApplication;
 import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.enums.StateEnum;
+import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -41,7 +44,7 @@ public class DeclarationControllerTest {
 
     @Test
     public void testMyEndpoint() {
-
+        
         ResponseEntity<List<DeclarationModel>> declaration = testRestTemplate
                 .exchange(endpoint,
                         HttpMethod.GET,
