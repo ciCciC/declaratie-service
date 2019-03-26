@@ -33,14 +33,16 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
     this.declarationService.getDeclarations().subscribe(data => {
       this.dataSource.data = data;
-      alert(data[0]);
+      alert(JSON.stringify(data));
     }, (error) => {
       const aa = error as HttpErrorResponse;
       console.log('Lolzzz: ' + aa.name);
       console.log('Lolzzz: ' + aa.ok);
       console.log('Lolzzz: ' + aa.message);
       console.log('Lolzzz: ' + aa.error.message);
+      console.log(JSON.stringify(aa));
     });
+
   }
 
   initTableColumnNames() {

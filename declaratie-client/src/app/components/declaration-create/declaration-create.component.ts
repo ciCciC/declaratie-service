@@ -76,7 +76,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
       amount: createFormValue.amount,
       empComment: createFormValue.empMessage,
       manComment: '',
-      files: ''
+      files: []
     };
 
     this.declarationService.addDeclaration(declaration).subscribe(data => {

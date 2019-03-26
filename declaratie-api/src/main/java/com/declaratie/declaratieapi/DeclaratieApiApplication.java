@@ -33,8 +33,7 @@ public class DeclaratieApiApplication {
 	@Bean
 	ApplicationRunner initSomeExampleList(DeclarationService declarationService) {
 		return args -> {
-			Stream.of("Benzine", "Eten", "Boek", "Administratie materiaal", "Make up",
-					"Bier", "Ferrari", "Computer").forEach(description -> {
+			Stream.of("Benzine", "Eten").forEach(description -> {
 
 				Declaration declaration = new Declaration(description, new Date(), 120,
 						"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
@@ -42,8 +41,8 @@ public class DeclaratieApiApplication {
 				byte [] tmp = new byte []{111, 127};
 
 				try{
-					declaration.addDeclarationFile(new DeclarationFile(FileTypeEnum.jpeg, tmp));
-					declaration.addDeclarationFile(new DeclarationFile(FileTypeEnum.png, tmp));
+					declaration.addDeclarationFile(new DeclarationFile("holidaypicture.jpg", tmp));
+					declaration.addDeclarationFile(new DeclarationFile("badboydancing.png", tmp));
 
 					Declaration dec = declarationService.create(declaration);
 

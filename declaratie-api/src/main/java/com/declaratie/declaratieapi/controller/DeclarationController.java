@@ -100,6 +100,8 @@ public class DeclarationController {
         return null;
     }
 
+
+
     @GetMapping()
     public ResponseEntity<List<DeclarationModel>> getAll() {
 
@@ -115,34 +117,6 @@ public class DeclarationController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found", ex);
         }
     }
-
-//    @GetMapping()
-//    public List<DeclarationModel> getAll() throws DeclarationNotFoundException {
-//        logger.info(this.callMessage("getAll()"));
-//
-//        this.declarationService.getAll().stream()
-//                .map(DeclarationModel::new)
-//                .collect(Collectors.toList();
-//    }
-
-//    @GetMapping("/declaration/all/{id}")
-//    public ResponseEntity<List<DeclarationModel>> getAll(@PathVariable("id") int id) {
-//        logger.info(this.callMessage("getAll()"));
-//
-//        if(id == 0){
-//            try{
-//                logger.info("Returning declarations");
-//                return new ResponseEntity<>(this.declarationService.getAll().stream()
-//                        .map(DeclarationModel::new)
-//                        .collect(Collectors.toList()), HttpStatus.OK);
-//            }catch(DeclarationNotFoundException ex){
-//                logger.info("No declarations found");
-//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found", ex);
-//            }
-//        }else{
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found");
-//        }
-//    }
 
     @ExceptionHandler(UnprocessableDeclarationException.class)
     private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {

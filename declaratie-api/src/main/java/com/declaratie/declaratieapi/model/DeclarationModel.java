@@ -1,11 +1,15 @@
 package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class DeclarationModel {
 
@@ -39,6 +43,9 @@ public class DeclarationModel {
         this.manComment = declaration.getManComment();
         this.state = declaration.getStatusEnum().name();
         this.empId = declaration.getEmpId();
+        this.files = declaration.getFiles().stream()
+                .map(DeclarationFileModel::new)
+                .collect(Collectors.toList());
     }
 
     public Declaration toDeclaration(){
@@ -110,6 +117,14 @@ public class DeclarationModel {
         this.empId = emp_id;
     }
 
+    public List<DeclarationFileModel> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<DeclarationFileModel> files) {
+        this.files = files;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,6 +157,7 @@ public class DeclarationModel {
                 ", manComment='" + manComment + '\'' +
                 ", state=" + state +
                 ", empId=" + empId +
+                ", files=" + files.size() +
                 '}';
     }
 }

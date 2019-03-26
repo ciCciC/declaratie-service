@@ -1,21 +1,17 @@
 package com.declaratie.declaratieapi.entity;
 
-import com.declaratie.declaratieapi.enums.FileTypeEnum;
-
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name="declarationfile",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"declaration_id", "file"})})
 public class DeclarationFile {
 
     public DeclarationFile() {
     }
 
-    public DeclarationFile(FileTypeEnum filetype, byte[] file) {
-        this.filetype = filetype;
+    public DeclarationFile(String fileName, byte[] file) {
+        this.fileName = fileName;
         this.file = file;
     }
 
@@ -27,28 +23,26 @@ public class DeclarationFile {
     @JoinColumn(name = "declaration_id")
     private Declaration declaration;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "filetype")
-    private FileTypeEnum filetype;
+    @Column(name = "fileName")
+    private String fileName;
 
-    @Lob
     @Column(name = "file", nullable = false)
     private byte[] file;
 
-    public Declaration getDeclaration_id() {
+    public Declaration getDeclarationId() {
         return this.declaration;
     }
 
-    public void setDeclaration_id(Declaration declaration_id) {
-        this.declaration = declaration_id;
+    public void setDeclarationId(Declaration declarationId) {
+        this.declaration = declarationId;
     }
 
-    public FileTypeEnum getFiletype() {
-        return filetype;
+    public String getFilename() {
+        return fileName;
     }
 
-    public void setFiletype(FileTypeEnum filetype) {
-        this.filetype = filetype;
+    public void setFilename(String filetype) {
+        this.fileName = filetype;
     }
 
     public byte[] getFile() {
@@ -88,7 +82,7 @@ public class DeclarationFile {
         return "DeclarationFile{" +
                 "id=" + id +
                 ", declaration=" + declaration +
-                ", filetype=" + filetype +
+                ", fileName=" + fileName +
                 ", file=" + Arrays.toString(file) +
                 '}';
     }

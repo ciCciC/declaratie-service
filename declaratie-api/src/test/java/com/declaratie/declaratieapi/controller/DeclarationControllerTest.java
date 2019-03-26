@@ -51,7 +51,7 @@ public class DeclarationControllerTest {
 
 //        ResponseEntity<String> declaration = testRestTemplate.getForEntity(endpoint, String.class);
 //        System.out.printf("declaration : %s", declaration);
-       assertThat(declaration.getBody()).size().isEqualTo(8);
+       assertThat(declaration.getBody()).size().isEqualTo(2);
 
     }
 

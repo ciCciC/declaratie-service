@@ -122,8 +122,8 @@ public class Declaration {
     }
 
     public void addDeclarationFile(DeclarationFile declarationFile){
-        this.files.add(declarationFile);
-        declarationFile.setDeclaration_id(this);
+        this.getFiles().add(declarationFile);
+        declarationFile.setDeclarationId(this);
     }
 
     public List<DeclarationFile> getFiles() {

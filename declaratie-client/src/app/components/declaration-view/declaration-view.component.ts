@@ -15,7 +15,8 @@ export class DeclarationViewComponent implements OnInit {
   employee = EMPLOYEE;
 
   constructor(private dialogRef: MatDialogRef<DeclarationViewComponent>, @Inject(MAT_DIALOG_DATA) private data: Declaration) {
-    this.declaration = DECLARATIONS[data.id];
+    // this.declaration = DECLARATIONS[data.id];
+    this.declaration = data;
   }
 
   close() {

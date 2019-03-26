@@ -10,7 +10,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -77,7 +76,16 @@ public class DeclarationService {
         if(this.declarationRepository.findAll().isEmpty()){
             throw new DeclarationNotFoundException("Declaration table is empty in repository");
         }
-        return this.declarationRepository.findAll();
+
+        List<Declaration> aa = this.declarationRepository.findAll();
+
+        return aa;
+
+//        return this.declarationRepository.findAll().stream()
+//                .map(data -> {
+//                    data.setFiles(this.declarationFileRepository.findAllByDeclaration_id(data.getId()));
+//                    return data;
+//                });
     }
 
     public boolean existsById(Long id){

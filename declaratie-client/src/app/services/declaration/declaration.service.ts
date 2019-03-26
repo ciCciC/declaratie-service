@@ -38,8 +38,8 @@ export class DeclarationService {
     return false;
   }
 
-  getDeclarations(): Observable<IDeclaration[]> {
-    return this.http.get<IDeclaration[]>(this.baseUrl, httpOptions);
+  getDeclarations(): Observable<any> {
+    return this.http.get<any>(this.baseUrl);
   }
 
   // getDeclarations(): Observable<IDeclaration[]> {
