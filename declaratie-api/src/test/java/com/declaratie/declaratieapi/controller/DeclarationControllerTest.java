@@ -43,7 +43,12 @@ public class DeclarationControllerTest {
     private static String endpoint = "/api/declarations";
 
     @Test
-    public void testMyEndpoint() {
+    public void testMyEndpoint() throws UnprocessableDeclarationException {
+
+        declarationService.deleteAll();
+
+        declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12));
 
         ResponseEntity<List<DeclarationModel>> declaration = testRestTemplate
                 .exchange(endpoint,
@@ -54,7 +59,7 @@ public class DeclarationControllerTest {
 
 //        ResponseEntity<String> declaration = testRestTemplate.getForEntity(endpoint, String.class);
 //        System.out.printf("declaration : %s", declaration);
-       assertThat(declaration.getBody()).size().isEqualTo(2);
+       assertThat(declaration.getBody()).size().isEqualTo(1);
 
     }
 
