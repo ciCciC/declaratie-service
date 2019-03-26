@@ -44,7 +44,7 @@ public class DeclarationControllerTest {
 
     @Test
     public void testMyEndpoint() {
-        
+
         ResponseEntity<List<DeclarationModel>> declaration = testRestTemplate
                 .exchange(endpoint,
                         HttpMethod.GET,
@@ -54,7 +54,7 @@ public class DeclarationControllerTest {
 
 //        ResponseEntity<String> declaration = testRestTemplate.getForEntity(endpoint, String.class);
 //        System.out.printf("declaration : %s", declaration);
-       assertThat(declaration.getBody()).size().isEqualTo(2);
+       assertThat(declaration.getBody()).size().isEqualTo(1);
 
     }
 
