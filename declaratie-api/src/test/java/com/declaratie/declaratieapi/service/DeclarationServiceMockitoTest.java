@@ -84,8 +84,8 @@ public class DeclarationServiceMockitoTest {
         dummyObject.setAmount(1500);
         dummyObject.setDate(new GregorianCalendar(2019, 4, 30).getTime());
         dummyObject.setStatusEnum(StateEnum.SUBMITTED);
-        dummyObject.setEmp_comment("Wel");
-        dummyObject.setMan_comment("Ja");
+        dummyObject.setEmpComment("Wel");
+        dummyObject.setManComment("Ja");
         dummyObject.setEmpId(2);
 
         Declaration actualObject = spy(Declaration.class);
@@ -93,8 +93,8 @@ public class DeclarationServiceMockitoTest {
         actualObject.setAmount(1000);
         actualObject.setDate(new GregorianCalendar(2019, 4, 20).getTime());
         actualObject.setStatusEnum(StateEnum.REJECTED);
-        actualObject.setEmp_comment("Nee");
-        actualObject.setMan_comment("Niet");
+        actualObject.setEmpComment("Nee");
+        actualObject.setManComment("Niet");
         actualObject.setEmpId(1);
 
         when(declarationRepository.save(dummyObject)).thenReturn(actualObject);
@@ -111,8 +111,8 @@ public class DeclarationServiceMockitoTest {
         assertNotEquals(dummyObject.getAmount(), result.getAmount(), 0);
         assertNotEquals(dummyObject.getDate(), result.getDate());
         assertNotEquals(dummyObject.getStatusEnum(), result.getStatusEnum());
-        assertNotEquals(dummyObject.getEmp_comment(), result.getEmp_comment());
-        assertNotEquals(dummyObject.getMan_comment(), result.getMan_comment());
+        assertNotEquals(dummyObject.getEmpComment(), result.getEmpComment());
+        assertNotEquals(dummyObject.getManComment(), result.getManComment());
         assertNotEquals(dummyObject.getEmpId(), result.getEmpId());
     }
 
@@ -139,8 +139,8 @@ public class DeclarationServiceMockitoTest {
         dummyObject.setAmount(1500);
         dummyObject.setDate(date);
         dummyObject.setStatusEnum(StateEnum.SUBMITTED);
-        dummyObject.setEmp_comment("Wel");
-        dummyObject.setMan_comment("Ja");
+        dummyObject.setEmpComment("Wel");
+        dummyObject.setManComment("Ja");
         dummyObject.setEmpId(2);
 
         when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
@@ -157,8 +157,8 @@ public class DeclarationServiceMockitoTest {
         assertEquals(1500, result.getAmount(), 0);
         assertEquals(date, result.getDate());
         assertEquals(StateEnum.SUBMITTED, result.getStatusEnum());
-        assertEquals("Wel", result.getEmp_comment());
-        assertEquals("Ja", result.getMan_comment());
+        assertEquals("Wel", result.getEmpComment());
+        assertEquals("Ja", result.getManComment());
         assertEquals(2, result.getEmpId());
     }
 

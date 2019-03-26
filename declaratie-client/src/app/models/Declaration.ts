@@ -8,10 +8,10 @@ export class Declaration implements IDeclaration {
   date: string;
   amount: number;
   status: StatusEnum;
-  files: string;
+  files: any;
   manComment: string;
   empComment: string;
-  emp_id: number;
+  empId: number;
 
   /**
    * Stop hier de gewenste properties die men wilt zien in de table component

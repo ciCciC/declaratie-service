@@ -6,8 +6,8 @@ export interface IDeclaration {
   date: string;
   amount: number;
   status: StatusEnum;
-  files: string;
+  files: any;
   manComment: string;
   empComment: string;
-  emp_id: number;
+  empId: number;
 }

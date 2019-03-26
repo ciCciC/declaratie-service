@@ -71,7 +71,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
       id: null,
       description: createFormValue.description,
       date: createFormValue.serDate,
-      emp_id: EMPLOYEE.id,
+      empId: EMPLOYEE.id,
       status: StatusEnum.SUBMITTED,
       amount: createFormValue.amount,
       empComment: createFormValue.empMessage,
