@@ -13,10 +13,12 @@ export class DeclarationViewComponent implements OnInit {
   // @Input() declaration: Declaration;
   declaration: Declaration;
   employee = EMPLOYEE;
+  empStatus = false;
 
   constructor(private dialogRef: MatDialogRef<DeclarationViewComponent>, @Inject(MAT_DIALOG_DATA) private data: Declaration) {
     // this.declaration = DECLARATIONS[data.id];
     this.declaration = data;
+    this.empStatus = this.declaration.manComment != null && this.declaration.manComment.length > 0;
   }
 
   close() {

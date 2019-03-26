@@ -33,7 +33,6 @@ describe(DeclarationViewComponent.name, () => {
 
     fixture = TestBed.createComponent(DeclarationViewComponent);
     component = fixture.componentInstance;
-    // component.declaration = new Declaration;
     fixture.detectChanges();
   });
 
