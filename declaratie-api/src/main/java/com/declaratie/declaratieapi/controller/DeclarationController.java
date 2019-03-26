@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/declaration")
+@RequestMapping("/api/declarations")
 public class DeclarationController {
 
     private static final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
@@ -84,8 +84,12 @@ public class DeclarationController {
      * @param id for getting the declaration
      * @return returns declaration
      */
-    public ResponseEntity<DeclarationModel> read(Long id) {
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<DeclarationModel> read(@PathVariable("id") Long id) {
+        if(!this.declarationService.existsById(id) || id < 0)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Declaration with id=%t not found", id));
+
+        return new ResponseEntity<>(declarationService.read(id), HttpStatus.FOUND);
     }
 
     public ResponseEntity<DeclarationModel> update(Long id, DeclarationModel declarationModel) {
@@ -96,8 +100,9 @@ public class DeclarationController {
         return null;
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<DeclarationModel>> getAll() {
+
         logger.info(this.callMessage("getAll()"));
 
         try{
@@ -110,6 +115,15 @@ public class DeclarationController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found", ex);
         }
     }
+
+//    @GetMapping()
+//    public List<DeclarationModel> getAll() throws DeclarationNotFoundException {
+//        logger.info(this.callMessage("getAll()"));
+//
+//        this.declarationService.getAll().stream()
+//                .map(DeclarationModel::new)
+//                .collect(Collectors.toList();
+//    }
 
 //    @GetMapping("/declaration/all/{id}")
 //    public ResponseEntity<List<DeclarationModel>> getAll(@PathVariable("id") int id) {
@@ -129,6 +143,11 @@ public class DeclarationController {
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found");
 //        }
 //    }
+
+    @ExceptionHandler(UnprocessableDeclarationException.class)
+    private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {
+        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaration is unprocessable", ex);
+    }
 
     private String callMessage(String methodname){
         return "Called -> DeclarationController : " + methodname;

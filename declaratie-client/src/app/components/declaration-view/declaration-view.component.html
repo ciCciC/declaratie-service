@@ -1,70 +1,75 @@
-<div class="declaration-container">
-
-  <form [formGroup]="createForm" name="declarationForm" class="declaration-container">
-
-    <div mat-dialog-actions align="end">
-      <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
-    </div>
-
-    <mat-form-field class="dec-full-width" appearance="outline">
-      <mat-label>Declaratie omschrijving</mat-label>
-      <input matInput placeholder="omschrijving"
-             id="description" name="description">
-    </mat-form-field>
-
-    <mat-form-field class="dec-full-width" appearance="outline">
-      <mat-label>Medewerker ID</mat-label>
-      <input matInput id="emp_id" name="emp_id">
-    </mat-form-field>
-
-    <table class="dec-full-width" cellspacing="0">
-      <tr>
-        <td>
-          <mat-form-field class="dec-full-width" appearance="outline">
-            <mat-label>Voornaam</mat-label>
-            <input matInput id="Voornaam" name="Voornaam">
-          </mat-form-field>
-        </td>
-        <td>
-          <mat-form-field class="dec-full-width" appearance="outline">
-            <mat-label>Achternaam</mat-label>
-            <input matInput id="Achternaam" name="Achternaam">
-          </mat-form-field>
-        </td>
-      </tr>
-    </table>
-
-    <mat-form-field>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Datum"
-             (focus)="picker.open()" name="serDate">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field class="dec-full-width" appearance="outline">
-      <mat-label>Bedrag</mat-label>
-      <input matInput #euro name="amount" placeholder="0,00" type="number">
-      <mat-hint align="begin" *ngIf="euro.value < 0">Vul een positief getal in</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field class="dec-full-width">
-      <mat-label>Medewerker bericht | {{empMessage.value.length}} / 255</mat-label>
-      <input matInput #empMessage id="empMessage" name="empMessage" placeholder="Vul hier een bericht in">
-    </mat-form-field>
-
-    <table class="dec-full-width" cellspacing="0">
-      <tr>
-        <td>
-          <button mat-raised-button dec-button-row class="myDelete" (click)="toDelete()">
-            <mat-icon matTooltip="Verwijder">remove_circle_outline</mat-icon>
-          </button>
-        </td>
-        <td>
-          <button mat-raised-button dec-button-row class="myEdit" (click)="toEdit()">
-            <mat-icon matTooltip="Wijzig">edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </form>
+<div mat-dialog-actions align="end">
+  <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
 </div>
+
+<h1 mat-dialog-title>Declaratie</h1>
+
+<div class="mat-dialog-content" *ngIf="declaration">
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>omschrijving</mat-label>
+    <input matInput value="{{declaration.description}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Medewerker ID</mat-label>
+    <input matInput value="{{employee.id}}" disabled>
+  </mat-form-field>
+
+  <table class="dec-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="dec-full-width" appearance="outline">
+          <mat-label>Voornaam</mat-label>
+          <input matInput value="{{employee.fname}}" disabled>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="dec-full-width" appearance="outline">
+          <mat-label>Achternaam</mat-label>
+          <input matInput value="{{employee.lname}}" disabled>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Datum</mat-label>
+    <input matInput value="{{declaration.date}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Bedrag</mat-label>
+    <input matInput type="number" value="{{declaration.amount}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="dec-full-width">
+    <mat-label>Medewerker bericht</mat-label>
+    <input matInput value="{{declaration.empComment}}" disabled>
+  </mat-form-field>
+
+  <div *ngIf="declaration.manComment.length > 0">
+    <mat-form-field class="dec-full-width">
+      <mat-label>Manager bericht</mat-label>
+      <input matInput value="{{declaration.manComment}}" disabled>
+    </mat-form-field>
+  </div>
+
+  <!--<a mat-flat-button color="primary" [routerLink]="['/product-edit', product._id]"><mat-icon>edit</mat-icon></a>-->
+  <!--<a mat-flat-button color="warn" (click)="deleteProduct(product._id)"><mat-icon>delete</mat-icon></a>-->
+</div>
+
+<table class="dec-full-width" cellspacing="0">
+  <tr>
+    <td>
+      <button mat-raised-button dec-button-row class="myDelete" (click)="toDelete()">
+        <mat-icon matTooltip="Verwijder">remove_circle_outline</mat-icon>
+      </button>
+    </td>
+    <td>
+      <button mat-raised-button dec-button-row class="myEdit" (click)="toEdit()">
+        <mat-icon matTooltip="Wijzig">edit</mat-icon>
+      </button>
+    </td>
+  </tr>
+</table>

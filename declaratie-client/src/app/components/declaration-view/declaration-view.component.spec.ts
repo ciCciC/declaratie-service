@@ -4,11 +4,11 @@ import { DeclarationViewComponent } from './declaration-view.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MatIconModule} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatFormFieldModule, MatIconModule} from '@angular/material';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
-describe('DeclarationViewComponent', () => {
+describe(DeclarationViewComponent.name, () => {
   let component: DeclarationViewComponent;
   let fixture: ComponentFixture<DeclarationViewComponent>;
 
@@ -16,19 +16,24 @@ describe('DeclarationViewComponent', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule,
         MatIconModule,
+        MatDialogModule,
         MaterialModule,
         BrowserAnimationsModule,
-        NoopAnimationsModule,
-        RouterTestingModule,
-        HttpClientTestingModule],
-      declarations: [ DeclarationViewComponent ]
+        NoopAnimationsModule],
+      providers: [{provide: MatDialogRef, useValue: {}}, {
+        provide: MAT_DIALOG_DATA,
+        useValue: {}
+      }],
+      declarations: [DeclarationViewComponent]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+
     fixture = TestBed.createComponent(DeclarationViewComponent);
     component = fixture.componentInstance;
+    // component.declaration = new Declaration;
     fixture.detectChanges();
   });
 
@@ -36,3 +41,9 @@ describe('DeclarationViewComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// @NgModule({
+//   imports: [MatIconModule, MatDialogModule, MaterialModule, MatFormFieldModule, AppModule]
+// })
+// export class DialogTestModule {
+// }

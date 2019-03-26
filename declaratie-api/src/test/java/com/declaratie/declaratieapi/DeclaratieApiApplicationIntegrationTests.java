@@ -10,9 +10,7 @@ import com.declaratie.declaratieapi.util.H2TestJpaConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,9 +18,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -35,7 +30,6 @@ import java.util.stream.Stream;
 		H2TestJpaConfig.class},
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
 public class DeclaratieApiApplicationIntegrationTests {
 	/***
 	 * Hier wordt de integratie test uitgevoerd.
@@ -47,31 +41,6 @@ public class DeclaratieApiApplicationIntegrationTests {
 	 */
 	@Autowired
 	private DeclarationService declarationService;
-
-	@Autowired
-	MockMvc mockMvc;
-
-	@Test
-	public void exampletest(){
-
-		DeclarationModel dm = new DeclarationModel(new Declaration("Dit is mijn description", new Date(), 120,
-				"Employee", "Manager", StateEnum.SUBMITTED, 12));
-
-		try {
-			MvcResult mvcResult = mockMvc.perform(
-					MockMvcRequestBuilders.get("/declaration/all")
-							.accept(MediaType.APPLICATION_JSON)).andReturn();
-
-			System.out.println(mvcResult.getResponse().getStatus());
-			System.out.println(mvcResult.getResponse().getHeader(""));
-			System.out.println(mvcResult.getResponse().getContentType());
-			System.out.println(mvcResult.getResponse().getContentAsString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	/***
 	 * Hier ligt de aandacht bij het toevoegen van een declaratie en opvragen van

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {IService} from '../iservice/IService';
 import {Declaration} from '../../models/Declaration';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {RestEnum} from '../../models/RestEnum';
@@ -16,26 +15,26 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class DeclarationService implements IService<IDeclaration> {
+export class DeclarationService {
 
-  private baseUrl = 'http://localhost:8080/api/declaration';
+  private baseUrl = 'http://localhost:8080/api/declarations';
   private crudOperations = RestEnum;
 
   constructor(private http: HttpClient) { }
 
-  create(t: IDeclaration): Observable<IDeclaration> {
+  addDeclaration(t: IDeclaration): Observable<IDeclaration> {
     return this.http.post<IDeclaration>(this.baseUrl + '/' + this.crudOperations.create, t, httpOptions);
   }
 
-  read(any): Observable<Declaration> {
-    return undefined;
+  getDeclaration(id: number): Observable<Declaration> {
+    return this.http.get<Declaration>(this.baseUrl + '/' + this.crudOperations.read + '/' + id, httpOptions);
   }
 
   update(t: Declaration): boolean {
     return false;
   }
 
-  delete(any): boolean {
+  deleteDeclaration(any): boolean {
     return false;
   }
 
@@ -43,7 +42,7 @@ export class DeclarationService implements IService<IDeclaration> {
   //   return this.http.get<IDeclaration[]>(this.baseUrl + '/' + this.crudOperations.all + '/1', httpOptions);
   // }
 
-  getAll(): Observable<IDeclaration[]> {
+  getDeclarations(): Observable<IDeclaration[]> {
     return of(DECLARATIONS);
   }
 

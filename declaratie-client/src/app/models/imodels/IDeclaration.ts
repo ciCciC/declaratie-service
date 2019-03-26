@@ -7,7 +7,7 @@ export interface IDeclaration {
   amount: number;
   status: StatusEnum;
   files: string;
-  man_comment: string;
-  emp_comment: string;
+  manComment: string;
+  empComment: string;
   emp_id: number;
 }

@@ -61,7 +61,7 @@ describe(DeclarationTableComponent.name, () => {
     collaborator = new DeclarationService(undefined);
     const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
-    collaborator.getAll = () => of(DECLARATIONS);
+    collaborator.getDeclarations = () => of(DECLARATIONS);
 
     // Act
     container.ngOnInit();

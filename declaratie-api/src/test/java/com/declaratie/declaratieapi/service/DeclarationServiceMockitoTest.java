@@ -41,7 +41,6 @@ public class DeclarationServiceMockitoTest {
     public void setUp() throws Exception {
         System.out.println("Before");
         MockitoAnnotations.initMocks(this);
-
     }
 
     /***
@@ -87,7 +86,7 @@ public class DeclarationServiceMockitoTest {
         dummyObject.setStatusEnum(StateEnum.SUBMITTED);
         dummyObject.setEmp_comment("Wel");
         dummyObject.setMan_comment("Ja");
-        dummyObject.setEmp_id(2);
+        dummyObject.setEmpId(2);
 
         Declaration actualObject = spy(Declaration.class);
         actualObject.setDescription("eten");
@@ -96,7 +95,7 @@ public class DeclarationServiceMockitoTest {
         actualObject.setStatusEnum(StateEnum.REJECTED);
         actualObject.setEmp_comment("Nee");
         actualObject.setMan_comment("Niet");
-        actualObject.setEmp_id(1);
+        actualObject.setEmpId(1);
 
         when(declarationRepository.save(dummyObject)).thenReturn(actualObject);
 
@@ -114,7 +113,7 @@ public class DeclarationServiceMockitoTest {
         assertNotEquals(dummyObject.getStatusEnum(), result.getStatusEnum());
         assertNotEquals(dummyObject.getEmp_comment(), result.getEmp_comment());
         assertNotEquals(dummyObject.getMan_comment(), result.getMan_comment());
-        assertNotEquals(dummyObject.getEmp_id(), result.getEmp_id());
+        assertNotEquals(dummyObject.getEmpId(), result.getEmpId());
     }
 
     /***
@@ -142,7 +141,7 @@ public class DeclarationServiceMockitoTest {
         dummyObject.setStatusEnum(StateEnum.SUBMITTED);
         dummyObject.setEmp_comment("Wel");
         dummyObject.setMan_comment("Ja");
-        dummyObject.setEmp_id(2);
+        dummyObject.setEmpId(2);
 
         when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
 
@@ -160,7 +159,7 @@ public class DeclarationServiceMockitoTest {
         assertEquals(StateEnum.SUBMITTED, result.getStatusEnum());
         assertEquals("Wel", result.getEmp_comment());
         assertEquals("Ja", result.getMan_comment());
-        assertEquals(2, result.getEmp_id());
+        assertEquals(2, result.getEmpId());
     }
 
 //    @Test

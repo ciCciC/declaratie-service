@@ -13,10 +13,10 @@
         </div>
         <th #actionCol mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <div *ngIf="col != 'action'; else elseAction">{{element[col]}}</div>
+          <div *ngIf="col != 'action'; else elseAction" (click)="openDialog(element)">{{element[col]}}</div>
           <ng-template #elseAction>
             <mat-icon mat-mini-fab>
-              <mat-icon class="toDelete" (click)="toDelete()">remove_circle_outline</mat-icon>
+              <mat-icon class="toDelete" matTooltip="Verwijder" (click)="toDelete()">remove_circle_outline</mat-icon>
             </mat-icon>
           </ng-template>
         </td>

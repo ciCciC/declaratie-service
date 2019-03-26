@@ -4,18 +4,23 @@ import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
+import com.declaratie.declaratieapi.model.DeclarationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class DeclarationService {
 
     private DeclarationRepository declarationRepository;
+
+    private Function<Declaration, DeclarationModel> declarationMapper = declaration -> new DeclarationModel(declaration);
 
     @Autowired
     public DeclarationService(DeclarationRepository declarationRepository){
@@ -46,8 +51,8 @@ public class DeclarationService {
         }
     }
 
-    public Declaration read(long id) {
-        return null;
+    public DeclarationModel read(Long id) {
+        return declarationMapper.apply(this.declarationRepository.findById(id).get());
     }
 
     public Declaration update(Declaration declaration) {
@@ -70,7 +75,7 @@ public class DeclarationService {
     public List<Declaration> getAll() throws DeclarationNotFoundException {
 
         if(this.declarationRepository.findAll().isEmpty()){
-            throw new DeclarationNotFoundException("Declarations not found in repository");
+            throw new DeclarationNotFoundException("Declaration table is empty in repository");
         }
         return this.declarationRepository.findAll();
     }

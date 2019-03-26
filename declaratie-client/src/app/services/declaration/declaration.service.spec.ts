@@ -36,9 +36,9 @@ describe(DeclarationService.name, () => {
 
       let response;
 
-      spyOn(declarationService, 'create').and.returnValues(of(DECLARATIONS[0]));
+      spyOn(declarationService, 'addDeclaration').and.returnValues(of(DECLARATIONS[0]));
 
-      declarationService.create(DECLARATIONS[0]).subscribe( data => {
+      declarationService.addDeclaration(DECLARATIONS[0]).subscribe( data => {
         response = data;
       });
 
@@ -49,10 +49,10 @@ describe(DeclarationService.name, () => {
       // Arrange
       declarationService = new DeclarationService(undefined);
 
-      const spy_create = spyOn(declarationService, 'create');
+      const spy_create = spyOn(declarationService, 'addDeclaration');
 
       // Act
-      declarationService.create(DECLARATIONS[0]);
+      declarationService.addDeclaration(DECLARATIONS[0]);
 
       // Assert
       expect(spy_create).toHaveBeenCalled();

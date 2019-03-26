@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {textInputValidator} from '../validators/textInputValidator';
-import {Location} from '@angular/common';
+import {Component, Inject, OnInit} from '@angular/core';
+import {Declaration} from '../../models/Declaration';
+import {DECLARATIONS} from '../../mocks/mock-declarations';
+import {EMPLOYEE} from '../../mocks/mock-employee';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-declaration-view',
@@ -9,20 +10,16 @@ import {Location} from '@angular/common';
   styleUrls: ['./declaration-view.component.css']
 })
 export class DeclarationViewComponent implements OnInit {
-  createForm: FormGroup;
+  // @Input() declaration: Declaration;
+  declaration: Declaration;
+  employee = EMPLOYEE;
 
-  constructor(private fb: FormBuilder, private location: Location) {
-    this.createForm = this.fb.group({
-      description: new FormControl('', [
-        Validators.required,
-        textInputValidator
-      ])
-    });
+  constructor(private dialogRef: MatDialogRef<DeclarationViewComponent>, @Inject(MAT_DIALOG_DATA) private data: Declaration) {
+    this.declaration = DECLARATIONS[data.id];
   }
 
   close() {
-    alert('pressed close');
-    this.location.back();
+    this.dialogRef.close();
   }
 
   toDelete() {

@@ -19,7 +19,7 @@ export class DeclarationExpansionListComponent implements OnInit {
   }
 
   private getDeclarationsList() {
-    this.declarationService.getAll().subscribe(data => {
+    this.declarationService.getDeclarations().subscribe(data => {
       this.declarations = data;
       alert(this.declarations.length);
     }, error => console.log(error));

@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -13,14 +14,14 @@ public class Declaration {
     public Declaration(){
     }
 
-    public Declaration(String description, Date date, double amount, String emp_comment, String man_comment, StateEnum state, long emp_id) {
+    public Declaration(String description, Date date, double amount, String empComment, String manComment, StateEnum state, long empId) {
         this.description = description;
         this.date = date;
         this.amount = amount;
-        this.emp_comment = emp_comment;
-        this.man_comment = man_comment;
+        this.empComment = empComment;
+        this.manComment = manComment;
         this.state = state;
-        this.emp_id = emp_id;
+        this.empId = empId;
         this.files = new ArrayList<>();
     }
 
@@ -40,18 +41,18 @@ public class Declaration {
     @Min(0)
     private double amount;
 
-    @Column(name = "emp_comment")
-    private String emp_comment;
+    @Column(name = "empComment")
+    private String empComment;
 
-    @Column(name = "man_comment")
-    private String man_comment;
+    @Column(name = "manComment")
+    private String manComment;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private StateEnum state;
 
-    @Column(name = "emp_id", nullable = false)
-    private long emp_id;
+    @Column(name = "empId", nullable = false)
+    private long empId;
 
     @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DeclarationFile> files;
@@ -88,20 +89,20 @@ public class Declaration {
         this.amount = amount;
     }
 
-    public String getEmp_comment() {
-        return emp_comment;
+    public String getEmpComment() {
+        return empComment;
     }
 
-    public void setEmp_comment(String emp_comment) {
-        this.emp_comment = emp_comment;
+    public void setEmpComment(String emp_comment) {
+        this.empComment = emp_comment;
     }
 
-    public String getMan_comment() {
-        return man_comment;
+    public String getManComment() {
+        return manComment;
     }
 
-    public void setMan_comment(String man_comment) {
-        this.man_comment = man_comment;
+    public void setManComment(String man_comment) {
+        this.manComment = man_comment;
     }
 
     public StateEnum getStatusEnum() {
@@ -112,12 +113,12 @@ public class Declaration {
         this.state = state;
     }
 
-    public long getEmp_id() {
-        return emp_id;
+    public long getEmpId() {
+        return empId;
     }
 
-    public void setEmp_id(long emp_id) {
-        this.emp_id = emp_id;
+    public void setEmpId(long emp_id) {
+        this.empId = emp_id;
     }
 
     public void addDeclarationFile(DeclarationFile declarationFile){
@@ -153,10 +154,10 @@ public class Declaration {
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 ", amount=" + amount +
-                ", emp_comment='" + emp_comment + '\'' +
-                ", man_comment='" + man_comment + '\'' +
+                ", empComment='" + empComment + '\'' +
+                ", manComment='" + manComment + '\'' +
                 ", state=" + state +
-                ", emp_id=" + emp_id +
+                ", empId=" + empId +
                 '}';
     }
 }

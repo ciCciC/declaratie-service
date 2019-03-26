@@ -7,6 +7,7 @@ import {Declaration} from '../../models/Declaration';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
+import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -30,7 +31,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   getDeclarationsList() {
 
-    this.declarationService.getAll().subscribe(data => {
+    this.declarationService.getDeclarations().subscribe(data => {
       this.dataSource.data = data;
     }, (error) => {
       const aa = error as HttpErrorResponse;
@@ -52,6 +53,13 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   createClick() {
     alert('pressed AANMAKEN');
+  }
+
+  openDialog(selected: Declaration) {
+    const dialogRef = this.dialog.open(DeclarationViewComponent, {data: selected});
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // });
   }
 
   ngOnInit() {

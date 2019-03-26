@@ -40,6 +40,7 @@ import { DeclarationViewComponent } from './components/declaration-view/declarat
     BrowserAnimationsModule,
     MaterialModule
   ],
+  entryComponents: [DeclarationTableComponent, DeclarationViewComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
