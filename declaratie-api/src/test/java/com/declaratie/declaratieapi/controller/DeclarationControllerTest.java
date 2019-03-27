@@ -13,13 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -43,13 +41,15 @@ public class DeclarationControllerTest {
     private static String endpoint = "/api/declarations";
 
     @Test
-    public void testMyEndpoint() throws UnprocessableDeclarationException {
+    public void A22_SR13_GetAllDeclarationsEndpoint() throws UnprocessableDeclarationException {
 
         declarationService.deleteAll();
 
+        // Prepare
         declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12));
 
+        // Call
         ResponseEntity<List<DeclarationModel>> declaration = testRestTemplate
                 .exchange(endpoint,
                         HttpMethod.GET,
@@ -57,10 +57,65 @@ public class DeclarationControllerTest {
                         new ParameterizedTypeReference<List<DeclarationModel>>() {
         });
 
-//        ResponseEntity<String> declaration = testRestTemplate.getForEntity(endpoint, String.class);
-//        System.out.printf("declaration : %s", declaration);
-       assertThat(declaration.getBody()).size().isEqualTo(1);
+        // Assert
+        assertThat(declaration.getBody()).size().isEqualTo(1);
 
+    }
+
+    @Test
+    public void A32_SR8_ReadDeclarationEndpoint() throws UnprocessableDeclarationException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        Declaration toRead = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
+                endpoint+"/"+toRead.getId(),
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getBody().getId()).isEqualTo(toRead.getId());
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+    }
+
+    @Test
+    public void A32_SR8_ReadDeclarationEndpointReturnNotFound() throws UnprocessableDeclarationException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        Long toRead = -10L;
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
+                endpoint+"/"+toRead,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void A32_SR8_ReadDeclarationDoesNotExistEndpoint() throws UnprocessableDeclarationException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        Long toRead = 100L;
+
+        declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
+                endpoint+"/"+toRead,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
 }

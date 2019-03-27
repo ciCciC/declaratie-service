@@ -54,7 +54,7 @@ public class Declaration {
     @Column(name = "empId", nullable = false)
     private long empId;
 
-    @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<DeclarationFile> files;
 
     public Long getId() {
@@ -127,7 +127,7 @@ public class Declaration {
     }
 
     public List<DeclarationFile> getFiles() {
-        return files;
+        return this.files;
     }
 
     public void setFiles(List<DeclarationFile> files) {

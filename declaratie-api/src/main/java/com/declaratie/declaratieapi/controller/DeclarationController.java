@@ -85,10 +85,7 @@ public class DeclarationController {
      * @return returns declaration
      */
     @GetMapping("/{id}")
-    public ResponseEntity<DeclarationModel> read(@PathVariable("id") Long id) {
-        if(!this.declarationService.existsById(id) || id < 0)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Declaration with id=%t not found", id));
-
+    public ResponseEntity<DeclarationModel> read(@PathVariable("id") Long id) throws DeclarationNotFoundException {
         return new ResponseEntity<>(declarationService.read(id), HttpStatus.FOUND);
     }
 
@@ -99,8 +96,6 @@ public class DeclarationController {
     public ResponseEntity<DeclarationModel> delete(Long id) {
         return null;
     }
-
-
 
     @GetMapping()
     public ResponseEntity<List<DeclarationModel>> getAll() {

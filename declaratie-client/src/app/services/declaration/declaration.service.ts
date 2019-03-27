@@ -27,7 +27,7 @@ export class DeclarationService {
   }
 
   getDeclaration(id: number): Observable<Declaration> {
-    return this.http.get<Declaration>(this.baseUrl + '/' + this.crudOperations.read + '/' + id, httpOptions);
+    return this.http.get<Declaration>(this.baseUrl + '/' + id, httpOptions);
   }
 
   update(t: Declaration): boolean {

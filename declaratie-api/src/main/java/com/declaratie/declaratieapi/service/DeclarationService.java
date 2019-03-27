@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -50,7 +51,10 @@ public class DeclarationService {
         }
     }
 
-    public DeclarationModel read(Long id) {
+    public DeclarationModel read(Long id) throws DeclarationNotFoundException {
+        if(!this.existsById(id) || id < 0)
+            throw new DeclarationNotFoundException(MessageFormat.format("Declaration with id={0} not found", id));
+
         return declarationMapper.apply(this.declarationRepository.findById(id).get());
     }
 
@@ -74,18 +78,10 @@ public class DeclarationService {
     public List<Declaration> getAll() throws DeclarationNotFoundException {
 
         if(this.declarationRepository.findAll().isEmpty()){
-            throw new DeclarationNotFoundException("Declaration table is empty in repository");
+            throw new DeclarationNotFoundException("Declaration table is empty");
         }
 
-        List<Declaration> aa = this.declarationRepository.findAll();
-
-        return aa;
-
-//        return this.declarationRepository.findAll().stream()
-//                .map(data -> {
-//                    data.setFiles(this.declarationFileRepository.findAllByDeclaration_id(data.getId()));
-//                    return data;
-//                });
+        return this.declarationRepository.findAll();
     }
 
     public boolean existsById(Long id){

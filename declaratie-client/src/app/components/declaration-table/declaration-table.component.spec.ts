@@ -59,8 +59,8 @@ describe(DeclarationTableComponent.name, () => {
     // Arrange : undefined is dummy
     let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
-    const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
+    const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, matDialog as unknown as MatDialog);
     collaborator.getDeclarations = () => of(DECLARATIONS);
 
     // Act

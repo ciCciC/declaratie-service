@@ -43,9 +43,10 @@ public class DeclarationModel {
         this.manComment = declaration.getManComment();
         this.state = declaration.getStatusEnum().name();
         this.empId = declaration.getEmpId();
-        this.files = declaration.getFiles().stream()
-                .map(DeclarationFileModel::new)
-                .collect(Collectors.toList());
+
+        this.files = declaration.getFiles() != null ? declaration.getFiles()
+                .stream().map(DeclarationFileModel::new)
+                .collect(Collectors.toList()) : new ArrayList<>();
     }
 
     public Declaration toDeclaration(){
