@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -56,11 +57,14 @@ public class DeclarationServiceMockitoTest {
     public void A11_SR11_deMedewerkerKanEenDeclaratieToevoegen(){
         System.out.println("Test: A11_SR11_deMedewerkerKanEenDeclaratieToevoegen");
 
-        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(new Declaration());
+        Declaration declaration = new Declaration("beschrijving", new Date(), 120,
+                "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
+
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(declaration);
 
         try{
 
-            assertThat(this.declarationService.create(new Declaration()), is(notNullValue()));
+            assertThat(this.declarationService.create(declaration), is(notNullValue()));
 
         }catch (UnprocessableDeclarationException ex){
             System.out.println("Declaratie kan niet aangemaakt worden.");
@@ -100,7 +104,7 @@ public class DeclarationServiceMockitoTest {
 
         when(declarationRepository.save(dummyObject)).thenReturn(actualObject);
 
-        Declaration result = null;
+        DeclarationModel result = null;
 
         try{
             result = declarationService.create(dummyObject);
@@ -111,10 +115,10 @@ public class DeclarationServiceMockitoTest {
         assertNotEquals(dummyObject.getDescription(), result.getDescription());
         assertNotEquals(dummyObject.getAmount(), result.getAmount(), 0);
         assertNotEquals(dummyObject.getDate(), result.getDate());
-        assertNotEquals(dummyObject.getStatusEnum(), result.getStatusEnum());
+        assertNotEquals(dummyObject.getStatusEnum(), result.getStatus());
         assertNotEquals(dummyObject.getEmpComment(), result.getEmpComment());
         assertNotEquals(dummyObject.getManComment(), result.getManComment());
-        assertNotEquals(dummyObject.getEmpId(), result.getEmpId());
+        assertNotEquals(dummyObject.getEmpId(), result.getEmpId().longValue());
     }
 
     /***
@@ -143,7 +147,7 @@ public class DeclarationServiceMockitoTest {
 
         when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
 
-        Declaration result = null;
+        DeclarationModel result = null;
 
         try{
             result = declarationService.create(dummyObject);
@@ -154,10 +158,10 @@ public class DeclarationServiceMockitoTest {
         assertEquals("auto", result.getDescription());
         assertEquals(1500, result.getAmount(), 0);
         assertEquals(date, result.getDate());
-        assertEquals(StateEnum.SUBMITTED, result.getStatusEnum());
+        assertEquals(StateEnum.SUBMITTED.name(), result.getStatus());
         assertEquals("Wel", result.getEmpComment());
         assertEquals("Ja", result.getManComment());
-        assertEquals(2, result.getEmpId());
+        assertEquals(2, result.getEmpId().longValue());
     }
 
 
@@ -190,7 +194,7 @@ public class DeclarationServiceMockitoTest {
 
         try{
             result = declarationService.getAll();
-        }catch (DeclarationNotFoundException ex){
+        }catch (ResponseStatusException ex){
             System.out.println("Declaratie lijst bestaat niet.");
         }
 

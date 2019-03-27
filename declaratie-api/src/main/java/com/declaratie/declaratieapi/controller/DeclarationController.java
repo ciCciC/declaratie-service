@@ -31,52 +31,24 @@ public class DeclarationController {
         this.declarationService = declarationService;
     }
 
-//    @GetMapping("/testen/{id}")
-//    public ResponseEntity<DeclarationModel> testen(@PathVariable("id") String id) {
-//        /**
-//         * Test het uitfilteren van de XSS injection.
-//         */
-//
-//        logger.info("Called index method.");
-//
-//        Declaration declaration = new Declaration("This is a description", new Date(), 120,
-//                "Employee", "<script>alert(hack me m8)</script>", StateEnum.SUBMITTED, 12);
-//
-//        DeclarationModel aa = new DeclarationModel(declaration);
-//
-//        // Hier wordt het uitgefilterd!!!
-//        ContentUtils.CLEAN_DELCARATION_VALUES(aa);
-//
-//        declaration = aa.toDeclaration();
-//
-//        try {
-//            declaration = this.declarationService.create(declaration);
-//        }catch(UnprocessableDeclarationException ex){
-//            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaration is unprocessable", ex);
-//        }
-//
-//        return new ResponseEntity<DeclarationModel>(new DeclarationModel(declaration), HttpStatus.CREATED);
-//    }
-
     /***
      * Posts a new declaration
      * @param declarationModel for creating a new declaration
      * @return returns created declaration
      */
     @PostMapping("/create")
-    public ResponseEntity<DeclarationModel> create(@RequestBody DeclarationModel declarationModel) {
+    public ResponseEntity<DeclarationModel> create(@RequestBody DeclarationModel declarationModel) throws UnprocessableDeclarationException {
         logger.info(this.callMessage("create()"));
+
+        System.out.println("BEFORE CHECK: " + declarationModel);
 
         ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
 
+        System.out.println("AFTER CHECK: " + declarationModel);
+
         Declaration toSave = declarationModel.toDeclaration();
 
-        try {
-            return new ResponseEntity<>(new DeclarationModel(declarationService.create(toSave)), HttpStatus.CREATED);
-        } catch (UnprocessableDeclarationException ex) {
-            logger.info("Declaration is unprocessable");
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaration is unprocessable", ex);
-        }
+        return new ResponseEntity<>(declarationService.create(toSave), HttpStatus.CREATED);
     }
 
     /***
@@ -98,24 +70,20 @@ public class DeclarationController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<DeclarationModel>> getAll() {
+    public ResponseEntity<List<DeclarationModel>> getAll() throws ResponseStatusException {
 
         logger.info(this.callMessage("getAll()"));
 
-        try{
-            logger.info("Returning declarations");
-            return new ResponseEntity<>(this.declarationService.getAll().stream()
-                    .map(DeclarationModel::new)
-                    .collect(Collectors.toList()), HttpStatus.OK);
-        }catch(DeclarationNotFoundException ex){
-            logger.info("No declarations found");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations not found", ex);
-        }
+        logger.info("Returning declarations");
+
+        return new ResponseEntity<>(this.declarationService.getAll().stream()
+                .map(DeclarationModel::new)
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @ExceptionHandler(UnprocessableDeclarationException.class)
     private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {
-        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaration is unprocessable", ex);
+        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaration is niet te verwerken", ex);
     }
 
     private String callMessage(String methodname){

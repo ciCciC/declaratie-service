@@ -13,7 +13,7 @@ public class ContentUtils {
         if(model.getManComment() != null)
             model.setManComment(REPLACE_XSS_CHARS(model.getManComment()));
 
-        model.setState(REPLACE_XSS_CHARS(model.getState()));
+        model.setStatus(REPLACE_XSS_CHARS(model.getStatus()));
     }
 
     private static String REPLACE_XSS_CHARS(String value){

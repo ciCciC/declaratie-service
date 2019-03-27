@@ -15,6 +15,7 @@ import {DeclarationService} from '../../services/declaration/declaration.service
 import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {of} from 'rxjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 
 describe(DeclarationTableComponent.name, () => {
 
@@ -57,10 +58,17 @@ describe(DeclarationTableComponent.name, () => {
      */
 
     // Arrange : undefined is dummy
-    let collaborator: DeclarationService;
-    collaborator = new DeclarationService(undefined);
+    // let collaborator: DeclarationService;
+    const collaborator = new DeclarationService(undefined);
+
+    // let errorHandlerService: ErrorHandlerService;
+    const errorHandlerService = new ErrorHandlerService(undefined);
+
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, matDialog as unknown as MatDialog);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
+      errorHandlerService as unknown as ErrorHandlerService,
+      matDialog as unknown as MatDialog);
+
     collaborator.getDeclarations = () => of(DECLARATIONS);
 
     // Act
@@ -82,8 +90,13 @@ describe(DeclarationTableComponent.name, () => {
     // Arrange : undefined is dummy
     let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
-    const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
+
+    const errorHandlerService = new ErrorHandlerService(undefined);
+
+    const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
+      errorHandlerService as unknown as ErrorHandlerService,
+      matDialog as unknown as MatDialog);
 
     const spy = spyOn(container, 'getDeclarationsList');
 

@@ -19,7 +19,7 @@ public class DeclarationModel {
     private double amount;
     private String empComment;
     private String manComment;
-    private String state;
+    private String status;
     private Long empId;
     private List<DeclarationFileModel> files;
 
@@ -30,7 +30,7 @@ public class DeclarationModel {
         this.amount = 0;
         this.empComment = "";
         this.manComment = "";
-        this.state = "";
+        this.status = "";
         this.empId = 0L;
     }
 
@@ -41,7 +41,7 @@ public class DeclarationModel {
         this.amount = declaration.getAmount();
         this.empComment = declaration.getEmpComment();
         this.manComment = declaration.getManComment();
-        this.state = declaration.getStatusEnum().name();
+        this.status = declaration.getStatusEnum().name();
         this.empId = declaration.getEmpId();
 
         this.files = declaration.getFiles() != null ? declaration.getFiles()
@@ -51,7 +51,7 @@ public class DeclarationModel {
 
     public Declaration toDeclaration(){
         return new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
-                StateEnum.valueOf(this.state), this.empId);
+                StateEnum.valueOf(this.status), this.empId);
     }
 
     public Long getId() {
@@ -102,20 +102,20 @@ public class DeclarationModel {
         this.manComment = man_comment;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public Long getEmpId() {
         return empId;
     }
 
     public void setEmpId(Long emp_id) {
         this.empId = emp_id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<DeclarationFileModel> getFiles() {
@@ -137,14 +137,14 @@ public class DeclarationModel {
                 date.equals(that.date) &&
                 empComment.equals(that.empComment) &&
                 manComment.equals(that.manComment) &&
-                state.equals(that.state) &&
+                status.equals(that.status) &&
                 empId.equals(that.empId) &&
                 files.equals(that.files);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, date, amount, empComment, manComment, state, empId, files);
+        return Objects.hash(id, description, date, amount, empComment, manComment, status, empId, files);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class DeclarationModel {
                 ", amount=" + amount +
                 ", empComment='" + empComment + '\'' +
                 ", manComment='" + manComment + '\'' +
-                ", state=" + state +
+                ", state=" + status +
                 ", empId=" + empId +
                 ", files=" + files.size() +
                 '}';

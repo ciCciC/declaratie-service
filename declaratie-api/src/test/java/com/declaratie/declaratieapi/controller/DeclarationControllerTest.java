@@ -17,7 +17,6 @@ import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +67,7 @@ public class DeclarationControllerTest {
         declarationService.deleteAll();
 
         // Prepare
-        Declaration toRead = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
+        DeclarationModel toRead = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12));
 
         // Do call

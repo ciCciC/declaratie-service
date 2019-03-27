@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -65,7 +66,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		/**
 		 * Nieuwe declaratie
 		 */
-		Declaration addedDeclaration = null;
+		DeclarationModel addedDeclaration = null;
 
 		try {
 			addedDeclaration = declarationService.create(new Declaration("Dit is mijn description", date, 120,
@@ -98,7 +99,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 */
 		try{
 			assertEquals(declaratiesLijstSize, declarationService.getAll().size());
-		}catch (DeclarationNotFoundException ex){
+		}catch (ResponseStatusException ex){
 			System.out.println("Declaration lijst bestaat niet in de database");
 		}
 
@@ -122,7 +123,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		/**
 		 * Nieuwe declaratie
 		 */
-		Declaration nieuweDeclaratie = null;
+		DeclarationModel nieuweDeclaratie = null;
 
 		try {
 			nieuweDeclaratie = declarationService.create(null);
@@ -158,7 +159,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		/**
 		 * Nieuwe declaratie
 		 */
-		Declaration nieuweDeclaratie = null;
+		DeclarationModel nieuweDeclaratie = null;
 
 		try {
 			nieuweDeclaratie = declarationService.create(new Declaration("Dit is mijn description", date, 120,
@@ -181,7 +182,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		try{
 			actualsize = declarationService.getAll().size();
 			assertEquals(declaratiesLijstSize, actualsize);
-		}catch (DeclarationNotFoundException ex){
+		}catch (ResponseStatusException ex){
 			System.out.println("Declaration lijst bestaat niet in de database");
 		}
 
@@ -218,7 +219,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		try{
 			ophalenLijst = declarationService.getAll();
-		}catch (DeclarationNotFoundException ex){
+		}catch (ResponseStatusException ex){
 			System.out.println("Declaration lijst bestaat niet in de database");
 		}
 
@@ -245,15 +246,17 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 */
 		declarationService.deleteAll();
 
-		Declaration toRead = new Declaration("Dit is mijn description", new Date(), 120,
+		Declaration toSave = new Declaration("Dit is mijn description", new Date(), 120,
 				"Employee", "Manager", StateEnum.SUBMITTED, 12);
-		toRead.addDeclarationFile(new DeclarationFile("bestfoto.jpg", new byte[]{12, 22}));
+		toSave.addDeclarationFile(new DeclarationFile("bestfoto.jpg", new byte[]{12, 22}));
+
+		DeclarationModel toRead = null;
 
 		/**
 		 * Toevoegen 1 elementen aan de in-memory database ter voorbereiding
 		 */
 		try {
-			toRead = declarationService.create(toRead);
+			toRead = declarationService.create(toSave);
 		} catch (UnprocessableDeclarationException e) {
 			e.printStackTrace();
 		}

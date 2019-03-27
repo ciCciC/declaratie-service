@@ -17,6 +17,8 @@ import { DeclarationExpansionListComponent } from './components/declaration-expa
 import {DeclarationService} from './services/declaration/declaration.service';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
 import { DeclarationViewComponent } from './components/declaration-view/declaration-view.component';
+import { ErrorDialogComponent } from './errorhandler/error-dialog/error-dialog.component';
+import {ErrorHandlerService} from './services/errorhandlerservice/error-handler.service';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -29,7 +31,8 @@ import { DeclarationViewComponent } from './components/declaration-view/declarat
     DeclarationStepperComponent,
     DeclarationPhotoUploadComponent,
     DeclarationExpansionListComponent,
-    DeclarationViewComponent
+    DeclarationViewComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +43,8 @@ import { DeclarationViewComponent } from './components/declaration-view/declarat
     BrowserAnimationsModule,
     MaterialModule
   ],
-  entryComponents: [DeclarationTableComponent, DeclarationViewComponent],
-  providers: [],
+  entryComponents: [DeclarationTableComponent, DeclarationViewComponent, ErrorDialogComponent],
+  providers: [ErrorHandlerService, DeclarationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

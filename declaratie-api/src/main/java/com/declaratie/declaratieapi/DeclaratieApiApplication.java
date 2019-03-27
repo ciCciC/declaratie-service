@@ -3,9 +3,9 @@ package com.declaratie.declaratieapi;
 import com.declaratie.declaratieapi.controller.DeclarationController;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
-import com.declaratie.declaratieapi.enums.FileTypeEnum;
 import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
+import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -44,7 +44,7 @@ public class DeclaratieApiApplication {
 					declaration.addDeclarationFile(new DeclarationFile("holidaypicture.jpg", tmp));
 					declaration.addDeclarationFile(new DeclarationFile("badboydancing.png", tmp));
 
-					Declaration dec = declarationService.create(declaration);
+					DeclarationModel dec = declarationService.create(declaration);
 
 				}catch(UnprocessableDeclarationException ex){
 					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");

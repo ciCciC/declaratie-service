@@ -8,6 +8,8 @@ import {Observable, of, Subject, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
+import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {ErrorDialogComponent} from '../../errorhandler/error-dialog/error-dialog.component';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -22,24 +24,17 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   loadingError = new Subject<boolean>();
   pageSizeOptions = [5, 10, 15];
 
-  public dialogConfig;
-
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private declarationService: DeclarationService, private dialog: MatDialog) { }
+  constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService, private dialog: MatDialog) { }
 
   getDeclarationsList() {
 
     this.declarationService.getDeclarations().subscribe(data => {
       this.dataSource.data = data;
     }, (error) => {
-      const aa = error as HttpErrorResponse;
-      console.log('Lolzzz: ' + aa.name);
-      console.log('Lolzzz: ' + aa.ok);
-      console.log('Lolzzz: ' + aa.message);
-      console.log('Lolzzz: ' + aa.error.message);
-      console.log(JSON.stringify(aa));
+      this.errorService.handleError(error);
     });
 
   }

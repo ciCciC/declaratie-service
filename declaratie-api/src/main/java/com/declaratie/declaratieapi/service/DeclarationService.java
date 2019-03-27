@@ -7,8 +7,10 @@ import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundExceptio
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -27,27 +29,18 @@ public class DeclarationService {
         this.declarationRepository = declarationRepository;
     }
 
-    public Declaration create(Declaration declaration) throws UnprocessableDeclarationException {
+    public DeclarationModel create(Declaration declaration) throws UnprocessableDeclarationException {
 
         if(declaration == null)
-            throw new UnprocessableDeclarationException("Declaration is not processable - null");
+            throw new UnprocessableDeclarationException("Declaration is not processable.");
 
         try {
-            return this.declarationRepository.save(declaration);
+            return declarationMapper.apply(this.declarationRepository.save(declaration));
         }catch (TransactionSystemException e) {
-            throw new UnprocessableDeclarationException("Declaration is not processable in repository - constraint violation");
+            throw new UnprocessableDeclarationException("Declaration is not processable - constraint violation");
 
         }catch (DataIntegrityViolationException e){
-            throw new UnprocessableDeclarationException("Declaration is not processable in repository - data integrity");
-        }
-    }
-
-    public Declaration createAndFlush(Declaration declaration) throws UnprocessableDeclarationException {
-
-        try{
-            return this.declarationRepository.saveAndFlush(declaration);
-        }catch (DataIntegrityViolationException ex){
-            throw new UnprocessableDeclarationException("Declaration is not processable in repository");
+            throw new UnprocessableDeclarationException("Declaration is not processable - data integrity");
         }
     }
 
@@ -75,10 +68,9 @@ public class DeclarationService {
         }
     }
 
-    public List<Declaration> getAll() throws DeclarationNotFoundException {
-
+    public List<Declaration> getAll() throws ResponseStatusException {
         if(this.declarationRepository.findAll().isEmpty()){
-            throw new DeclarationNotFoundException("Declaration table is empty");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations table is empty");
         }
 
         return this.declarationRepository.findAll();

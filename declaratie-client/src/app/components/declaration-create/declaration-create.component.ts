@@ -7,6 +7,7 @@ import {DeclarationService} from '../../services/declaration/declaration.service
 import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
+import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
   controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
 
   constructor(private fb: FormBuilder, private location: Location,
-              private router: Router, private declarationService: DeclarationService) {
+              private router: Router, private declarationService: DeclarationService, private errorService: ErrorHandlerService) {
     this.minDate = new Date(Date.now());
     this.maxDate = new Date(Date.now());
     this.maxDate.setDate(this.maxDate.getDate() + this.maxDaysRange);
@@ -41,7 +42,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
         Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
       serDate: new FormControl((new Date()).toISOString(), [Validators.required]),
       amount: new FormControl('', [
-        Validators.required, Validators.max(3000), Validators.min(0)]),
+        Validators.required]),
       empMessage: new FormControl('', [
         Validators.maxLength(255),
         textInputValidator
@@ -80,9 +81,11 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     };
 
     this.declarationService.addDeclaration(declaration).subscribe(data => {
-      console.log('Added: ' + JSON.stringify(data));
+      alert(JSON.stringify(data));
       this.backToList();
-    }, error => console.log(error));
+    }, error => {{
+      this.errorService.handleError(error);
+    }});
   }
 
   get formControllers(): any[] {
