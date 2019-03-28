@@ -33,7 +33,7 @@ public class DeclaratieApiApplication {
 	@Bean
 	ApplicationRunner initSomeExampleList(DeclarationService declarationService) {
 		return args -> {
-			Stream.of("Benzine", "Eten").forEach(description -> {
+			Stream.of("Benzine", "Eten", "Auto", "Alcohol").forEach(description -> {
 
 				Declaration declaration = new Declaration(description, new Date(), 120,
 						"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);

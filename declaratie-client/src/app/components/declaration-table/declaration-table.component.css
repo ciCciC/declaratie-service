@@ -6,6 +6,11 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
+.createbutton:hover{
+  background-color: rgba(126, 63, 242, 0.91);
+  color:white;
+}
+
 .toDelete{
   display:none;
   color: lightcoral;

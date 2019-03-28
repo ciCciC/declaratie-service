@@ -3,6 +3,7 @@ package com.declaratie.declaratieapi.controller;
 import com.declaratie.declaratieapi.DeclaratieApiApplication;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
@@ -16,7 +17,9 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -115,6 +118,65 @@ public class DeclarationControllerTest {
 
         // Assert
         assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void A33_SR10_DeleteDeclarationEndpoint() throws DeclarationNotFoundException, UnprocessableDeclarationException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        DeclarationModel toDelete = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
+                endpoint+"/delete/"+toDelete.getId(),
+                DeclarationModel.class);
+
+        System.out.println(MessageFormat.format("Status: {0}", declarationModel.getStatusCode()));
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void A33_SR10_DeleteDeclarationNotFoundEndpoint() {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        Long toDelete = -10L;
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
+                endpoint+"/delete/"+toDelete,
+                DeclarationModel.class);
+
+        System.out.println(MessageFormat.format("Status: {0}", declarationModel.getStatusCode()));
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void A33_SR10_DeleteDeclarationInProgressBadRequestEndpoint() throws ResponseStatusException, UnprocessableDeclarationException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        DeclarationModel toDelete = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.INPROGRESS, 12));
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
+                endpoint+"/delete/"+toDelete.getId(),
+                DeclarationModel.class);
+
+        System.out.println(MessageFormat.format("Status: {0}", declarationModel.getStatusCode()));
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
 }

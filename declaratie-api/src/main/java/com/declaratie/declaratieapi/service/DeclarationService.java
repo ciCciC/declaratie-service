@@ -2,6 +2,7 @@ package com.declaratie.declaratieapi.service;
 
 import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
@@ -55,10 +56,6 @@ public class DeclarationService {
         return null;
     }
 
-    public boolean delete(long id) {
-        return false;
-    }
-
     public boolean delete(Declaration declaration) {
         if(this.declarationRepository.existsById(declaration.getId())){
             this.declarationRepository.delete(declaration);
@@ -82,6 +79,19 @@ public class DeclarationService {
 
     public Optional<Declaration> findById(Long id){
         return this.declarationRepository.findById(id);
+    }
+
+    public void delete(Long id) throws DeclarationNotFoundException, ResponseStatusException {
+
+        if(!this.existsById(id))
+            throw new DeclarationNotFoundException(MessageFormat.format("Declaratie met id={0} niet gevonden", id));
+
+        DeclarationModel modelToDelete = this.read(id);
+
+        if(StateEnum.valueOf(modelToDelete.getStatus()) == StateEnum.INPROGRESS)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is in behandeling", modelToDelete.getId()));
+
+        this.declarationRepository.deleteById(modelToDelete.getId());
     }
 
     public void deleteAll() {

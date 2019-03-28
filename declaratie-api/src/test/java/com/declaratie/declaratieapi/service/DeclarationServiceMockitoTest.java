@@ -168,10 +168,6 @@ public class DeclarationServiceMockitoTest {
 //    @Test
 //    public void update() {
 //    }
-//
-//    @Test
-//    public void delete() {
-//    }
 
     /***
      * Tests the value of the actual and expected variables
@@ -275,6 +271,50 @@ public class DeclarationServiceMockitoTest {
         }
 
         assertNull(declaratie_bestaat);
+    }
+
+    /***
+     * Tests delete a declaration
+     */
+    @Test
+    public void A33_SR10_TG1_deMedewerkerKanEenDeclaratieVerwijderen() {
+        System.out.println("Test: A33_SR10_TG1_deMedewerkerKanEenDeclaratieVerwijderen");
+
+        Long dummyId = 1L;
+
+        DeclarationService declarationService = mock(DeclarationService.class);
+
+        boolean declaratie_bestaat = true;
+
+        try {
+            doNothing().when(declarationService).delete(dummyId);
+            declarationService.delete(dummyId);
+        } catch (DeclarationNotFoundException | ResponseStatusException e) {
+            declaratie_bestaat = false;
+            System.out.println("Message: " + e.getMessage());
+        }
+        assertTrue(declaratie_bestaat);
+    }
+
+    /***
+     * Tests delete a declaration
+     */
+    @Test
+    public void A33_SR10_TG2_deMedewerkerKanEenDeclaratieVerwijderen() {
+        System.out.println("Test: A33_SR10_TG2_deMedewerkerKanEenDeclaratieVerwijderen");
+
+        DeclarationService declarationService = mock(DeclarationService.class);
+
+        // Deze declaratie bestaat niet.
+        Long dummyId = -100L;
+
+        try {
+            doThrow(DeclarationNotFoundException.class).when(declarationService).delete(dummyId);
+            declarationService.delete(dummyId);
+        } catch (DeclarationNotFoundException e) {
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Declaratie bestaat niet.");
+        }
     }
 
     /***

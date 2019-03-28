@@ -56,7 +56,7 @@
   </div>
 </div>
 
-<table class="dec-full-width" cellspacing="0">
+<table *ngIf="processStatus" class="dec-full-width" cellspacing="0">
   <tr>
     <td>
       <button mat-raised-button dec-button-row class="myDelete" (click)="toDelete()">

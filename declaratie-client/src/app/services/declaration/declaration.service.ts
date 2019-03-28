@@ -28,8 +28,8 @@ export class DeclarationService {
     return false;
   }
 
-  deleteDeclaration(any): boolean {
-    return false;
+  deleteDeclaration(id: number): Observable<any> {
+    return this.http.get<any>(environment.urlAddress + '/' + this.crudOperations.delete + '/' + id);
   }
 
   getDeclarations(): Observable<IDeclaration[]> {
@@ -46,9 +46,5 @@ export class DeclarationService {
   //   return of(DECLARATIONS);
   // }
 
-  // delete(id: number): Observable<any> {
-  //   return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
-  // }
-  //
 
 }

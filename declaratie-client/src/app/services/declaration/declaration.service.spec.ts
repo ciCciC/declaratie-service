@@ -119,4 +119,38 @@ describe(DeclarationService.name, () => {
 
   });
 
+  describe('Delete call', () => {
+
+    it('A33_SR10_shouldDeleteDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      let response;
+
+      spyOn(declarationService, 'deleteDeclaration').and.returnValues(of(DECLARATIONS[0]));
+
+      // Act
+      declarationService.deleteDeclaration(1).subscribe( data => {
+        response = data;
+      });
+
+      // Assert
+      expect(response).toEqual(DECLARATIONS[0]);
+    });
+
+    it('A33_SR10_shouldCallDeleteDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      const spy_create = spyOn(declarationService, 'deleteDeclaration');
+
+      // Act
+      declarationService.deleteDeclaration(1);
+
+      // Assert
+      expect(spy_create).toHaveBeenCalled();
+    });
+
+  });
+
 });

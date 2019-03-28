@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class DeclarationController {
      * @param declarationModel for creating a new declaration
      * @return returns created declaration
      */
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<DeclarationModel> create(@RequestBody DeclarationModel declarationModel) throws UnprocessableDeclarationException {
         logger.info(this.callMessage("create()"));
 
@@ -54,7 +55,7 @@ public class DeclarationController {
     /***
      * Gets a declaration
      * @param id for getting the declaration
-     * @return returns declaration
+     * @return returns response
      */
     @GetMapping("/{id}")
     public ResponseEntity<DeclarationModel> read(@PathVariable("id") Long id) throws DeclarationNotFoundException {
@@ -65,8 +66,14 @@ public class DeclarationController {
         return null;
     }
 
-    public ResponseEntity<DeclarationModel> delete(Long id) {
-        return null;
+    /***
+     * Deletes a declaration
+     * @param id for getting the declaration
+     * @return returns response
+     */
+    @GetMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Long id) throws DeclarationNotFoundException, ResponseStatusException {
+        this.declarationService.delete(id);
     }
 
     @GetMapping()
@@ -83,7 +90,7 @@ public class DeclarationController {
 
     @ExceptionHandler(UnprocessableDeclarationException.class)
     private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {
-        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaration is niet te verwerken", ex);
+        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaratie is niet te verwerken", ex);
     }
 
     private String callMessage(String methodname){

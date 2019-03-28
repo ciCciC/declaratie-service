@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorDialogComponent} from '../../errorhandler/error-dialog/error-dialog.component';
+import {ErrorDialogComponent} from '../../dialogs/error-dialog/error-dialog.component';
 import {IErrorDialog} from '../../models/imodels/IErrorDialog';
 
 @Injectable({
@@ -10,6 +10,7 @@ import {IErrorDialog} from '../../models/imodels/IErrorDialog';
 export class ErrorHandlerService {
 
   private dialogConfig: IErrorDialog;
+  private errorName = 'Error message';
 
   constructor(private dialog: MatDialog) { }
 
@@ -42,6 +43,15 @@ export class ErrorHandlerService {
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
+  public unableToDelete() {
+    this.dialogConfig = {
+      statusCode: 400,
+      name: this.errorName,
+      message: 'Declaratie is in proces',
+    };
+    this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
+  }
+
   private handleOtherError(error: HttpErrorResponse) {
     this.createErrorMessage(error);
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
@@ -50,9 +60,11 @@ export class ErrorHandlerService {
   private createErrorMessage(error: HttpErrorResponse) {
     this.dialogConfig = error.error ? {
       statusCode: error.error['status'],
+      name: this.errorName,
       message: error.error['message'],
     } : {
       statusCode: error.status,
+      name: this.errorName,
       message: error.statusText,
     };
   }

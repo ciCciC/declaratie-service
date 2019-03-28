@@ -303,5 +303,113 @@ public class DeclaratieApiApplicationIntegrationTests {
 		assertNull(declaratie_bestaat);
 	}
 
+	/***
+	 * Hier ligt de aandacht bij het verwijderen van een declaratie.
+	 */
+	@Test
+	public void A33_SR10_TG1_INTEGRATION_TEST_system_can_delete_declaration(){
+		System.out.println("Integratietest: A33_SR10_TG1_INTEGRATION_TEST_system_can_delete_declaration");
+
+		/**
+		 * Dit om de initialisatie in DeclaratieApiApplication class eerst te verwijderen.
+		 */
+		declarationService.deleteAll();
+
+		Declaration toSave = new Declaration("Dit is mijn description", new Date(), 120,
+				"Employee", "Manager", StateEnum.SUBMITTED, 12);
+		toSave.addDeclarationFile(new DeclarationFile("bestfoto.jpg", new byte[]{12, 22}));
+
+		DeclarationModel toDelete = null;
+		boolean declaratie_bestaat = false;
+
+		/**
+		 * Toevoegen 1 elementen aan de in-memory database ter voorbereiding
+		 */
+		try {
+			toDelete = declarationService.create(toSave);
+		} catch (UnprocessableDeclarationException e) {
+			e.printStackTrace();
+		}
+
+		/**
+		 * Controle verwijdering declaratie
+		 */
+		try {
+			declarationService.delete(toDelete.getId());
+			System.out.println("Message: declaratie is verwijderd");
+			declaratie_bestaat = true;
+		} catch (DeclarationNotFoundException e) {
+			System.out.println("Message: " + e.getMessage());
+		}
+
+		assertTrue(declaratie_bestaat);
+	}
+
+	/***
+	 * Hier ligt de aandacht bij het verwijderen van een declaratie.
+	 */
+	@Test
+	public void A33_SR10_TG2_INTEGRATION_TEST_system_can_delete_declaration(){
+		System.out.println("Integratietest: A33_SR10_TG2_INTEGRATION_TEST_system_can_delete_declaration");
+
+		Long toDelete = -100L;
+		boolean declaratie_bestaat = false;
+
+		/**
+		 * Controle verwijdering declaratie
+		 */
+		try {
+			declarationService.delete(toDelete);
+			System.out.println("Message: declaratie is verwijderd");
+			declaratie_bestaat = true;
+		} catch (DeclarationNotFoundException e) {
+			System.out.println("Message: " + e.getMessage());
+		}
+
+		assertFalse(declaratie_bestaat);
+	}
+
+	/***
+	 * Hier ligt de aandacht bij het verwijderen van een declaratie.
+	 */
+	@Test
+	public void A33_SR10_INTEGRATION_TEST_system_can_delete_declaration_shouldReturnBadRequest(){
+		System.out.println("Integratietest: A33_SR10_INTEGRATION_TEST_system_can_delete_declaration_shouldReturnBadRequest");
+
+		/**
+		 * Dit om de initialisatie in DeclaratieApiApplication class eerst te verwijderen.
+		 */
+		declarationService.deleteAll();
+
+		Declaration toSave = new Declaration("Dit is mijn description", new Date(), 120,
+				"Employee", "Manager", StateEnum.INPROGRESS, 12);
+		toSave.addDeclarationFile(new DeclarationFile("bestfoto.jpg", new byte[]{12, 22}));
+
+		DeclarationModel toDelete = null;
+		boolean declaratie_bestaat = false;
+
+		/**
+		 * Toevoegen 1 elementen aan de in-memory database ter voorbereiding
+		 */
+		try {
+			toDelete = declarationService.create(toSave);
+		} catch (UnprocessableDeclarationException e) {
+			e.printStackTrace();
+		}
+
+		/**
+		 * Controle verwijdering declaratie
+		 */
+		try {
+			declarationService.delete(toDelete.getId());
+			System.out.println("Message: declaratie is verwijderd");
+			declaratie_bestaat = true;
+		} catch (ResponseStatusException | DeclarationNotFoundException e) {
+			System.out.println("Message: " + e.getMessage());
+		}
+
+		assertFalse(declaratie_bestaat);
+	}
+
 }
 
