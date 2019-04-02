@@ -14,8 +14,9 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {of} from 'rxjs';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe(DeclarationTableComponent.name, () => {
 
@@ -31,7 +32,9 @@ describe(DeclarationTableComponent.name, () => {
         MatPaginatorModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
-        MatDialogModule
+        MatDialogModule,
+        NoopAnimationsModule,
+        RouterTestingModule
       ],
       declarations: [ DeclarationTableComponent ]
     })
@@ -67,7 +70,7 @@ describe(DeclarationTableComponent.name, () => {
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
       errorHandlerService as unknown as ErrorHandlerService,
-      matDialog as unknown as MatDialog);
+      matDialog as unknown as MatDialog, undefined);
 
     collaborator.getDeclarations = () => of(DECLARATIONS);
 
@@ -96,7 +99,7 @@ describe(DeclarationTableComponent.name, () => {
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
       errorHandlerService as unknown as ErrorHandlerService,
-      matDialog as unknown as MatDialog);
+      matDialog as unknown as MatDialog, undefined);
 
     const spy = spyOn(container, 'getDeclarationsList');
 
