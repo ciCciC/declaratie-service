@@ -10,6 +10,7 @@ import {ErrorHandlerService} from '../../services/errorhandlerservice/error-hand
 import {StatusEnum} from '../../models/StatusEnum';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
+import {Router} from '@angular/router';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -24,11 +25,14 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   loadingError = new Subject<boolean>();
   pageSizeOptions = [5, 10, 15];
   InProgress = StatusEnum.INPROGRESS;
+  actionValue = 'action';
+  colNames: string[];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService, private dialog: MatDialog) { }
+  constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService,
+              private dialog: MatDialog, private router: Router) { }
 
   getDeclarationsList() {
 
@@ -40,12 +44,14 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   }
 
   initTableColumnNames() {
+    this.colNames = ['beschrijving', 'bedrag', 'datum', 'status'];
     this.displayedColumns = Declaration.getPropertyNamesForTableComponent();
     this.displayedColumns.push('action');
   }
 
   createClick() {
-    alert('pressed AANMAKEN');
+    // this.router.navigateByUrl('/declarationcreate');
+    this.router.navigate(['/declarationcreate']);
   }
 
   toDelete(declaration: Declaration) {
@@ -95,6 +101,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.paginator._intl.itemsPerPageLabel = 'Items per pagina:';
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.initTableColumnNames();

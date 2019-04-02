@@ -52,8 +52,8 @@
     </mat-form-field>
 
     <mat-form-field class="dec-full-width">
-      <mat-label>Medewerker bericht | {{empMessage.value.length}} / 255</mat-label>
-      <input formControlName="empMessage" matInput #empMessage id="empMessage"
+      <mat-label>Medewerker bericht (optioneel)</mat-label>
+      <input formControlName="empMessage" matInput id="empMessage"
              name="empMessage" placeholder="Vul hier een bericht in">
 
       <mat-hint align="begin"
@@ -76,3 +76,15 @@
 
   </form>
 </div>
+
+<!--<mat-form-field class="dec-full-width">-->
+<!--  <mat-label>Medewerker bericht | {{empMessage.value.length}} / 255 (optioneel)</mat-label>-->
+<!--  <input formControlName="empMessage" matInput #empMessage id="empMessage"-->
+<!--         name="empMessage" placeholder="Vul hier een bericht in">-->
+
+<!--  <mat-hint align="begin"-->
+<!--            *ngIf="formControllers[maxSize].invalid && formControllers[maxSize].errors.lets_be_friends">-->
+<!--    Lets be friends-->
+<!--    <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>-->
+<!--  </mat-hint>-->
+<!--</mat-form-field>-->

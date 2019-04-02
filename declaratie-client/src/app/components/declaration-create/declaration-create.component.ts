@@ -42,7 +42,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
         Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
       serDate: new FormControl((new Date()).toISOString(), [Validators.required]),
       amount: new FormControl('', [
-        Validators.required]),
+        Validators.required, Validators.min(0)]),
       empMessage: new FormControl('', [
         Validators.maxLength(255),
         textInputValidator
@@ -64,7 +64,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
   }
 
   private backToList() {
-    this.router.navigate(['/declarationtable']);
+    this.router.navigateByUrl('/declarationtable');
   }
 
   private executeDeclarationCreation(createFormValue) {

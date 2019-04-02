@@ -21,3 +21,7 @@
 .dec-button-row a {
   margin-right: 8px;
 }
+
+.mat-hint{
+  color:red;
+}

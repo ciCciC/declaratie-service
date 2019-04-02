@@ -5,7 +5,6 @@
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/entity/DeclarationFile.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/model/EmployeeModel.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/DeclaratieApiApplication.java
-/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IController.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/controller/DeclarationController.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/exceptionHandler/DeclarationNotFoundException.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/service/DeclarationService.java
@@ -13,6 +12,5 @@
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/enums/RoleEnum.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/enums/StateEnum.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/entity/Declaration.java
-/Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/interfaces/IService.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/model/DeclarationFileModel.java
 /Users/koray/Desktop/GAME/declaratie-service/declaratie-api/src/main/java/com/declaratie/declaratieapi/model/DeclarationModel.java
