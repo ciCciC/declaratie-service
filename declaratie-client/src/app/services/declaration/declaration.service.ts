@@ -1,59 +1,50 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {IService} from '../iservice/IService';
 import {Declaration} from '../../models/Declaration';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {RestEnum} from '../../models/RestEnum';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DeclarationService implements IService<IDeclaration> {
+export class DeclarationService {
 
-  private baseUrl = 'http://localhost:8080/api/declaration';
   private crudOperations = RestEnum;
 
   constructor(private http: HttpClient) { }
 
-  create(t: IDeclaration): Observable<IDeclaration> {
-    return this.http.post<IDeclaration>(this.baseUrl + '/' + this.crudOperations.create, t, httpOptions);
+  addDeclaration(t: IDeclaration): Observable<IDeclaration> {
+    return this.http.post<IDeclaration>(environment.urlAddress + '/' + this.crudOperations.create, t, this.generateHeaders());
   }
 
-  read(any): Observable<Declaration> {
-    return undefined;
+  getDeclaration(id: number): Observable<Declaration> {
+    return this.http.get<Declaration>(environment.urlAddress + '/' + id, this.generateHeaders());
   }
 
   update(t: Declaration): boolean {
     return false;
   }
 
-  delete(any): boolean {
-    return false;
+  deleteDeclaration(id: number): Observable<any> {
+    return this.http.get<any>(environment.urlAddress + '/' + this.crudOperations.delete + '/' + id);
   }
 
-  // getAll(): Observable<IDeclaration[]> {
-  //   return this.http.get<IDeclaration[]>(this.baseUrl + '/' + this.crudOperations.all + '/1', httpOptions);
+  // getDeclarations(): Observable<IDeclaration[]> {
+  //   return this.http.get<IDeclaration[]>(environment.urlAddress);
   // }
 
-  getAll(): Observable<IDeclaration[]> {
+  private generateHeaders() {
+    return {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+  }
+
+  getDeclarations(): Observable<IDeclaration[]> {
     return of(DECLARATIONS);
   }
 
-  // read(id): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/${id}`);
-  // }
-  //
-  // delete(id: number): Observable<any> {
-  //   return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
-  // }
-  //
 
 }

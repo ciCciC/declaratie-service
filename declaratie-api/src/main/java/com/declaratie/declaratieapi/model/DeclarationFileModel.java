@@ -9,18 +9,16 @@ import java.util.Objects;
 public class DeclarationFileModel {
 
     private Long id;
-    private String filetype;
+    private String filename;
     private byte[] file;
-    private Declaration declaration;
 
     public DeclarationFileModel() {
     }
 
     public DeclarationFileModel(DeclarationFile declarationFile) {
         this.id = declarationFile.getId();
-        this.filetype = declarationFile.getFiletype().name();
+        this.filename = declarationFile.getFilename();
         this.file = declarationFile.getFile();
-        this.declaration = declarationFile.getDeclaration_id();
     }
 
     public Long getId() {
@@ -31,12 +29,12 @@ public class DeclarationFileModel {
         this.id = id;
     }
 
-    public String getFiletype() {
-        return filetype;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFiletype(String filetype) {
-        this.filetype = filetype;
+    public void setFilename(String filetype) {
+        this.filename = filetype;
     }
 
     public byte[] getFile() {
@@ -53,14 +51,13 @@ public class DeclarationFileModel {
         if (o == null || getClass() != o.getClass()) return false;
         DeclarationFileModel that = (DeclarationFileModel) o;
         return id.equals(that.id) &&
-                filetype.equals(that.filetype) &&
-                Arrays.equals(file, that.file) &&
-                declaration.equals(that.declaration);
+                filename.equals(that.filename) &&
+                Arrays.equals(file, that.file);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, filetype, declaration);
+        int result = Objects.hash(id, filename);
         result = 31 * result + Arrays.hashCode(file);
         return result;
     }
@@ -69,9 +66,8 @@ public class DeclarationFileModel {
     public String toString() {
         return "DeclarationFileModel{" +
                 "id=" + id +
-                ", filetype='" + filetype + '\'' +
+                ", filename='" + filename + '\'' +
                 ", file=" + Arrays.toString(file) +
-                ", declaration=" + declaration +
                 '}';
     }
 }

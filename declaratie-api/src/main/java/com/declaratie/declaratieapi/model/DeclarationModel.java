@@ -1,11 +1,15 @@
 package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class DeclarationModel {
 
@@ -13,10 +17,10 @@ public class DeclarationModel {
     private String description;
     private Date date;
     private double amount;
-    private String emp_comment;
-    private String man_comment;
-    private String state;
-    private Long emp_id;
+    private String empComment;
+    private String manComment;
+    private String status;
+    private Long empId;
     private List<DeclarationFileModel> files;
 
     public DeclarationModel() {
@@ -24,10 +28,10 @@ public class DeclarationModel {
         this.description = "";
         this.date = new Date();
         this.amount = 0;
-        this.emp_comment = "";
-        this.man_comment = "";
-        this.state = "";
-        this.emp_id = 0L;
+        this.empComment = "";
+        this.manComment = "";
+        this.status = "";
+        this.empId = 0L;
     }
 
     public DeclarationModel(Declaration declaration){
@@ -35,15 +39,19 @@ public class DeclarationModel {
         this.description = declaration.getDescription();
         this.date = declaration.getDate();
         this.amount = declaration.getAmount();
-        this.emp_comment = declaration.getEmp_comment();
-        this.man_comment = declaration.getMan_comment();
-        this.state = declaration.getStatusEnum().name();
-        this.emp_id = declaration.getEmp_id();
+        this.empComment = declaration.getEmpComment();
+        this.manComment = declaration.getManComment();
+        this.status = declaration.getStatusEnum().name();
+        this.empId = declaration.getEmpId();
+
+        this.files = declaration.getFiles() != null ? declaration.getFiles()
+                .stream().map(DeclarationFileModel::new)
+                .collect(Collectors.toList()) : new ArrayList<>();
     }
 
     public Declaration toDeclaration(){
-        return new Declaration(this.description, this.date, this.amount, this.emp_comment, this.man_comment,
-                StateEnum.valueOf(this.state), this.emp_id);
+        return new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
+                StateEnum.valueOf(this.status), this.empId);
     }
 
     public Long getId() {
@@ -78,36 +86,44 @@ public class DeclarationModel {
         this.amount = amount;
     }
 
-    public String getEmp_comment() {
-        return emp_comment;
+    public String getEmpComment() {
+        return empComment;
     }
 
-    public void setEmp_comment(String emp_comment) {
-        this.emp_comment = emp_comment;
+    public void setEmpComment(String emp_comment) {
+        this.empComment = emp_comment;
     }
 
-    public String getMan_comment() {
-        return man_comment;
+    public String getManComment() {
+        return manComment;
     }
 
-    public void setMan_comment(String man_comment) {
-        this.man_comment = man_comment;
+    public void setManComment(String man_comment) {
+        this.manComment = man_comment;
     }
 
-    public String getState() {
-        return state;
+    public Long getEmpId() {
+        return empId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setEmpId(Long emp_id) {
+        this.empId = emp_id;
     }
 
-    public Long getEmp_id() {
-        return emp_id;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEmp_id(Long emp_id) {
-        this.emp_id = emp_id;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<DeclarationFileModel> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<DeclarationFileModel> files) {
+        this.files = files;
     }
 
     @Override
@@ -119,16 +135,16 @@ public class DeclarationModel {
                 id.equals(that.id) &&
                 description.equals(that.description) &&
                 date.equals(that.date) &&
-                emp_comment.equals(that.emp_comment) &&
-                man_comment.equals(that.man_comment) &&
-                state.equals(that.state) &&
-                emp_id.equals(that.emp_id) &&
+                empComment.equals(that.empComment) &&
+                manComment.equals(that.manComment) &&
+                status.equals(that.status) &&
+                empId.equals(that.empId) &&
                 files.equals(that.files);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, date, amount, emp_comment, man_comment, state, emp_id, files);
+        return Objects.hash(id, description, date, amount, empComment, manComment, status, empId, files);
     }
 
     @Override
@@ -138,10 +154,11 @@ public class DeclarationModel {
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 ", amount=" + amount +
-                ", emp_comment='" + emp_comment + '\'' +
-                ", man_comment='" + man_comment + '\'' +
-                ", state=" + state +
-                ", emp_id=" + emp_id +
+                ", empComment='" + empComment + '\'' +
+                ", manComment='" + manComment + '\'' +
+                ", state=" + status +
+                ", empId=" + empId +
+                ", files=" + files.size() +
                 '}';
     }
 }

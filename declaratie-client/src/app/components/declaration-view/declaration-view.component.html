@@ -1,0 +1,72 @@
+<div mat-dialog-actions align="end">
+  <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
+</div>
+
+<h1 mat-dialog-title>Declaratie</h1>
+
+<div class="mat-dialog-content" *ngIf="declaration">
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>omschrijving</mat-label>
+    <input matInput value="{{declaration.description}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Medewerker ID</mat-label>
+    <input matInput value="{{employee.id}}" disabled>
+  </mat-form-field>
+
+  <table class="dec-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="dec-full-width" appearance="outline">
+          <mat-label>Voornaam</mat-label>
+          <input matInput value="{{employee.fname}}" disabled>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="dec-full-width" appearance="outline">
+          <mat-label>Achternaam</mat-label>
+          <input matInput value="{{employee.lname}}" disabled>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Datum</mat-label>
+    <input matInput value="{{declaration.date}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="dec-full-width" appearance="outline">
+    <mat-label>Bedrag</mat-label>
+    <input matInput type="number" value="{{declaration.amount}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="dec-full-width">
+    <mat-label>Medewerker bericht</mat-label>
+    <input matInput value="{{declaration.empComment}}" disabled>
+  </mat-form-field>
+
+  <div *ngIf="empStatus">
+    <mat-form-field class="dec-full-width">
+      <mat-label>Manager bericht</mat-label>
+      <input matInput value="{{declaration.manComment}}" disabled>
+    </mat-form-field>
+  </div>
+</div>
+
+<table *ngIf="processStatus" class="dec-full-width" cellspacing="0">
+  <tr>
+    <td>
+      <button mat-raised-button dec-button-row class="myDelete" (click)="toDelete()">
+        <mat-icon matTooltip="Verwijder">remove_circle_outline</mat-icon>
+      </button>
+    </td>
+    <td>
+      <button mat-raised-button dec-button-row class="myEdit" (click)="toEdit()">
+        <mat-icon matTooltip="Wijzig">edit</mat-icon>
+      </button>
+    </td>
+  </tr>
+</table>

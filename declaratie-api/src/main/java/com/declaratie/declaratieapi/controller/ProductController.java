@@ -1,12 +1,18 @@
 package com.declaratie.declaratieapi.controller;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class ProductController {
+
+//    @Value("${myProp}")
+//    private String prop;
 
 //
 //    @GetMapping("/product")
@@ -51,6 +57,11 @@ public class ProductController {
 //    private ResponseEntity<String> getStatusResponse(boolean status){
 //        return status ? new ResponseEntity<>("Process: good", HttpStatus.OK) :
 //                new ResponseEntity<>("Process: failure", HttpStatus.NOT_FOUND);
+//    }
+
+//    @PostConstruct
+//    public void init() {
+//        System.out.println("Property is : "+ prop);
 //    }
 
 }

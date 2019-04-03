@@ -1,3 +1,5 @@
-com/declaratie/declaratieapi/service/DeclarationServiceTest.class
 com/declaratie/declaratieapi/util/H2TestJpaConfig.class
 com/declaratie/declaratieapi/DeclaratieApiApplicationIntegrationTests.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest$1.class
+com/declaratie/declaratieapi/service/DeclarationServiceMockitoTest.class

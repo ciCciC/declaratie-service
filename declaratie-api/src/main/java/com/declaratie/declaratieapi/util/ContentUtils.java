@@ -7,13 +7,13 @@ public class ContentUtils {
     public static void CLEAN_DELCARATION_VALUES(DeclarationModel model){
         model.setDescription(REPLACE_XSS_CHARS(model.getDescription()));
 
-        if(model.getEmp_comment() != null)
-            model.setEmp_comment(REPLACE_XSS_CHARS(model.getEmp_comment()));
+        if(model.getEmpComment() != null)
+            model.setEmpComment(REPLACE_XSS_CHARS(model.getEmpComment()));
 
-        if(model.getMan_comment() != null)
-            model.setMan_comment(REPLACE_XSS_CHARS(model.getMan_comment()));
+        if(model.getManComment() != null)
+            model.setManComment(REPLACE_XSS_CHARS(model.getManComment()));
 
-        model.setState(REPLACE_XSS_CHARS(model.getState()));
+        model.setStatus(REPLACE_XSS_CHARS(model.getStatus()));
     }
 
     private static String REPLACE_XSS_CHARS(String value){

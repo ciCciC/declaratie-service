@@ -1,12 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeclarationTableComponent } from './declaration-table.component';
-import {MatDialog, MatDialogModule, MatPaginator, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatIconModule,
+  MatPaginator,
+  MatPaginatorModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {of} from 'rxjs';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe(DeclarationTableComponent.name, () => {
 
@@ -16,12 +26,15 @@ describe(DeclarationTableComponent.name, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        MatIconModule,
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
-        MatDialogModule
+        MatDialogModule,
+        NoopAnimationsModule,
+        RouterTestingModule
       ],
       declarations: [ DeclarationTableComponent ]
     })
@@ -48,11 +61,18 @@ describe(DeclarationTableComponent.name, () => {
      */
 
     // Arrange : undefined is dummy
-    let collaborator: DeclarationService;
-    collaborator = new DeclarationService(undefined);
-    const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
-    collaborator.getAll = () => of(DECLARATIONS);
+    // let collaborator: DeclarationService;
+    const collaborator = new DeclarationService(undefined);
+
+    // let errorHandlerService: ErrorHandlerService;
+    const errorHandlerService = new ErrorHandlerService(undefined);
+
+    const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
+      errorHandlerService as unknown as ErrorHandlerService,
+      matDialog as unknown as MatDialog, undefined);
+
+    collaborator.getDeclarations = () => of(DECLARATIONS);
 
     // Act
     container.ngOnInit();
@@ -73,8 +93,13 @@ describe(DeclarationTableComponent.name, () => {
     // Arrange : undefined is dummy
     let collaborator: DeclarationService;
     collaborator = new DeclarationService(undefined);
-    const aa = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
-    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService, aa as unknown as MatDialog);
+
+    const errorHandlerService = new ErrorHandlerService(undefined);
+
+    const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
+      errorHandlerService as unknown as ErrorHandlerService,
+      matDialog as unknown as MatDialog, undefined);
 
     const spy = spyOn(container, 'getDeclarationsList');
 

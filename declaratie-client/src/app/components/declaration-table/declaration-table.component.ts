@@ -1,12 +1,16 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {Declaration} from '../../models/Declaration';
-import {Observable, of, Subject, throwError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
+import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
+import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {StatusEnum} from '../../models/StatusEnum';
+import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
+import {IMessageDialog} from '../../models/imodels/IMessageDialog';
+import {Router} from '@angular/router';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -20,37 +24,88 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   data$: Observable<IDeclaration[]>;
   loadingError = new Subject<boolean>();
   pageSizeOptions = [5, 10, 15];
-
-  public dialogConfig;
+  InProgress = StatusEnum.INPROGRESS;
+  private notAcceptableStatus = [StatusEnum.INPROGRESS, StatusEnum.APPROVED];
+  actionValue = 'action';
+  colNames: string[];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private declarationService: DeclarationService, private dialog: MatDialog) { }
+  constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService,
+              private dialog: MatDialog, private router: Router) { }
 
   getDeclarationsList() {
-    // this.declarationService.getAll().subscribe(data => {
-    //   this.dataSource.data = data;
-    //   this.displayedColumns = Declaration.getPropertyNamesForTableComponent();
-    // }, error => console.log(error));
-
-    this.declarationService.getAll().subscribe(data => {
+    this.declarationService.getDeclarations().subscribe(data => {
       this.dataSource.data = data;
     }, (error) => {
-      const aa = error as HttpErrorResponse;
-      console.log('Lolzzz: ' + aa.name);
-      console.log('Lolzzz: ' + aa.ok);
-      console.log('Lolzzz: ' + aa.message);
-      console.log('Lolzzz: ' + aa.error.message);
+      this.errorService.handleError(error);
     });
   }
 
+  checkStatus(statusToCheck: StatusEnum) {
+    return !this.notAcceptableStatus.some( status => status === statusToCheck);
+  }
+
   initTableColumnNames() {
+    this.colNames = ['beschrijving', 'bedrag', 'datum', 'status'];
     this.displayedColumns = Declaration.getPropertyNamesForTableComponent();
+    this.displayedColumns.push('action');
+  }
+
+  createClick() {
+    // this.router.navigateByUrl('/declarationcreate');
+    this.router.navigate(['/declarationcreate']);
+  }
+
+  toDelete(declaration: Declaration) {
+
+    if (declaration.status === StatusEnum.INPROGRESS) {
+      this.errorService.unableToDelete();
+    } else {
+
+      const toDelete: IMessageDialog = {
+        name: 'Bericht',
+        message: 'Declaratie verwijderen?'
+      };
+
+      const dialogRef = this.dialog.open(MessageDialogComponent, {data: toDelete});
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          // this.declarationListFilter(declaration);
+          this.deleteDeclaration(declaration);
+        }
+      });
+    }
+  }
+
+  openDialog(selected: Declaration) {
+    const dialogRef = this.dialog.open(DeclarationViewComponent, {data: selected});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.declarationListFilter(selected);
+        // this.deleteDeclaration(selected);
+      }
+    });
+  }
+
+  private deleteDeclaration(declaration: Declaration) {
+    this.declarationService.deleteDeclaration(declaration.id).subscribe(data => {
+      alert(JSON.stringify(data));
+      this.declarationListFilter(declaration);
+      // this.getDeclarationsList();
+    }, (error) => {
+      alert(JSON.stringify(error));
+      this.errorService.handleError(error);
+    });
+  }
+
+  private declarationListFilter(declaration: Declaration) {
+    this.dataSource.data = this.dataSource.data.filter(u => u !== declaration);
   }
 
   ngOnInit() {
-
+    // this.paginator._intl.itemsPerPageLabel = 'Items per pagina:';
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.initTableColumnNames();

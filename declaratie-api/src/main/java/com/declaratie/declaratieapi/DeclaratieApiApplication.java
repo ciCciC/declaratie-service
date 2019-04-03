@@ -3,9 +3,9 @@ package com.declaratie.declaratieapi;
 import com.declaratie.declaratieapi.controller.DeclarationController;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
-import com.declaratie.declaratieapi.enums.FileTypeEnum;
 import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
+import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -33,8 +33,7 @@ public class DeclaratieApiApplication {
 	@Bean
 	ApplicationRunner initSomeExampleList(DeclarationService declarationService) {
 		return args -> {
-			Stream.of("Benzine", "Eten", "Boek", "Administratie materiaal", "Make up",
-					"Bier", "Ferrari", "Computer").forEach(description -> {
+			Stream.of("Benzine", "Eten", "Auto", "Alcohol").forEach(description -> {
 
 				Declaration declaration = new Declaration(description, new Date(), 120,
 						"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
@@ -42,10 +41,10 @@ public class DeclaratieApiApplication {
 				byte [] tmp = new byte []{111, 127};
 
 				try{
-					declaration.addDeclarationFile(new DeclarationFile(FileTypeEnum.jpeg, tmp));
-					declaration.addDeclarationFile(new DeclarationFile(FileTypeEnum.png, tmp));
+					declaration.addDeclarationFile(new DeclarationFile("holidaypicture.jpg", tmp));
+					declaration.addDeclarationFile(new DeclarationFile("badboydancing.png", tmp));
 
-					Declaration dec = declarationService.create(declaration);
+					DeclarationModel dec = declarationService.create(declaration);
 
 				}catch(UnprocessableDeclarationException ex){
 					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
