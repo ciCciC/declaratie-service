@@ -16,7 +16,7 @@
           <div *ngIf="col != actionValue; else elseAction" (click)="openDialog(element)">{{element[col]}}</div>
           <ng-template #elseAction>
             <mat-icon mat-mini-fab>
-              <mat-icon *ngIf="element.status != InProgress" class="toDelete" matTooltip="Verwijder"
+              <mat-icon *ngIf="checkStatus(element.status)" class="toDelete" matTooltip="Verwijder"
                         (click)="toDelete(element)">remove_circle_outline
               </mat-icon>
             </mat-icon>

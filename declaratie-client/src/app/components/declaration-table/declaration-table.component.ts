@@ -25,6 +25,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   loadingError = new Subject<boolean>();
   pageSizeOptions = [5, 10, 15];
   InProgress = StatusEnum.INPROGRESS;
+  private notAcceptableStatus = [StatusEnum.INPROGRESS, StatusEnum.APPROVED];
   actionValue = 'action';
   colNames: string[];
 
@@ -35,12 +36,15 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
               private dialog: MatDialog, private router: Router) { }
 
   getDeclarationsList() {
-
     this.declarationService.getDeclarations().subscribe(data => {
       this.dataSource.data = data;
     }, (error) => {
       this.errorService.handleError(error);
     });
+  }
+
+  checkStatus(statusToCheck: StatusEnum) {
+    return !this.notAcceptableStatus.some( status => status === statusToCheck);
   }
 
   initTableColumnNames() {

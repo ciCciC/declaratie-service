@@ -8,6 +8,7 @@ import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {map} from 'rxjs/operators';
 
 
 @Component({
@@ -17,12 +18,12 @@ import {ErrorHandlerService} from '../../services/errorhandlerservice/error-hand
 })
 export class DeclarationCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
-  disabled = true;
-  minDate: Date;
-  maxDate: Date;
-  maxDaysRange = 5;
-  maxDesc = 30;
-  controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
+  private disabled = true;
+  private minDate: Date;
+  private maxDate: Date;
+  private maxDaysRange = 5;
+  private maxDesc = 30;
+  private controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
 
   constructor(private fb: FormBuilder, private location: Location,
               private router: Router, private declarationService: DeclarationService, private errorService: ErrorHandlerService) {
@@ -48,7 +49,6 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
         textInputValidator
       ])
     });
-
   }
 
   createDeclaration(createFormValue) {
@@ -81,14 +81,13 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     };
 
     this.declarationService.addDeclaration(declaration).subscribe(data => {
-      alert(JSON.stringify(data));
       this.backToList();
     }, error => {{
       this.errorService.handleError(error);
     }});
   }
 
-  get formControllers(): any[] {
+  private get formControllers(): any[] {
     const toReturn = [];
 
     for (const conName of this.controllerForCheck) {
@@ -96,10 +95,6 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     }
 
     return toReturn;
-  }
-
-  get maxSize() {
-    return this.formControllers.length - 1;
   }
 
   private examInputSecurity() {

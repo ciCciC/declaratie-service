@@ -22,11 +22,10 @@ export class DeclarationViewComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationViewComponent>,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService) {
-    // this.declaration = DECLARATIONS[data.id];
     this.declaration = data;
     this.declarationId = data.id;
     this.declarationStatus = data.status;
-    this.processStatus = data.status !== StatusEnum.INPROGRESS;
+    this.processStatus = data.status !== StatusEnum.INPROGRESS && data.status !== StatusEnum.APPROVED;
     this.empStatus = this.declaration.manComment != null && this.declaration.manComment.length > 0;
   }
 

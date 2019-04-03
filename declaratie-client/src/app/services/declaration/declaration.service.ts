@@ -32,9 +32,9 @@ export class DeclarationService {
     return this.http.get<any>(environment.urlAddress + '/' + this.crudOperations.delete + '/' + id);
   }
 
-  getDeclarations(): Observable<IDeclaration[]> {
-    return this.http.get<IDeclaration[]>(environment.urlAddress);
-  }
+  // getDeclarations(): Observable<IDeclaration[]> {
+  //   return this.http.get<IDeclaration[]>(environment.urlAddress);
+  // }
 
   private generateHeaders() {
     return {
@@ -42,9 +42,9 @@ export class DeclarationService {
     };
   }
 
-  // getDeclarations(): Observable<IDeclaration[]> {
-  //   return of(DECLARATIONS);
-  // }
+  getDeclarations(): Observable<IDeclaration[]> {
+    return of(DECLARATIONS);
+  }
 
 
 }

@@ -6,11 +6,7 @@
       <mat-label>Declaratie omschrijving</mat-label>
       <input formControlName="description" matInput placeholder="omschrijving"
              id="description" name="description">
-
-      <mat-hint align="begin" *ngIf="formControllers[2].invalid && formControllers[2].errors.lets_be_friends">
-        Lets be friends
-        <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>
-      </mat-hint>
+      <div *ngIf="!(createForm.controls.description.invalid && createForm.controls.description.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
 
     <mat-form-field class="dec-full-width" appearance="outline">
@@ -43,7 +39,6 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Bedrag</mat-label>
       <input formControlName="amount" matInput #euro
@@ -55,12 +50,7 @@
       <mat-label>Medewerker bericht (optioneel)</mat-label>
       <input formControlName="empMessage" matInput id="empMessage"
              name="empMessage" placeholder="Vul hier een bericht in">
-
-      <mat-hint align="begin"
-                *ngIf="formControllers[maxSize].invalid && formControllers[maxSize].errors.lets_be_friends">
-        Lets be friends
-        <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>
-      </mat-hint>
+      <div *ngIf="!(createForm.controls.empMessage.invalid && createForm.controls.empMessage.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
 
     <table class="dec-full-width" cellspacing="0">
@@ -74,17 +64,12 @@
       </tr>
     </table>
 
+    <ng-template #elseAction>
+      <mat-hint align="begin">
+        Lets be friends
+        <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>
+      </mat-hint>
+    </ng-template>
+
   </form>
 </div>
-
-<!--<mat-form-field class="dec-full-width">-->
-<!--  <mat-label>Medewerker bericht | {{empMessage.value.length}} / 255 (optioneel)</mat-label>-->
-<!--  <input formControlName="empMessage" matInput #empMessage id="empMessage"-->
-<!--         name="empMessage" placeholder="Vul hier een bericht in">-->
-
-<!--  <mat-hint align="begin"-->
-<!--            *ngIf="formControllers[maxSize].invalid && formControllers[maxSize].errors.lets_be_friends">-->
-<!--    Lets be friends-->
-<!--    <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>-->
-<!--  </mat-hint>-->
-<!--</mat-form-field>-->
