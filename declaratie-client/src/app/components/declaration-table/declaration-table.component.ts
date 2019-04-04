@@ -61,7 +61,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   toDelete(declaration: Declaration) {
 
     if (declaration.status === StatusEnum.INPROGRESS) {
-      this.errorService.unableToDelete();
+      this.errorService.unableToProcess(declaration.status);
     } else {
 
       const toDelete: IMessageDialog = {

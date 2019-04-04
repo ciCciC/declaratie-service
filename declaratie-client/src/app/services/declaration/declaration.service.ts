@@ -16,16 +16,16 @@ export class DeclarationService {
 
   constructor(private http: HttpClient) { }
 
-  addDeclaration(t: IDeclaration): Observable<IDeclaration> {
-    return this.http.post<IDeclaration>(environment.urlAddress + '/' + this.crudOperations.create, t, this.generateHeaders());
+  addDeclaration(toSave: IDeclaration): Observable<IDeclaration> {
+    return this.http.post<IDeclaration>(environment.urlAddress + '/' + this.crudOperations.create, toSave, this.generateHeaders());
   }
 
   getDeclaration(id: number): Observable<Declaration> {
     return this.http.get<Declaration>(environment.urlAddress + '/' + id, this.generateHeaders());
   }
 
-  update(t: Declaration): boolean {
-    return false;
+  update(toUpdate: Declaration): Observable<Declaration> {
+    return this.http.post<IDeclaration>(environment.urlAddress + '/' + this.crudOperations.update, toUpdate, this.generateHeaders());
   }
 
   deleteDeclaration(id: number): Observable<any> {

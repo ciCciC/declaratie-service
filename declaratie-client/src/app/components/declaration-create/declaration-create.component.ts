@@ -19,29 +19,22 @@ import {map} from 'rxjs/operators';
 export class DeclarationCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
   private disabled = true;
-  private minDate: Date;
-  private maxDate: Date;
-  private maxDaysRange = 5;
-  private maxDesc = 30;
   private controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
+  processDate = new Date();
 
   constructor(private fb: FormBuilder, private location: Location,
               private router: Router, private declarationService: DeclarationService, private errorService: ErrorHandlerService) {
-    this.minDate = new Date(Date.now());
-    this.maxDate = new Date(Date.now());
-    this.maxDate.setDate(this.maxDate.getDate() + this.maxDaysRange);
     this.createForm = this.fb.group({
       description: new FormControl('', [
         Validators.required,
-        Validators.maxLength(this.maxDesc),
+        Validators.maxLength(255),
         textInputValidator
       ]),
       empID: new FormControl({value: EMPLOYEE.id, disabled: this.disabled}),
       fname: new FormControl({value: EMPLOYEE.fname, disabled: this.disabled}, [
-        Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
+        Validators.required, textInputValidator]),
       lname: new FormControl({value: EMPLOYEE.lname, disabled: this.disabled}, [
-        Validators.required, Validators.maxLength(this.maxDesc), textInputValidator]),
-      serDate: new FormControl((new Date()).toISOString(), [Validators.required]),
+        Validators.required, textInputValidator]),
       amount: new FormControl('', [
         Validators.required, Validators.min(0)]),
       empMessage: new FormControl('', [
@@ -71,7 +64,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     const declaration: Declaration = {
       id: null,
       description: createFormValue.description,
-      date: createFormValue.serDate,
+      date: new Date().toISOString(),
       empId: EMPLOYEE.id,
       status: StatusEnum.SUBMITTED,
       amount: createFormValue.amount,

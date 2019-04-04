@@ -6,6 +6,7 @@ import {StatusEnum} from '../../models/StatusEnum';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
 
 @Component({
   selector: 'app-declaration-view',
@@ -14,7 +15,7 @@ import {ErrorHandlerService} from '../../services/errorhandlerservice/error-hand
 })
 export class DeclarationViewComponent implements OnInit {
   private declarationId: number;
-  private declarationStatus: StatusEnum;
+  private declarationStatus: boolean;
   declaration: Declaration;
   employee = EMPLOYEE;
   empStatus = false;
@@ -24,8 +25,9 @@ export class DeclarationViewComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService) {
     this.declaration = data;
     this.declarationId = data.id;
-    this.declarationStatus = data.status;
     this.processStatus = data.status !== StatusEnum.INPROGRESS && data.status !== StatusEnum.APPROVED;
+    console.log('Status: ' + data.status);
+    this.declarationStatus = !this.processStatus;
     this.empStatus = this.declaration.manComment != null && this.declaration.manComment.length > 0;
   }
 
@@ -34,8 +36,8 @@ export class DeclarationViewComponent implements OnInit {
   }
 
   toDelete() {
-    if (this.declarationStatus === StatusEnum.INPROGRESS) {
-      this.errorService.unableToDelete();
+    if (this.declarationStatus) {
+      this.errorService.unableToProcess(this.declaration.status);
     } else {
       const toDelete: IMessageDialog = {
         name: 'Bericht',
@@ -52,7 +54,13 @@ export class DeclarationViewComponent implements OnInit {
   }
 
   toEdit() {
-    alert('pressed edit');
+    if (this.declarationStatus) {
+      this.errorService.unableToProcess(this.declaration.status);
+    } else {
+
+      this.dialog.open(DeclarationUpdateComponent, {data: this.declaration});
+      this.close();
+    }
   }
 
   ngOnInit() {

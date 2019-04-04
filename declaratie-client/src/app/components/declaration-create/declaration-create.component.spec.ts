@@ -38,7 +38,7 @@ describe(DeclarationCreateComponent.name, () => {
 
   it('form should be valid', () => {
     component.createForm.get('description').setValue('This is my description');
-    component.createForm.get('serDate').setValue(new Date());
+    component.processDate = new Date();
     component.createForm.get('amount').setValue(100.50);
     component.createForm.get('empMessage').setValue('I like beer');
 

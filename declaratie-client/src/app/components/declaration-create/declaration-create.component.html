@@ -31,12 +31,9 @@
       </tr>
     </table>
 
-    <mat-form-field>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Datum"
-             (focus)="picker.open()"
-             formControlName="serDate" name="serDate">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field class="dec-full-width" appearance="outline">
+      <mat-label>Datum</mat-label>
+      <input matInput value="{{processDate | date}}" disabled>
     </mat-form-field>
 
     <mat-form-field class="dec-full-width" appearance="outline">
