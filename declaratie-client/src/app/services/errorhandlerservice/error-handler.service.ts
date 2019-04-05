@@ -16,7 +16,9 @@ export class ErrorHandlerService {
   constructor(private dialog: MatDialog) { }
 
   public handleError(error: HttpErrorResponse) {
-    if (error.status === 404) {
+    if (error.status === 500) {
+      this.handle500Error(error);
+    } else if (error.status === 404) {
       this.handle404Error(error);
     } else if (error.status === 400) {
       this.handle400Error(error);
@@ -25,6 +27,11 @@ export class ErrorHandlerService {
     } else {
       this.handleOtherError(error);
     }
+  }
+
+  private handle500Error(error: HttpErrorResponse) {
+    this.createErrorMessage(error);
+    this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
   private handle404Error(error: HttpErrorResponse) {

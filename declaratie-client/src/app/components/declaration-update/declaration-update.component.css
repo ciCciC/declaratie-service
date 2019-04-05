@@ -26,15 +26,6 @@
   color:red;
 }
 
-.myCancel{
-  background-color: rgba(255, 0, 0, 0.8);
-  color:white;
-}
-
-.myCancel:hover{
-  background-color:red;
-}
-
 .mySave{
   background-color: rgba(126, 63, 242, 0.91);
   color:white;
@@ -42,4 +33,8 @@
 
 .mySave:hover{
   background-color:#7e3ff2;
+}
+
+.mat-hint{
+  color:red;
 }

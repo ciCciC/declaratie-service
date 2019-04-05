@@ -26,7 +26,7 @@ public class DeclarationFile {
     @Column(name = "fileName")
     private String fileName;
 
-    @Column(name = "file", nullable = false)
+    @Column(name = "file")
     private byte[] file;
 
     public Declaration getDeclarationId() {

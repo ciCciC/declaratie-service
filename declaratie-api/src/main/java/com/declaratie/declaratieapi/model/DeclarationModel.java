@@ -50,8 +50,14 @@ public class DeclarationModel {
     }
 
     public Declaration toDeclaration(){
-        return new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
+        Declaration transformed = new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
                 StateEnum.valueOf(this.status), this.empId);
+
+        transformed.setFiles(this.getFiles() != null ? this.getFiles()
+                .stream().map(data -> data.toDeclarationFile())
+                .collect(Collectors.toList()) : new ArrayList<>());
+
+        return transformed;
     }
 
     public Long getId() {

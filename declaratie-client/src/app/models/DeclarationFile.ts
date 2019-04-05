@@ -1,5 +1,5 @@
 export class DeclarationFile {
   id: number;
-  file: Blob;
-  filetype: string;
+  file: string;
+  filename: string;
 }

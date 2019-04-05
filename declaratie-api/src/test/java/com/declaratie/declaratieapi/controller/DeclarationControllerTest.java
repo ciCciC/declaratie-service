@@ -73,14 +73,18 @@ public class DeclarationControllerTest {
         DeclarationModel toRead = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12));
 
+        System.out.println("ID: " + toRead.getId());
+
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
-                endpoint+"/"+toRead.getId(),
+                endpoint+"/read/"+toRead.getId(),
                 DeclarationModel.class);
+
+        System.out.println("GOT ID:" + declarationModel.getBody().getId());
 
         // Assert
         assertThat(declarationModel.getBody().getId()).isEqualTo(toRead.getId());
-        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
@@ -93,7 +97,7 @@ public class DeclarationControllerTest {
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
-                endpoint+"/"+toRead,
+                endpoint+"/read/"+toRead,
                 DeclarationModel.class);
 
         // Assert
@@ -113,7 +117,7 @@ public class DeclarationControllerTest {
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
-                endpoint+"/"+toRead,
+                endpoint+"/read/"+toRead,
                 DeclarationModel.class);
 
         // Assert

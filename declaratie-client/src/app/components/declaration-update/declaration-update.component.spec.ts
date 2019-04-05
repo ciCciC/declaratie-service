@@ -5,6 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatIconModule} from '@angular/material';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('DeclarationUpdateComponent', () => {
   let component: DeclarationUpdateComponent;
@@ -18,7 +19,8 @@ describe('DeclarationUpdateComponent', () => {
         MatDialogModule,
         MaterialModule,
         BrowserAnimationsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        HttpClientTestingModule
       ],
       providers: [{provide: MatDialogRef, useValue: {}}, {
         provide: MAT_DIALOG_DATA,

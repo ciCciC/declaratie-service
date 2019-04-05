@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {map} from 'rxjs/operators';
+import {DeclarationFile} from '../../models/DeclarationFile';
 
 
 @Component({
@@ -61,6 +62,15 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
   }
 
   private executeDeclarationCreation(createFormValue) {
+    const ss: DeclarationFile [] = [
+      {id: 1,
+      file: '1',
+        filename: 'lolz.jpeg'},
+      {id: 2,
+      file: '2',
+        filename: 'lolz.jpeg'}
+    ];
+
     const declaration: Declaration = {
       id: null,
       description: createFormValue.description,
@@ -70,7 +80,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
       amount: createFormValue.amount,
       empComment: createFormValue.empMessage,
       manComment: '',
-      files: []
+      files: ss
     };
 
     this.declarationService.addDeclaration(declaration).subscribe(data => {

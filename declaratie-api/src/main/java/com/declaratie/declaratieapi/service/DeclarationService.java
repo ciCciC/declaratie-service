@@ -11,13 +11,17 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+@Transactional
 @Service
 public class DeclarationService {
 
@@ -36,7 +40,7 @@ public class DeclarationService {
             throw new UnprocessableDeclarationException("Declaration is not processable.");
 
         try {
-            return declarationMapper.apply(this.declarationRepository.save(declaration));
+            return new DeclarationModel(this.declarationRepository.save(declaration));
         }catch (TransactionSystemException e) {
             throw new UnprocessableDeclarationException("Declaration is not processable - constraint violation");
 
@@ -46,14 +50,38 @@ public class DeclarationService {
     }
 
     public DeclarationModel read(Long id) throws DeclarationNotFoundException {
+        Optional<Declaration> toRead = this.declarationRepository.findById(id);
+
+        if(!toRead.isPresent() || id < 0)
+            throw new DeclarationNotFoundException(MessageFormat.format("Declaration with id={0} not found", id));
+
+        Declaration toReturn = toRead.get();
+
+//        Hibernate.initialize(toReturn.getFiles());
+        toReturn.getFiles();
+//        System.out.println("Extra data: " + toReturn.getFiles().size());
+
+        return new DeclarationModel(toReturn);
+    }
+
+    public DeclarationModel update(Long id, DeclarationModel declarationModel) throws DeclarationNotFoundException, UnprocessableDeclarationException {
         if(!this.existsById(id) || id < 0)
             throw new DeclarationNotFoundException(MessageFormat.format("Declaration with id={0} not found", id));
 
-        return declarationMapper.apply(this.declarationRepository.findById(id).get());
-    }
+        if(declarationModel == null)
+            throw new UnprocessableDeclarationException("Declaration is not processable.");
 
-    public Declaration update(Declaration declaration) {
-        return null;
+        try {
+            Declaration toUpdate = declarationModel.toDeclaration();
+            toUpdate.setId(id);
+
+            return declarationMapper.apply(this.declarationRepository.save(toUpdate));
+        }catch (TransactionSystemException e) {
+            throw new UnprocessableDeclarationException("Declaration is not processable - constraint violation");
+
+        }catch (DataIntegrityViolationException e){
+            throw new UnprocessableDeclarationException("Declaration is not processable - data integrity");
+        }
     }
 
     public boolean delete(Declaration declaration) {
@@ -66,11 +94,13 @@ public class DeclarationService {
     }
 
     public List<Declaration> getAll() throws ResponseStatusException {
-        if(this.declarationRepository.findAll().isEmpty()){
+        List<Declaration> ss = StreamSupport.stream(this.declarationRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+        if(ss.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations table is empty");
         }
 
-        return this.declarationRepository.findAll();
+        return ss;
     }
 
     public boolean existsById(Long id){

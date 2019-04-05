@@ -3,38 +3,46 @@ import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Declaration} from '../../models/Declaration';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
-import {RestEnum} from '../../models/RestEnum';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {environment} from '../../../environments/environment';
+import {DeclarationFile} from '../../models/DeclarationFile';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeclarationService {
 
-  private crudOperations = RestEnum;
-
   constructor(private http: HttpClient) { }
 
   addDeclaration(toSave: IDeclaration): Observable<IDeclaration> {
-    return this.http.post<IDeclaration>(environment.urlAddress + '/' + this.crudOperations.create, toSave, this.generateHeaders());
+    return this.http.post<IDeclaration>(environment.urlAddress + '/', toSave, this.generateHeaders());
   }
 
-  getDeclaration(id: number): Observable<Declaration> {
-    return this.http.get<Declaration>(environment.urlAddress + '/' + id, this.generateHeaders());
+  getDeclaration(id: number): Observable<IDeclaration> {
+    return this.http.get<IDeclaration>(environment.urlAddress + '/read/' + id);
   }
 
-  update(toUpdate: Declaration): Observable<Declaration> {
-    return this.http.post<IDeclaration>(environment.urlAddress + '/' + this.crudOperations.update, toUpdate, this.generateHeaders());
+  updateDeclaration(toUpdate: IDeclaration): Observable<IDeclaration> {
+
+    // const ss: DeclarationFile [] = [
+    //   {id: 1,
+    //   file: [] = [1, 2, 3],
+    //   fileName: 'lolz.jpeg'},
+    //   {id: 2,
+    //   file: [] = [1, 2, 3],
+    //   fileName: 'lolz.jpeg'}
+    // ];
+
+    return this.http.post<IDeclaration>(environment.urlAddress + '/' + toUpdate.id, toUpdate, this.generateHeaders());
   }
 
   deleteDeclaration(id: number): Observable<any> {
-    return this.http.get<any>(environment.urlAddress + '/' + this.crudOperations.delete + '/' + id);
+    return this.http.get<any>(environment.urlAddress + '/delete/' + id);
   }
 
-  // getDeclarations(): Observable<IDeclaration[]> {
-  //   return this.http.get<IDeclaration[]>(environment.urlAddress);
-  // }
+  getDeclarations(): Observable<IDeclaration[]> {
+    return this.http.get<IDeclaration[]>(environment.urlAddress);
+  }
 
   private generateHeaders() {
     return {
@@ -42,9 +50,9 @@ export class DeclarationService {
     };
   }
 
-  getDeclarations(): Observable<IDeclaration[]> {
-    return of(DECLARATIONS);
-  }
+  // getDeclarations(): Observable<IDeclaration[]> {
+  //   return of(DECLARATIONS);
+  // }
 
 
 }

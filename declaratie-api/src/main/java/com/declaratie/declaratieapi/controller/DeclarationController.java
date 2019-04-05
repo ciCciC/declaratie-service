@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,13 +56,21 @@ public class DeclarationController {
      * @param id for getting the declaration
      * @return returns response
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<DeclarationModel> read(@PathVariable("id") Long id) throws DeclarationNotFoundException {
-        return new ResponseEntity<>(declarationService.read(id), HttpStatus.FOUND);
+    @GetMapping("/read/{id}")
+    public DeclarationModel read(@PathVariable("id") Long id) throws DeclarationNotFoundException {
+        return declarationService.read(id);
     }
 
-    public ResponseEntity<DeclarationModel> update(Long id, DeclarationModel declarationModel) {
-        return null;
+//    @GetMapping("/readme/{id}")
+//    public DeclarationModel readMe(@PathVariable("id") Long id) {
+//        return declarationService.readMe(id);
+//    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<DeclarationModel> update(@PathVariable("id") Long id, @RequestBody DeclarationModel declarationModel)
+            throws UnprocessableDeclarationException, DeclarationNotFoundException {
+
+        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
     }
 
     /***

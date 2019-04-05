@@ -1,6 +1,5 @@
 package com.declaratie.declaratieapi.model;
 
-import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 
 import java.util.Arrays;
@@ -19,6 +18,12 @@ public class DeclarationFileModel {
         this.id = declarationFile.getId();
         this.filename = declarationFile.getFilename();
         this.file = declarationFile.getFile();
+    }
+
+    public DeclarationFile toDeclarationFile(){
+        DeclarationFile transformed = new DeclarationFile(this.filename, this.getFile());
+        transformed.setId(this.getId());
+        return transformed;
     }
 
     public Long getId() {

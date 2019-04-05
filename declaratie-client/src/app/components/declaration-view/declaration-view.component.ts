@@ -6,6 +6,7 @@ import {StatusEnum} from '../../models/StatusEnum';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {RestEnum} from '../../models/RestEnum';
 import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
 
 @Component({
@@ -26,7 +27,6 @@ export class DeclarationViewComponent implements OnInit {
     this.declaration = data;
     this.declarationId = data.id;
     this.processStatus = data.status !== StatusEnum.INPROGRESS && data.status !== StatusEnum.APPROVED;
-    console.log('Status: ' + data.status);
     this.declarationStatus = !this.processStatus;
     this.empStatus = this.declaration.manComment != null && this.declaration.manComment.length > 0;
   }
@@ -47,7 +47,7 @@ export class DeclarationViewComponent implements OnInit {
       const dialogRefMessage = this.dialog.open(MessageDialogComponent, {data: toDelete});
       dialogRefMessage.afterClosed().subscribe(result => {
         if (result) {
-          this.dialogRef.close(result);
+          this.dialogRef.close(RestEnum.delete);
         }
       });
     }
@@ -57,9 +57,7 @@ export class DeclarationViewComponent implements OnInit {
     if (this.declarationStatus) {
       this.errorService.unableToProcess(this.declaration.status);
     } else {
-
-      this.dialog.open(DeclarationUpdateComponent, {data: this.declaration});
-      this.close();
+      this.dialogRef.close(RestEnum.update);
     }
   }
 
