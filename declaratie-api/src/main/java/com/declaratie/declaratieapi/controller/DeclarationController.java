@@ -40,15 +40,9 @@ public class DeclarationController {
     public ResponseEntity<DeclarationModel> create(@RequestBody DeclarationModel declarationModel) throws UnprocessableDeclarationException {
         logger.info(this.callMessage("create()"));
 
-        System.out.println("BEFORE CHECK: " + declarationModel);
-
         ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
 
-        System.out.println("AFTER CHECK: " + declarationModel);
-
-        Declaration toSave = declarationModel.toDeclaration();
-
-        return new ResponseEntity<>(declarationService.create(toSave), HttpStatus.CREATED);
+        return new ResponseEntity<>(declarationService.create(declarationModel), HttpStatus.CREATED);
     }
 
     /***
@@ -58,17 +52,17 @@ public class DeclarationController {
      */
     @GetMapping("/read/{id}")
     public DeclarationModel read(@PathVariable("id") Long id) throws DeclarationNotFoundException {
+        logger.info(this.callMessage("read()"));
+
         return declarationService.read(id);
     }
-
-//    @GetMapping("/readme/{id}")
-//    public DeclarationModel readMe(@PathVariable("id") Long id) {
-//        return declarationService.readMe(id);
-//    }
 
     @PostMapping("/{id}")
     public ResponseEntity<DeclarationModel> update(@PathVariable("id") Long id, @RequestBody DeclarationModel declarationModel)
             throws UnprocessableDeclarationException, DeclarationNotFoundException {
+        logger.info(this.callMessage("update()"));
+
+        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
 
         return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
     }
@@ -80,19 +74,15 @@ public class DeclarationController {
      */
     @GetMapping("/delete/{id}")
     public void delete(@PathVariable("id") Long id) throws DeclarationNotFoundException, ResponseStatusException {
+        logger.info(this.callMessage("delete()"));
         this.declarationService.delete(id);
     }
 
     @GetMapping()
-    public ResponseEntity<List<DeclarationModel>> getAll() throws ResponseStatusException {
-
+    public ResponseEntity<List<DeclarationModel>> getAll() {
         logger.info(this.callMessage("getAll()"));
 
-        logger.info("Returning declarations");
-
-        return new ResponseEntity<>(this.declarationService.getAll().stream()
-                .map(DeclarationModel::new)
-                .collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(this.declarationService.getAll(), HttpStatus.OK);
     }
 
     @ExceptionHandler(UnprocessableDeclarationException.class)

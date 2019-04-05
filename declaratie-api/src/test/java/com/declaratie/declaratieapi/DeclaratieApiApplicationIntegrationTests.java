@@ -63,14 +63,16 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		Date date = new GregorianCalendar(2019, 4, 30).getTime();
 
+		Declaration toCreate = new Declaration("Dit is mijn description", date, 120,
+				"Employee", "Manager", StateEnum.SUBMITTED, 12);
+
 		/**
 		 * Nieuwe declaratie
 		 */
 		DeclarationModel addedDeclaration = null;
 
 		try {
-			addedDeclaration = declarationService.create(new Declaration("Dit is mijn description", date, 120,
-					"Employee", "Manager", StateEnum.SUBMITTED, 12));
+			addedDeclaration = declarationService.create(new DeclarationModel(toCreate));
 		}catch (UnprocessableDeclarationException ex){
 			System.out.println("Declaratie kan niet aangemaakt worden.");
 		}
@@ -156,14 +158,16 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		Date date = new GregorianCalendar(2019, 4, 30).getTime();
 
+		Declaration toCreate = new Declaration("Dit is mijn description", date, 120,
+				"Employee", "Manager", StateEnum.SUBMITTED, 12);
+
 		/**
 		 * Nieuwe declaratie
 		 */
 		DeclarationModel nieuweDeclaratie = null;
 
 		try {
-			nieuweDeclaratie = declarationService.create(new Declaration("Dit is mijn description", date, 120,
-					"Employee", "Manager", StateEnum.SUBMITTED, 12));
+			nieuweDeclaratie = declarationService.create(new DeclarationModel(toCreate));
 		}catch (UnprocessableDeclarationException ex){
 			System.out.println("Declaratie kan niet aangemaakt worden.");
 		}
@@ -209,13 +213,13 @@ public class DeclaratieApiApplicationIntegrationTests {
 			Declaration declaration = new Declaration(description, new Date(), 120,
 					"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
 			try {
-				declarationService.create(declaration);
+				declarationService.create(new DeclarationModel(declaration));
 			}catch (UnprocessableDeclarationException ex){
 				System.out.println("Declaratie kan niet aangemaakt worden.");
 			}
 		});
 
-		List<Declaration> ophalenLijst = null;
+		List<DeclarationModel> ophalenLijst = null;
 
 		try{
 			ophalenLijst = declarationService.getAll();
@@ -256,7 +260,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 * Toevoegen 1 elementen aan de in-memory database ter voorbereiding
 		 */
 		try {
-			toRead = declarationService.create(toSave);
+			toRead = declarationService.create(new DeclarationModel(toSave));
 		} catch (UnprocessableDeclarationException e) {
 			e.printStackTrace();
 		}
@@ -326,7 +330,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 * Toevoegen 1 elementen aan de in-memory database ter voorbereiding
 		 */
 		try {
-			toDelete = declarationService.create(toSave);
+			toDelete = declarationService.create(new DeclarationModel(toSave));
 		} catch (UnprocessableDeclarationException e) {
 			e.printStackTrace();
 		}
@@ -392,7 +396,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 * Toevoegen 1 elementen aan de in-memory database ter voorbereiding
 		 */
 		try {
-			toDelete = declarationService.create(toSave);
+			toDelete = declarationService.create(new DeclarationModel(toSave));
 		} catch (UnprocessableDeclarationException e) {
 			e.printStackTrace();
 		}

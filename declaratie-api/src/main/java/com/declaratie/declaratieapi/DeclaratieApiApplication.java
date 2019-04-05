@@ -50,7 +50,7 @@ public class DeclaratieApiApplication {
 					declaration.addDeclarationFile(new DeclarationFile("holidaypicture.jpg", tmp));
 					declaration.addDeclarationFile(new DeclarationFile("badboydancing.png", tmp));
 
-					DeclarationModel dec = declarationService.create(declaration);
+					DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
 
 				}catch(UnprocessableDeclarationException ex){
 					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");

@@ -16,10 +16,10 @@
       <div *ngIf="!(updateForm.controls.description.invalid && updateForm.controls.description.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
 
-  <mat-form-field class="dec-full-width" appearance="outline">
-    <mat-label>Datum</mat-label>
-    <input matInput value="{{processDate | date}}" disabled>
-  </mat-form-field>
+    <mat-form-field class="dec-full-width" appearance="outline">
+      <mat-label>Datum</mat-label>
+      <input matInput value="{{processDate | date}}" disabled>
+    </mat-form-field>
 
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Bedrag</mat-label>
@@ -35,19 +35,12 @@
       <div *ngIf="!(updateForm.controls.empMessage.invalid && updateForm.controls.empMessage.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
 
-  <div *ngIf="empStatus">
-    <mat-form-field class="dec-full-width">
-      <mat-label>Manager bericht</mat-label>
-      <input matInput value="{{declaration.manComment}}">
-    </mat-form-field>
-
     <mat-form-field class="dec-full-width">
       <mat-label>Manager bericht (optioneel)</mat-label>
       <input formControlName="manMessage" matInput id="manMessage"
              name="manMessage" placeholder="Vul hier een bericht in">
-      <div *ngIf="!(updateForm.controls.manMessage.invalid && updateForm.controls.manMessage.errors.lets_be_friends); else elseAction"></div>
+            <div *ngIf="!(updateForm.controls.manMessage.invalid && updateForm.controls.manMessage.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
-  </div>
 
     <button mat-raised-button dec-button-row [disabled]="!updateForm.valid" color="primary">Opslaan</button>
 

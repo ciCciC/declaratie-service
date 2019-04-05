@@ -48,8 +48,10 @@ public class DeclarationControllerTest {
         declarationService.deleteAll();
 
         // Prepare
-        declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12);
+
+        declarationService.create(new DeclarationModel(toCreate));
 
         // Call
         ResponseEntity<List<DeclarationModel>> declaration = testRestTemplate
@@ -70,8 +72,10 @@ public class DeclarationControllerTest {
         declarationService.deleteAll();
 
         // Prepare
-        DeclarationModel toRead = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12);
+
+        DeclarationModel toRead = declarationService.create(new DeclarationModel(toCreate));
 
         System.out.println("ID: " + toRead.getId());
 
@@ -112,8 +116,10 @@ public class DeclarationControllerTest {
         // Prepare
         Long toRead = 100L;
 
-        declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12);
+
+        declarationService.create(new DeclarationModel(toCreate));
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
@@ -130,8 +136,10 @@ public class DeclarationControllerTest {
         declarationService.deleteAll();
 
         // Prepare
-        DeclarationModel toDelete = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StateEnum.SUBMITTED, 12));
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.SUBMITTED, 12);
+
+        DeclarationModel toDelete = declarationService.create(new DeclarationModel(toCreate));
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(
@@ -169,8 +177,10 @@ public class DeclarationControllerTest {
         declarationService.deleteAll();
 
         // Prepare
-        DeclarationModel toDelete = declarationService.create(new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StateEnum.INPROGRESS, 12));
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.INPROGRESS, 12);
+
+        DeclarationModel toDelete = declarationService.create(new DeclarationModel(toCreate));
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.getForEntity(

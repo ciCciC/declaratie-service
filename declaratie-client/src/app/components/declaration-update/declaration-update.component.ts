@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Declaration} from '../../models/Declaration';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
@@ -8,11 +7,9 @@ import {StatusEnum} from '../../models/StatusEnum';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {DeclarationService} from '../../services/declaration/declaration.service';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {textInputValidator} from '../validators/textInputValidator';
-import {DeclarationTableComponent} from '../declaration-table/declaration-table.component';
+import {MessageCreator} from '../../models/MessageCreator';
 
 @Component({
   selector: 'app-declaration-update',
@@ -21,12 +18,14 @@ import {DeclarationTableComponent} from '../declaration-table/declaration-table.
 })
 export class DeclarationUpdateComponent implements OnInit {
   updateForm: FormGroup;
-  private declaration: Declaration;
+  // private declaration: Declaration;
   // employee = EMPLOYEE;
   empStatus = false;
   processDate = new Date();
+  private declaration: Declaration;
   private declarationId: number;
-  private declarationStatus: boolean;
+  private declarationNotEditable: boolean;
+  private declarationStatus: StatusEnum;
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationUpdateComponent>,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
@@ -35,7 +34,6 @@ export class DeclarationUpdateComponent implements OnInit {
     this.declarationId = data.id;
     this.declaration = new Declaration();
     // this.empStatus = this.declaration.manComment != null && this.declaration.manComment.length > 0;
-    this.declarationStatus = data.status === StatusEnum.INPROGRESS || data.status === StatusEnum.APPROVED;
     this.initForm();
     this.getDeclaration(data.id);
   }
@@ -67,6 +65,8 @@ export class DeclarationUpdateComponent implements OnInit {
     this.declarationService.getDeclaration(id).subscribe(data => {
       this.declaration = data;
       this.fillInForm();
+      this.declarationNotEditable = data.status === StatusEnum.INPROGRESS || data.status === StatusEnum.APPROVED;
+      this.declarationStatus = data.status;
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -76,37 +76,38 @@ export class DeclarationUpdateComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  // private updateDeclaration(createFormValue) {
-  //
-  //   if (this.createForm.valid && this.examInputSecurity()) {
-  //     this.executeDeclarationCreation(createFormValue);
-  //   }
-  // }
-
   toSave(updateFormValue) {
-    if (this.declarationStatus) {
-      this.errorService.unableToProcess(this.declaration.status);
+    if (this.declarationNotEditable) {
+      this.errorService.unableToProcess(this.declarationStatus);
+      this.close();
     } else {
+      if (this.updateForm.valid) {
 
-      const toUpdate: IMessageDialog = {
-        name: 'Bericht',
-        message: 'Declaratie wijzigen?'
-      };
-
-      const dialogRefMessage = this.dialog.open(MessageDialogComponent, {data: toUpdate});
-      dialogRefMessage.afterClosed().subscribe(result => {
-        if (result) {
-          this.proceedSaving();
-          this.close();
-        }
-      });
+        const dialogRefMessage = this.dialog.open(MessageDialogComponent, {data: MessageCreator.toUpdate()});
+        dialogRefMessage.afterClosed().subscribe(result => {
+          if (result) {
+            this.executeDeclarationUpdate(updateFormValue);
+            this.close();
+          }
+        });
+      }
     }
   }
 
-  private proceedSaving() {
-    this.declaration.id = this.declarationId;
-    this.declaration.description = 'Dit is een test';
-    this.declarationService.updateDeclaration(this.declaration).subscribe(data => {
+  private executeDeclarationUpdate(updateFormValue) {
+    const declaration: Declaration = {
+      id: this.declarationId,
+      description: updateFormValue.description,
+      date: new Date().toISOString(),
+      empId: EMPLOYEE.id,
+      status: StatusEnum.SUBMITTED,
+      amount: updateFormValue.amount,
+      empComment: updateFormValue.empMessage,
+      manComment: updateFormValue.manMessage,
+      files: this.declaration.files
+    };
+
+    this.declarationService.updateDeclaration(declaration).subscribe(data => {
       // Todo met succes gewijzigd !!
     }, (error) => {
       this.errorService.handleError(error);

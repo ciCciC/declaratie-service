@@ -9,10 +9,10 @@ import {DeclarationViewComponent} from '../declaration-view/declaration-view.com
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {StatusEnum} from '../../models/StatusEnum';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
-import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 import {Router} from '@angular/router';
 import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
 import {RestEnum} from '../../models/RestEnum';
+import {MessageCreator} from '../../models/MessageCreator';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -66,15 +66,9 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
       this.errorService.unableToProcess(declaration.status);
     } else {
 
-      const toDelete: IMessageDialog = {
-        name: 'Bericht',
-        message: 'Declaratie verwijderen?'
-      };
-
-      const dialogRef = this.dialog.open(MessageDialogComponent, {data: toDelete});
+      const dialogRef = this.dialog.open(MessageDialogComponent, {data: MessageCreator.toDelete()});
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          // this.declarationListFilter(declaration);
           this.deleteDeclaration(declaration);
         }
       });
@@ -86,7 +80,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
     const dialogRefView = this.dialog.open(DeclarationViewComponent, {data: selected});
     dialogRefView.afterClosed().subscribe(result => {
       if (result === RestEnum.delete) {
-        // this.declarationListFilter(selected);
         this.deleteDeclaration(selected);
       } else if (result === RestEnum.update) {
         this.openUpdateDialog(selected);
@@ -103,16 +96,15 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   private deleteDeclaration(declaration: Declaration) {
     this.declarationService.deleteDeclaration(declaration.id).subscribe(data => {
-      // this.declarationListFilter(declaration);
       this.getDeclarationsList();
     }, (error) => {
       this.errorService.handleError(error);
     });
   }
 
-  private declarationListFilter(declaration: Declaration) {
-    this.dataSource.data = this.dataSource.data.filter(u => u !== declaration);
-  }
+  // private declarationListFilter(declaration: Declaration) {
+  //   this.dataSource.data = this.dataSource.data.filter(u => u !== declaration);
+  // }
 
   ngOnInit() {
     // this.paginator._intl.itemsPerPageLabel = 'Items per pagina:';
@@ -120,8 +112,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
     this.initTableColumnNames();
     this.getDeclarationsList();
-
-
   }
 
   ngOnDestroy(): void {

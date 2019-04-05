@@ -27,20 +27,18 @@ public class DeclarationService {
 
     private DeclarationRepository declarationRepository;
 
-    private Function<Declaration, DeclarationModel> declarationMapper = declaration -> new DeclarationModel(declaration);
-
     @Autowired
     public DeclarationService(DeclarationRepository declarationRepository){
         this.declarationRepository = declarationRepository;
     }
 
-    public DeclarationModel create(Declaration declaration) throws UnprocessableDeclarationException {
+    public DeclarationModel create(DeclarationModel declarationModel) throws UnprocessableDeclarationException {
 
-        if(declaration == null)
+        if(declarationModel == null)
             throw new UnprocessableDeclarationException("Declaration is not processable.");
 
         try {
-            return new DeclarationModel(this.declarationRepository.save(declaration));
+            return new DeclarationModel(this.declarationRepository.save(declarationModel.toDeclaration()));
         }catch (TransactionSystemException e) {
             throw new UnprocessableDeclarationException("Declaration is not processable - constraint violation");
 
@@ -52,21 +50,26 @@ public class DeclarationService {
     public DeclarationModel read(Long id) throws DeclarationNotFoundException {
         Optional<Declaration> toRead = this.declarationRepository.findById(id);
 
-        if(!toRead.isPresent() || id < 0)
+        if(!toRead.isPresent())
             throw new DeclarationNotFoundException(MessageFormat.format("Declaration with id={0} not found", id));
 
         Declaration toReturn = toRead.get();
 
 //        Hibernate.initialize(toReturn.getFiles());
+        // Hierdoor roep je de files ook aan ivm Lazy loading oplossing
         toReturn.getFiles();
-//        System.out.println("Extra data: " + toReturn.getFiles().size());
 
         return new DeclarationModel(toReturn);
     }
 
     public DeclarationModel update(Long id, DeclarationModel declarationModel) throws DeclarationNotFoundException, UnprocessableDeclarationException {
-        if(!this.existsById(id) || id < 0)
-            throw new DeclarationNotFoundException(MessageFormat.format("Declaration with id={0} not found", id));
+        DeclarationModel fromDb = this.read(id);
+
+        StateEnum currentState = StateEnum.valueOf(fromDb.getStatus());
+
+        if(currentState == StateEnum.INPROGRESS || currentState == StateEnum.APPROVED){
+            throw new UnprocessableDeclarationException("Declaration is not processable, current state: " + currentState);
+        }
 
         if(declarationModel == null)
             throw new UnprocessableDeclarationException("Declaration is not processable.");
@@ -75,7 +78,7 @@ public class DeclarationService {
             Declaration toUpdate = declarationModel.toDeclaration();
             toUpdate.setId(id);
 
-            return declarationMapper.apply(this.declarationRepository.save(toUpdate));
+            return new DeclarationModel(this.declarationRepository.save(toUpdate));
         }catch (TransactionSystemException e) {
             throw new UnprocessableDeclarationException("Declaration is not processable - constraint violation");
 
@@ -93,14 +96,10 @@ public class DeclarationService {
         }
     }
 
-    public List<Declaration> getAll() throws ResponseStatusException {
-        List<Declaration> ss = StreamSupport.stream(this.declarationRepository.findAll().spliterator(), false)
+    public List<DeclarationModel> getAll() {
+        return this.declarationRepository.findAll().stream()
+                .map(DeclarationModel::new)
                 .collect(Collectors.toList());
-        if(ss.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Declarations table is empty");
-        }
-
-        return ss;
     }
 
     public boolean existsById(Long id){
