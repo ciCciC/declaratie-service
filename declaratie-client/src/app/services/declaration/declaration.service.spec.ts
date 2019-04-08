@@ -153,4 +153,38 @@ describe(DeclarationService.name, () => {
 
   });
 
+  describe('Update call', () => {
+
+    it('A42_SR9_shouldUpdateDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      let response;
+
+      spyOn(declarationService, 'updateDeclaration').and.returnValues(of(DECLARATIONS[0]));
+
+      // Act
+      declarationService.updateDeclaration(DECLARATIONS[0]).subscribe( data => {
+        response = data;
+      });
+
+      // Assert
+      expect(response).toEqual(DECLARATIONS[0]);
+    });
+
+    it('A42_SR9_shouldCallUpdateDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      const spy_create = spyOn(declarationService, 'updateDeclaration');
+
+      // Act
+      declarationService.updateDeclaration(DECLARATIONS[0]);
+
+      // Assert
+      expect(spy_create).toHaveBeenCalled();
+    });
+
+  });
+
 });

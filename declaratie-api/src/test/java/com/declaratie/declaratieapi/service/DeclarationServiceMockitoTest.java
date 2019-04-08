@@ -7,6 +7,7 @@ import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -176,9 +177,150 @@ public class DeclarationServiceMockitoTest {
 //    }
 
 
-//    @Test
-//    public void update() {
-//    }
+    @Test
+    public void A42_SR9_TG1_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG1_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+            System.out.println("Declaratie is gewijzigd");
+
+        } catch (DeclarationNotFoundException e) {
+            System.out.println("Declaratie kan niet gewijzigd worden");
+        } catch (UnprocessableDeclarationException e) {
+            System.out.println("Declaratie kan niet gewijzigd worden");
+        }
+    }
+
+    @Test
+    public void A42_SR9_TG2_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG2_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        DeclarationModel declarationModel = null;
+
+        // Call
+        // Assert
+        Assertions.assertThatCode(() -> {
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        }).hasMessage("Declaration is not processable.");
+        System.out.println("Declaratie kan niet gewijzigd worden");
+    }
+
+    @Test
+    public void A42_SR9_TG4_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG4_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Call
+        // Assert
+        Assertions.assertThatCode(() -> {
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        }).hasMessage("Declaration with id=1 not found");
+        System.out.println("Declaratie kan niet gewijzigd worden");
+    }
+
+    @Test
+    public void A42_SR9_TG6_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG6_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.REJECTED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+            System.out.println("Declaratie is gewijzigd");
+        } catch (DeclarationNotFoundException e) {
+            System.out.println("Declaratie kan niet gewijzigd worden");
+        } catch (UnprocessableDeclarationException e) {
+            System.out.println("Declaratie kan niet gewijzigd worden");
+        }
+    }
+
+    @Test(expected = UnprocessableDeclarationException.class)
+    public void A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen() throws DeclarationNotFoundException, UnprocessableDeclarationException {
+        System.out.println("Test: A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.INPROGRESS;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+
+        // Call
+        // Assert
+        DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+    }
+
+    @Test(expected = UnprocessableDeclarationException.class)
+    public void A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen() throws DeclarationNotFoundException, UnprocessableDeclarationException {
+        System.out.println("Test: A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.APPROVED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+
+        // Call
+        // Assert
+        DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+    }
 
     /***
      * Tests the value of the actual and expected variables

@@ -85,10 +85,10 @@ public class DeclarationController {
         return new ResponseEntity<>(this.declarationService.getAll(), HttpStatus.OK);
     }
 
-    @ExceptionHandler(UnprocessableDeclarationException.class)
-    private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {
-        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaratie is niet te verwerken", ex);
-    }
+//    @ExceptionHandler(UnprocessableDeclarationException.class)
+//    private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {
+//        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaratie is niet te verwerken", ex);
+//    }
 
     private String callMessage(String methodname){
         return "Called -> DeclarationController : " + methodname;

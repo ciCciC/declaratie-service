@@ -131,6 +131,81 @@ public class DeclarationControllerTest {
     }
 
     @Test
+    public void A42_SR9_UpdateDeclarationEndpoint() throws UnprocessableDeclarationException, DeclarationNotFoundException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setDescription("Gasoline");
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/"+createdModel.getId(), toUpdate,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createdModel).isNotEqualTo(toUpdate.toDeclaration());
+    }
+
+    @Test
+    public void A42_SR9_UpdateDeclarationUnprocessableEndpoint() throws UnprocessableDeclarationException, DeclarationNotFoundException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.INPROGRESS;
+        Declaration toCreate = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setDescription("Gasoline");
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/"+createdModel.getId(), toUpdate,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void A42_SR9_UpdateDeclarationNotFoundEndpoint() throws UnprocessableDeclarationException, DeclarationNotFoundException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.REJECTED;
+        Declaration toCreate = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setDescription("Gasoline");
+
+        long nonExistingId = 100;
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/"+nonExistingId, toUpdate,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
     public void A33_SR10_DeleteDeclarationEndpoint() throws DeclarationNotFoundException, UnprocessableDeclarationException {
 
         declarationService.deleteAll();

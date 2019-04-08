@@ -63,16 +63,20 @@ public class DeclarationService {
     }
 
     public DeclarationModel update(Long id, DeclarationModel declarationModel) throws DeclarationNotFoundException, UnprocessableDeclarationException {
-        DeclarationModel fromDb = this.read(id);
 
-        StateEnum currentState = StateEnum.valueOf(fromDb.getStatus());
+        if(declarationModel == null)
+            throw new UnprocessableDeclarationException("Declaration is not processable.");
+
+        Optional<Declaration> declarationExist = this.declarationRepository.findById(id);
+
+        if(!declarationExist.isPresent())
+            throw new DeclarationNotFoundException(MessageFormat.format("Declaration with id={0} not found", id));
+
+        StateEnum currentState = declarationExist.get().getStatusEnum();
 
         if(currentState == StateEnum.INPROGRESS || currentState == StateEnum.APPROVED){
             throw new UnprocessableDeclarationException("Declaration is not processable, current state: " + currentState);
         }
-
-        if(declarationModel == null)
-            throw new UnprocessableDeclarationException("Declaration is not processable.");
 
         try {
             Declaration toUpdate = declarationModel.toDeclaration();

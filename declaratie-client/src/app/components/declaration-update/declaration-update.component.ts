@@ -4,7 +4,6 @@ import {Declaration} from '../../models/Declaration';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {StatusEnum} from '../../models/StatusEnum';
-import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -18,7 +17,6 @@ import {MessageCreator} from '../../models/MessageCreator';
 })
 export class DeclarationUpdateComponent implements OnInit {
   updateForm: FormGroup;
-  // private declaration: Declaration;
   // employee = EMPLOYEE;
   empStatus = false;
   processDate = new Date();
@@ -45,20 +43,17 @@ export class DeclarationUpdateComponent implements OnInit {
       empMessage: new FormControl(),
       manMessage: new FormControl()
     });
+    this.updateForm.controls.description.setValidators([Validators.required, Validators.maxLength(255), textInputValidator]);
+    this.updateForm.controls.amount.setValidators([Validators.required, Validators.min(0)]);
+    this.updateForm.controls.empMessage.setValidators([Validators.maxLength(255), textInputValidator]);
+    this.updateForm.controls.manMessage.setValidators([Validators.maxLength(255), textInputValidator]);
   }
 
   private fillInForm() {
     this.updateForm.controls.description.setValue(this.declaration.description);
-    this.updateForm.controls.description.setValidators([Validators.required, Validators.maxLength(255), textInputValidator]);
-
     this.updateForm.controls.amount.setValue(this.declaration.amount);
-    this.updateForm.controls.amount.setValidators([Validators.required, Validators.min(0)]);
-
     this.updateForm.controls.empMessage.setValue(this.declaration.empComment);
-    this.updateForm.controls.empMessage.setValidators([Validators.maxLength(255), textInputValidator]);
-
     this.updateForm.controls.manMessage.setValue(this.declaration.manComment);
-    this.updateForm.controls.manMessage.setValidators([Validators.maxLength(255), textInputValidator]);
   }
 
   private getDeclaration(id: number) {
