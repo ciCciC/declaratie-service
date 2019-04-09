@@ -12,7 +12,6 @@ import {MaterialModule} from './material/material.module';
 import {DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
 
 import { DeclarationStepperComponent } from './components/declaration-stepper/declaration-stepper.component';
-import { DeclarationPhotoUploadComponent } from './components/declaration-photo-upload/declaration-photo-upload.component';
 import { DeclarationExpansionListComponent } from './components/declaration-expansion-list/declaration-expansion-list.component';
 import {DeclarationService} from './services/declaration/declaration.service';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
@@ -32,7 +31,6 @@ import { DeclarationfileUploadComponent } from './components/declarationfile-upl
     DeclarationTableComponent,
     DeclarationCreateComponent,
     DeclarationStepperComponent,
-    DeclarationPhotoUploadComponent,
     DeclarationExpansionListComponent,
     DeclarationViewComponent,
     ErrorDialogComponent,
