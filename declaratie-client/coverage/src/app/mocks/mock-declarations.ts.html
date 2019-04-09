@@ -61,7 +61,43 @@
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -81,15 +117,33 @@ import {StatusEnum} from '../models/StatusEnum';
 &nbsp;
 &nbsp;
 export const DECLARATIONS: IDeclaration[] = [
-  { id: 1, description: 'Gasoline', amount: 1200, date: '1-1-2019', emp_id: 1, emp_comment: 'Trust this declaration',
-    man_comment: 'Shall I trust it?', status: StatusEnum.INPROGRESS,
-    files: ''},
-  { id: 2, description: 'Food for good', amount: 10, date: '1-1-2019', emp_id: 1, emp_comment: 'Trust this declaration',
-    man_comment: 'Shall I trust it?', status: StatusEnum.INPROGRESS,
-    files: ''},
-  { id: 3, description: 'Bier for a extra Tier', amount: 5500, date: '1-1-2019', emp_id: 1, emp_comment: 'Trust this declaration',
-    man_comment: 'Shall I trust it? No..', status: StatusEnum.INPROGRESS,
-    files: ''}
+  { id: 0, description: 'Gasoline', amount: 1200, date: new Date().toISOString(), empId: 1, empComment: 'Trust this declaration',
+    manComment: '', status: StatusEnum.INPROGRESS,
+    files: []},
+  { id: 1, description: 'Food for good', amount: 10, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it?', status: StatusEnum.INPROGRESS,
+    files: []},
+  { id: 2, description: 'Drinks', amount: 5500, date: '1-1-2019', empId: 1, empComment: '',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.APPROVED,
+    files: []},
+  { id: 3, description: 'Food', amount: 5500, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.REJECTED,
+    files: []},
+  { id: 4, description: 'Food', amount: 5500, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.SUBMITTED,
+    files: []},
+  { id: 5, description: 'Gasoline', amount: 5500, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.SUBMITTED,
+    files: []},
+  { id: 6, description: 'Gasoline', amount: 5500, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.SUBMITTED,
+    files: []},
+  { id: 7, description: 'Drinks', amount: 5500, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.APPROVED,
+    files: []},
+  { id: 8, description: 'Drinks', amount: 5500, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+    manComment: 'Shall I trust it? No..', status: StatusEnum.APPROVED,
+    files: []},
 ];
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -97,7 +151,7 @@ export const DECLARATIONS: IDeclaration[] = [
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Mar 08 2019 19:47:19 GMT+0100 (CET)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 09 2019 09:48:24 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

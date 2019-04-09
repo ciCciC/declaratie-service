@@ -21,6 +21,7 @@ import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.compon
 import {ErrorHandlerService} from './services/errorhandlerservice/error-handler.service';
 import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
 import { DeclarationUpdateComponent } from './components/declaration-update/declaration-update.component';
+import { DeclarationfileUploadComponent } from './components/declarationfile-upload/declarationfile-upload.component';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -36,7 +37,8 @@ import { DeclarationUpdateComponent } from './components/declaration-update/decl
     DeclarationViewComponent,
     ErrorDialogComponent,
     MessageDialogComponent,
-    DeclarationUpdateComponent
+    DeclarationUpdateComponent,
+    DeclarationfileUploadComponent
   ],
   imports: [
     BrowserModule,
