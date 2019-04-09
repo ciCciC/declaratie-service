@@ -7,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeclarationfileUploadComponent implements OnInit {
 
+  declarationFiles: File[];
+  private allPhotoExtentions = 'image/*';
+  acceptTypes = 'image/jpeg,image/jpg,image/png,application/pdf';
+  private allowedTypes = ['jpg', 'jpeg', 'png', 'pdf'];
+
   constructor() { }
 
   ngOnInit() {
+
   }
 }
