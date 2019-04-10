@@ -45,7 +45,7 @@ import { DeclarationfileUploadComponent } from './components/declarationfile-upl
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
   ],
   entryComponents: [DeclarationTableComponent, DeclarationViewComponent, ErrorDialogComponent, MessageDialogComponent, DeclarationUpdateComponent],
   providers: [ErrorHandlerService, DeclarationService],

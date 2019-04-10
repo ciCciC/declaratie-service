@@ -7,6 +7,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DeclarationCreateComponent} from './declaration-create.component';
+import {DeclarationfileUploadComponent} from '../declarationfile-upload/declarationfile-upload.component';
 
 describe(DeclarationCreateComponent.name, () => {
   let component: DeclarationCreateComponent;
@@ -21,7 +22,7 @@ describe(DeclarationCreateComponent.name, () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ DeclarationCreateComponent ]
+      declarations: [ DeclarationCreateComponent, DeclarationfileUploadComponent ]
     })
     .compileComponents();
   }));
@@ -41,6 +42,7 @@ describe(DeclarationCreateComponent.name, () => {
     component.processDate = new Date();
     component.createForm.get('amount').setValue(100.50);
     component.createForm.get('empMessage').setValue('I like beer');
+    component.createForm.get('files').setValue(1);
 
     expect(component.createForm.valid).toEqual(true);
     expect(component.createForm.get('description').value).toEqual('This is my description');
