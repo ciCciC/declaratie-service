@@ -1,6 +1,6 @@
 <div class="declaration-container">
   <form name="declarationForm" [formGroup]="createForm"
-        (ngSubmit)="createDeclaration(createForm.value); createForm.reset()" class="declaration-container">
+        (ngSubmit)="createDeclaration(createForm.value)" class="declaration-container">
 
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Declaratie omschrijving</mat-label>
@@ -49,6 +49,8 @@
              name="empMessage" placeholder="Vul hier een bericht in">
       <div *ngIf="!(createForm.controls.empMessage.invalid && createForm.controls.empMessage.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
+
+    <app-declarationfile-upload (uploaded)="onUploadedFiles($event)"></app-declarationfile-upload>
 
     <table class="dec-full-width" cellspacing="0">
       <tr>

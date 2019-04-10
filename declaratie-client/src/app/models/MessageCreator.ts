@@ -1,4 +1,3 @@
-import {StatusEnum} from './StatusEnum';
 import {IMessageDialog} from './imodels/IMessageDialog';
 
 export class MessageCreator {
@@ -14,7 +13,8 @@ export class MessageCreator {
   static toDelete() {
     const toDelete: IMessageDialog = {
       name: 'Bericht',
-      message: 'Declaratie verwijderen?'
+      message: 'Verwijderen?'
     };
+    return toDelete;
   }
 }

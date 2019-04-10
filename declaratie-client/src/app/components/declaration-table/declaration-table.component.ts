@@ -4,7 +4,6 @@ import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/mat
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {Declaration} from '../../models/Declaration';
-import {Observable, Subject} from 'rxjs';
 import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {StatusEnum} from '../../models/StatusEnum';
@@ -23,10 +22,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<IDeclaration>();
-  data$: Observable<IDeclaration[]>;
-  loadingError = new Subject<boolean>();
   pageSizeOptions = [5, 10, 15];
-  InProgress = StatusEnum.INPROGRESS;
   private notAcceptableStatus = [StatusEnum.INPROGRESS, StatusEnum.APPROVED];
   actionValue = 'action';
   colNames: string[];

@@ -6,6 +6,7 @@ import {DeclarationStepperComponent} from './components/declaration-stepper/decl
 import {DeclarationExpansionListComponent} from './components/declaration-expansion-list/declaration-expansion-list.component';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
 import {DeclarationViewComponent} from './components/declaration-view/declaration-view.component';
+import {DeclarationfileUploadComponent} from './components/declarationfile-upload/declarationfile-upload.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/declarationtable', pathMatch: 'full' },
@@ -13,8 +14,9 @@ const routes: Routes = [
   { path: 'declarationtable', component: DeclarationTableComponent },
   { path: 'declarationcreate', component: DeclarationCreateComponent },
   { path: 'declarationview', component: DeclarationViewComponent },
-  { path: 'declarationstepper', component: DeclarationStepperComponent },
-  { path: 'declarationexpansionlist', component: DeclarationExpansionListComponent }
+  { path: 'declarationfile', component: DeclarationfileUploadComponent }
+  // { path: 'declarationstepper', component: DeclarationStepperComponent },
+  // { path: 'declarationexpansionlist', component: DeclarationExpansionListComponent }
 ];
 
 @NgModule({

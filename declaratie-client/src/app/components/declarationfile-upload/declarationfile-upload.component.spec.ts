@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeclarationfileUploadComponent } from './declarationfile-upload.component';
+import {MatDialogModule} from '@angular/material';
 
 describe('DeclarationfileUploadComponent', () => {
   let component: DeclarationfileUploadComponent;
@@ -8,6 +9,9 @@ describe('DeclarationfileUploadComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule
+      ],
       declarations: [ DeclarationfileUploadComponent ]
     })
     .compileComponents();

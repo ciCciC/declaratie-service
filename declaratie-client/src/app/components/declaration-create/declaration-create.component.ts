@@ -8,8 +8,8 @@ import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
-import {map} from 'rxjs/operators';
 import {DeclarationFile} from '../../models/DeclarationFile';
+import {DECLARATIONFILES} from '../../mocks/mock-declarationfiles';
 
 
 @Component({
@@ -20,8 +20,10 @@ import {DeclarationFile} from '../../models/DeclarationFile';
 export class DeclarationCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
   private disabled = true;
-  private controllerForCheck = ['fname', 'lname', 'description', 'empMessage'];
+  private declarationFiles: File[] = [];
   processDate = new Date();
+
+  fakeTest = [{name: 'lolz.jpg', size: 1234}, {name: 'lolz222.jpg', size: 1234}];
 
   constructor(private fb: FormBuilder, private location: Location,
               private router: Router, private declarationService: DeclarationService, private errorService: ErrorHandlerService) {
@@ -41,13 +43,13 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
       empMessage: new FormControl('', [
         Validators.maxLength(255),
         textInputValidator
-      ])
+      ]),
+      files: new FormControl('', [Validators.required, Validators.min(1)])
     });
   }
 
   createDeclaration(createFormValue) {
-
-    if (this.createForm.valid && this.examInputSecurity()) {
+    if (this.createForm.valid && this.declarationFiles.length > 0) {
       this.executeDeclarationCreation(createFormValue);
     }
   }
@@ -57,19 +59,16 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  private backToList() {
-    this.router.navigateByUrl('/declarationtable');
+  // private backToList() {
+  //   this.router.navigateByUrl('/declarationtable');
+  // }
+
+  onUploadedFiles(files: File[]) {
+    this.declarationFiles = files;
+    this.createForm.controls.files.setValue(this.declarationFiles.length);
   }
 
   private executeDeclarationCreation(createFormValue) {
-    const ss: DeclarationFile [] = [
-      {id: 1,
-      file: '1',
-        filename: 'lolz.jpeg'},
-      {id: 2,
-      file: '2',
-        filename: 'lolz.jpeg'}
-    ];
 
     const declaration: Declaration = {
       id: null,
@@ -80,37 +79,19 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
       amount: createFormValue.amount,
       empComment: createFormValue.empMessage,
       manComment: '',
-      files: ss
+      files: null
     };
 
-    this.declarationService.addDeclaration(declaration).subscribe(data => {
-      this.backToList();
-    }, error => {{
-      this.errorService.handleError(error);
-    }});
-  }
-
-  private get formControllers(): any[] {
-    const toReturn = [];
-
-    for (const conName of this.controllerForCheck) {
-      toReturn.push(this.createForm.get(conName));
+    if (this.declarationFiles.length > 0) {
+      alert(JSON.stringify(this.declarationFiles[0].name));
     }
 
-    return toReturn;
-  }
-
-  private examInputSecurity() {
-    let status = false;
-    for (const conName of this.formControllers) {
-      if (conName.invalid && conName.errors.lets_be_friends) {
-        status = false;
-        break;
-      } else {
-        status = true;
-      }
-    }
-    return status;
+    // this.declarationService.addDeclaration(declaration).subscribe(data => {
+    //  this.createForm.reset();
+    //   this.backToList();
+    // }, error => {{
+    //   this.errorService.handleError(error);
+    // }});
   }
 
   ngOnInit() {
