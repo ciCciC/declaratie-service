@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
-@Table(name = "Declaration")
+@Table
 public class Declaration {
 
     public Declaration(){
@@ -29,29 +29,37 @@ public class Declaration {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "description", nullable = false)
+    @Column
+    @NotNull
     @Length(min = 1, max = 255)
     private String description;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date", nullable = false)
+    @Column
+    @NotNull
     private Date date;
 
-    @Column(name = "amount", nullable = false)
+    @Column
+    @NotNull
     @Min(0)
     private double amount;
 
-    @Column(name = "empComment")
+    @Column
     private String empComment;
 
-    @Column(name = "manComment")
+    @Column
     private String manComment;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false)
+    @Column
+    @NotNull
     private StateEnum state;
 
-    @Column(name = "empId", nullable = false)
+    @Column
+    private String city;
+
+    @Column
+    @NotNull
     private long empId;
 
     @OneToMany(targetEntity = DeclarationFile.class, mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
@@ -131,7 +139,9 @@ public class Declaration {
     }
 
     public void setFiles(List<DeclarationFile> files) {
-        this.files = files;
+        for (DeclarationFile file:files) {
+            this.addDeclarationFile(file);
+        }
     }
 
     @Override

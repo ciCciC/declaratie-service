@@ -1,10 +1,12 @@
 package com.declaratie.declaratieapi.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
+@Table
 public class DeclarationFile {
 
     public DeclarationFile() {
@@ -21,12 +23,15 @@ public class DeclarationFile {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "declaration_id")
+    @NotNull
     private Declaration declaration;
 
-    @Column(name = "fileName")
+    @Column
     private String fileName;
 
-    @Column(name = "file")
+    @Column
+    @NotNull
+    @Lob
     private byte[] file;
 
     public Declaration getDeclarationId() {
@@ -83,7 +88,7 @@ public class DeclarationFile {
                 "id=" + id +
                 ", declaration=" + declaration +
                 ", fileName=" + fileName +
-                ", file=" + Arrays.toString(file) +
+                ", file=" + file.length +
                 '}';
     }
 }

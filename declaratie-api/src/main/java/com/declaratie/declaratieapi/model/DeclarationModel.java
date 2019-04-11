@@ -132,6 +132,10 @@ public class DeclarationModel {
         this.files = files;
     }
 
+    public void addFile(DeclarationFileModel file) {
+        this.getFiles().add(file);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

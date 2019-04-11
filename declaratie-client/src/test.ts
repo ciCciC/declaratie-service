@@ -16,6 +16,7 @@ getTestBed().initTestEnvironment(
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
+// const context = require.context('./', true, /image-dialog.component\.spec\.ts$/);
 // const context = require.context('./', true, /declarationfile-upload.component\.spec\.ts$/);
 // const context = require.context('./', true, /declaration-create.component\.spec\.ts$/);
 // const context = require.context('./', true, /declaration-update.component\.spec\.ts$/);

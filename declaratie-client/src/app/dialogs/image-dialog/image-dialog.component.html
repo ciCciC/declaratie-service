@@ -1,0 +1,11 @@
+<div mat-dialog-actions align="end">
+  <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
+</div>
+<div *ngIf="fileUrl">
+  <div *ngIf="fileType !== 'pdf'; else pdfbestand">
+    <img class="fileImage" [src]="fileUrl">
+  </div>
+  <ng-template #pdfbestand>
+    <embed class="filePdf" [src]="fileUrl" type="application/pdf">
+  </ng-template>
+</div>

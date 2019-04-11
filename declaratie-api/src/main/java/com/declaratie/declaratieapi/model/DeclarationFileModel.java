@@ -1,6 +1,7 @@
 package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.DeclarationFile;
+import org.springframework.core.io.ByteArrayResource;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class DeclarationFileModel {
     public DeclarationFileModel(DeclarationFile declarationFile) {
         this.id = declarationFile.getId();
         this.filename = declarationFile.getFilename();
-        this.file = declarationFile.getFile();
+        this.file = new ByteArrayResource(declarationFile.getFile()).getByteArray();
     }
 
     public DeclarationFile toDeclarationFile(){

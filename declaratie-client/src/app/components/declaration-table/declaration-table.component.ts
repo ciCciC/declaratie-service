@@ -35,6 +35,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   getDeclarationsList() {
     this.declarationService.getDeclarations().subscribe(data => {
+      console.log(data);
       this.dataSource.data = data;
     }, (error) => {
       this.errorService.handleError(error);

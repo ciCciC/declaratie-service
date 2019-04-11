@@ -8,8 +8,6 @@ import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
-import {DeclarationFile} from '../../models/DeclarationFile';
-import {DECLARATIONFILES} from '../../mocks/mock-declarationfiles';
 
 
 @Component({
@@ -22,8 +20,6 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
   private disabled = true;
   private declarationFiles: File[] = [];
   processDate = new Date();
-
-  fakeTest = [{name: 'lolz.jpg', size: 1234}, {name: 'lolz222.jpg', size: 1234}];
 
   constructor(private fb: FormBuilder, private location: Location,
               private router: Router, private declarationService: DeclarationService, private errorService: ErrorHandlerService) {
@@ -59,9 +55,9 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  // private backToList() {
-  //   this.router.navigateByUrl('/declarationtable');
-  // }
+  private backToList() {
+    this.router.navigateByUrl('/declarationtable');
+  }
 
   onUploadedFiles(files: File[]) {
     this.declarationFiles = files;
@@ -79,19 +75,24 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
       amount: createFormValue.amount,
       empComment: createFormValue.empMessage,
       manComment: '',
-      files: null
+      files: []
     };
 
     if (this.declarationFiles.length > 0) {
-      alert(JSON.stringify(this.declarationFiles[0].name));
-    }
+      this.declarationService.addTest(declaration, this.declarationFiles).subscribe(data => {
+        this.createForm.reset();
+        this.backToList();
+      }, error => {
+        this.errorService.handleError(error);
+      });
 
-    // this.declarationService.addDeclaration(declaration).subscribe(data => {
-    //  this.createForm.reset();
-    //   this.backToList();
-    // }, error => {{
-    //   this.errorService.handleError(error);
-    // }});
+      // this.declarationService.addDeclaration(declaration).subscribe(data => {
+      //   this.createForm.reset();
+      //   this.backToList();
+      // }, error => {{
+      //   this.errorService.handleError(error);
+      // }});
+    }
   }
 
   ngOnInit() {

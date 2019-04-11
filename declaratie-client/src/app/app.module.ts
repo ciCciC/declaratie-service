@@ -12,7 +12,6 @@ import {MaterialModule} from './material/material.module';
 import {DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
 
 import { DeclarationStepperComponent } from './components/declaration-stepper/declaration-stepper.component';
-import { DeclarationExpansionListComponent } from './components/declaration-expansion-list/declaration-expansion-list.component';
 import {DeclarationService} from './services/declaration/declaration.service';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
 import { DeclarationViewComponent } from './components/declaration-view/declaration-view.component';
@@ -21,6 +20,7 @@ import {ErrorHandlerService} from './services/errorhandlerservice/error-handler.
 import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
 import { DeclarationUpdateComponent } from './components/declaration-update/declaration-update.component';
 import { DeclarationfileUploadComponent } from './components/declarationfile-upload/declarationfile-upload.component';
+import { ImageDialogComponent } from './dialogs/image-dialog/image-dialog.component';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -31,12 +31,12 @@ import { DeclarationfileUploadComponent } from './components/declarationfile-upl
     DeclarationTableComponent,
     DeclarationCreateComponent,
     DeclarationStepperComponent,
-    DeclarationExpansionListComponent,
     DeclarationViewComponent,
     ErrorDialogComponent,
     MessageDialogComponent,
     DeclarationUpdateComponent,
-    DeclarationfileUploadComponent
+    DeclarationfileUploadComponent,
+    ImageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +47,8 @@ import { DeclarationfileUploadComponent } from './components/declarationfile-upl
     BrowserAnimationsModule,
     MaterialModule,
   ],
-  entryComponents: [DeclarationTableComponent, DeclarationViewComponent, ErrorDialogComponent, MessageDialogComponent, DeclarationUpdateComponent],
+  entryComponents: [DeclarationTableComponent, DeclarationViewComponent,
+    ErrorDialogComponent, MessageDialogComponent, DeclarationUpdateComponent, ImageDialogComponent],
   providers: [ErrorHandlerService, DeclarationService],
   bootstrap: [AppComponent]
 })

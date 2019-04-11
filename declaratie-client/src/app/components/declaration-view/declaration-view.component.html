@@ -49,6 +49,28 @@
       <input matInput value="{{declaration.manComment}}" disabled>
     </mat-form-field>
   </div>
+
+  <table mat-table [dataSource]="declaration.files">
+    <ng-container matColumnDef="file">
+      <th mat-header-cell *matHeaderCellDef> Bestand </th>
+      <td mat-cell *matCellDef="let element">
+        <div (click)="openImage(element)">
+          {{element.filename}}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="download" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon class="myDownload" (click)="downloadFile()" matTooltip="download bestand">cloud_download</mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
 </div>
 
 <table *ngIf="processStatus" class="dec-full-width" cellspacing="0">

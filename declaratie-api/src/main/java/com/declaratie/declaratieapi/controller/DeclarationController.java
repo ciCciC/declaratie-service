@@ -1,20 +1,24 @@
 package com.declaratie.declaratieapi.controller;
 
-import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
+import com.declaratie.declaratieapi.model.DeclarationFileModel;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.ContentUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -43,6 +47,32 @@ public class DeclarationController {
         ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
 
         return new ResponseEntity<>(declarationService.create(declarationModel), HttpStatus.CREATED);
+    }
+
+    /***
+     * Posts a new declaration with files
+     * @param declaration declaration
+     * @param declarationfiles files related to the declaration
+     * @return declarationModel
+     * @throws IOException
+     * @throws UnprocessableDeclarationException
+     */
+    @PostMapping("/addDeclaration")
+    public ResponseEntity<DeclarationModel> create(@RequestParam("declaration") String declaration, @RequestParam("declarationfiles") MultipartFile [] declarationfiles)
+            throws IOException, UnprocessableDeclarationException {
+
+        DeclarationModel declarationModel = new ObjectMapper().readValue(declaration, DeclarationModel.class);
+
+        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
+
+        for (MultipartFile fileModel: declarationfiles) {
+            DeclarationFileModel tmp = new DeclarationFileModel();
+            tmp.setFile(fileModel.getBytes());
+            tmp.setFilename(fileModel.getOriginalFilename());
+            declarationModel.addFile(tmp);
+        }
+
+        return new ResponseEntity<>(declarationService.create(declarationModel), HttpStatus.OK);
     }
 
     /***

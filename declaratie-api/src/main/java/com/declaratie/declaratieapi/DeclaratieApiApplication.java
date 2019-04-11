@@ -16,6 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -26,9 +29,7 @@ public class DeclaratieApiApplication {
 	private static final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 
 	public static void main(String[] args) {
-
 		logger.info("Called application class.");
-
 		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
 
@@ -38,21 +39,27 @@ public class DeclaratieApiApplication {
 		return args -> {
 			Random rand = new Random();
 
+			final File file = new File("./img");
+
 			Stream.of("Benzine", "Eten", "Auto", "Alcohol", "Eten", "Benzine").forEach(description -> {
+
 				int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
+				int randomFile = rand.nextInt((2 - 0) + 1) + 0;
 
 				Declaration declaration = new Declaration(description, new Date(), 120,
-						"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
+						"Employee", "Manager houdt van bier", StateEnum.values()[randomChoice], 12);
 
-				byte [] tmp = new byte []{111, 127};
+				byte [] tmp = new byte[0];
 
 				try{
-					declaration.addDeclarationFile(new DeclarationFile("holidaypicture.jpg", tmp));
-					declaration.addDeclarationFile(new DeclarationFile("badboydancing.png", tmp));
+					tmp = Files.readAllBytes(file.listFiles()[randomFile].toPath());
+
+					declaration.addDeclarationFile(new DeclarationFile(file.listFiles()[randomFile].getName(), tmp));
+					declaration.addDeclarationFile(new DeclarationFile(file.listFiles()[randomFile].getName(), tmp));
 
 					DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
 
-				}catch(UnprocessableDeclarationException ex){
+				}catch(UnprocessableDeclarationException | IOException ex){
 					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
 				}
 			});

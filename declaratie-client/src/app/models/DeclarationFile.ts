@@ -1,5 +1,6 @@
 export class DeclarationFile {
   id: number;
-  file: string;
+  file: File;
   filename: string;
+  fileUrl: any;
 }

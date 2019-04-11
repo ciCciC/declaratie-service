@@ -26,6 +26,10 @@
   color:red;
 }
 
+.myDownload:hover{
+  color: #039be5;
+}
+
 .myDelete{
   background-color: rgba(255, 0, 0, 0.8);
   color:white;
@@ -42,4 +46,16 @@
 
 .myEdit:hover{
   background-color:#7e3ff2;
+}
+
+.fileItem:hover{
+  background-color: lightgrey;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-row:hover {
+  background-color: #ebebeb;
 }
