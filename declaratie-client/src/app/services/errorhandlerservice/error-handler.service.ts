@@ -30,18 +30,27 @@ export class ErrorHandlerService {
   }
 
   private handle500Error(error: HttpErrorResponse) {
+    console.log(error);
     this.createErrorMessage(error);
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
   private handle404Error(error: HttpErrorResponse) {
-    this.createErrorMessage(error);
+    console.log(error);
+    // this.createErrorMessage(error);
+
+    this.dialogConfig = {
+      statusCode: error.status,
+      name: this.errorName,
+      message: error.error,
+    };
+
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
   private handle400Error(error: HttpErrorResponse) {
+    console.log(error);
     this.createErrorMessage(error);
-    this.dialogConfig.message = 'Declaratie is niet verwerkbaar';
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 

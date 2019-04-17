@@ -3,8 +3,9 @@ import com.declaratie.declaratieapi.enums.StateEnum;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -30,18 +31,18 @@ public class Declaration {
     private Long id;
 
     @Column
-    @NotNull
-    @Length(min = 1, max = 255)
+    @NotNull(message = "Beschrijving should not be null.")
+    @Size(min = 1, max = 255, message = "Beschrijving should be between 1 and 255 characters.")
     private String description;
 
     @Temporal(TemporalType.DATE)
     @Column
-    @NotNull
+    @NotNull(message = "Datum should not be null.")
     private Date date;
 
     @Column
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Bedrag should not be null.")
+    @DecimalMin(value = "0.01", message = "Bedrag must be greater than or equal to 0,01.")
     private double amount;
 
     @Column
@@ -52,14 +53,14 @@ public class Declaration {
 
     @Enumerated(EnumType.STRING)
     @Column
-    @NotNull
+    @NotNull(message = "Status should not be null.")
     private StateEnum state;
 
     @Column
     private String city;
 
     @Column
-    @NotNull
+    @NotNull(message = "Medewerker ID should not be null.")
     private long empId;
 
     @OneToMany(targetEntity = DeclarationFile.class, mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

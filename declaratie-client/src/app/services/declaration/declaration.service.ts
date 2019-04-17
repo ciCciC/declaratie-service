@@ -3,10 +3,8 @@ import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Declaration} from '../../models/Declaration';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
-import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {environment} from '../../../environments/environment';
 import {DeclarationFile} from '../../models/DeclarationFile';
-import {forEach} from '@angular/router/src/utils/collection';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -17,32 +15,72 @@ export class DeclarationService {
   constructor(private http: HttpClient) { }
 
   addDeclaration(toSave: IDeclaration): Observable<IDeclaration> {
+    toSave.amount = null;
     return this.http.post<IDeclaration>(environment.urlAddress + '/', toSave, this.generateHeaders());
   }
 
-  addTest(toSave: Declaration, files: File[]): Observable<IDeclaration> {
+  addTest(toSave: Declaration, files: DeclarationFile[]): Observable<IDeclaration> {
 
     const dataToPost = new FormData();
     dataToPost.append('declaration', JSON.stringify(toSave));
 
     for (const file of files) {
-      dataToPost.append('declarationfiles', file, file.name);
+      dataToPost.append('declarationfiles', file.file, file.filename);
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/addDeclaration', dataToPost);
   }
 
+  // getDeclaration(id: number): Observable<IDeclaration> {
+  //   return this.http.get<IDeclaration>(environment.urlAddress + '/read/' + id);
+  // }
+
   getDeclaration(id: number): Observable<IDeclaration> {
-    return this.http.get<IDeclaration>(environment.urlAddress + '/read/' + id);
+    return this.http.get<IDeclaration>(environment.urlAddress + '/' + id).pipe(
+      map(declaration => {
+        const fileAtt: DeclarationFile[] = [];
+        declaration.files.map(data => {
+          const aa = new DeclarationFile();
+          const splitted = data.filename.split('.');
+          let filetype = splitted[splitted.length - 1];
+          if (filetype === 'pdf') {
+            filetype = 'application/' + filetype;
+          } else {
+            filetype = 'image/' + filetype;
+          }
+
+          const blob = this.dataURItoBlob(data.file, filetype);
+          aa.filename = data.filename;
+          aa.file = new File([blob], data.filename, { type: filetype });
+          aa.id = data.id;
+          aa.fileUrl = '';
+          fileAtt.push(aa);
+
+        });
+        declaration.files = fileAtt;
+        return declaration;
+      })
+    );
   }
 
-  updateDeclaration(toUpdate: IDeclaration): Observable<IDeclaration> {
+  updateDeclaration(toUpdate: IDeclaration, declarationFiles: DeclarationFile[]): Observable<IDeclaration> {
+    const dataToPost = new FormData();
+    dataToPost.append('declaration', JSON.stringify(toUpdate));
 
-    return this.http.post<IDeclaration>(environment.urlAddress + '/' + toUpdate.id, toUpdate, this.generateHeaders());
+    for (const file of declarationFiles) {
+      dataToPost.append('declarationfiles', file.file, file.filename + '-' + file.id);
+    }
+
+    return this.http.post<IDeclaration>(environment.urlAddress + '/updateDeclaration/' + toUpdate.id, dataToPost);
   }
 
   deleteDeclaration(id: number): Observable<any> {
-    return this.http.get<any>(environment.urlAddress + '/delete/' + id);
+    return this.http.delete<any>(environment.urlAddress + '/' + id);
+  }
+
+  getChunkDeclarations(from: number, pagesize: number): Observable<IDeclaration[]> {
+
+    return this.http.get<IDeclaration[]>(environment.urlAddress + '/paging/' + from + '/' + pagesize);
   }
 
   getDeclarations(): Observable<IDeclaration[]> {

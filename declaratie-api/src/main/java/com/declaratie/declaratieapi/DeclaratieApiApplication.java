@@ -15,12 +15,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -39,27 +40,28 @@ public class DeclaratieApiApplication {
 		return args -> {
 			Random rand = new Random();
 
-			final File file = new File("./img");
+			final File file = new File("./testimg");
+			List<File> files = Arrays.asList(file.listFiles()).stream().filter(value -> value.getName() != ".DS_Store").collect(Collectors.toList());
 
-			Stream.of("Benzine", "Eten", "Auto", "Alcohol", "Eten", "Benzine").forEach(description -> {
+			Stream.of("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6").forEach(description -> {
 
 				int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
-				int randomFile = rand.nextInt((2 - 0) + 1) + 0;
+				int randomFile = rand.nextInt((1 - 0) + 1) + 0;
 
 				Declaration declaration = new Declaration(description, new Date(), 120,
-						"Employee", "Manager houdt van bier", StateEnum.values()[randomChoice], 12);
+						"Hier staat medewerker zijn bericht", "Hier staat manager zijn bericht", StateEnum.values()[randomChoice], 12);
 
 				byte [] tmp = new byte[0];
 
 				try{
-					tmp = Files.readAllBytes(file.listFiles()[randomFile].toPath());
+					tmp = Files.readAllBytes(files.get(randomFile).toPath());
 
-					declaration.addDeclarationFile(new DeclarationFile(file.listFiles()[randomFile].getName(), tmp));
-					declaration.addDeclarationFile(new DeclarationFile(file.listFiles()[randomFile].getName(), tmp));
+					declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
+					declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
 
 					DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
 
-				}catch(UnprocessableDeclarationException | IOException ex){
+				}catch(ResponseStatusException | IOException ex){
 					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
 				}
 			});

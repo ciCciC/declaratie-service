@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">70.37% </span>
+        <span class="strong">68.75% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>19/27</span>
+        <span class='fraction'>22/32</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>3/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">25% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/6</span>
+        <span class='fraction'>2/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">69.57% </span>
+        <span class="strong">67.86% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>16/23</span>
+        <span class='fraction'>19/28</span>
       </div>
     </div>
     <p class="quiet">
@@ -113,7 +113,11 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,17 +137,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -154,11 +163,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,6 +178,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -185,11 +193,11 @@ import {Declaration} from '../../models/Declaration';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {StatusEnum} from '../../models/StatusEnum';
-import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {RestEnum} from '../../models/RestEnum';
-import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
+import {ImageDialogComponent} from '../../dialogs/image-dialog/image-dialog.component';
+import {MessageCreator} from '../../models/MessageCreator';
 &nbsp;
 @Component({
   selector: 'app-declaration-view',
@@ -203,6 +211,7 @@ export class DeclarationViewComponent implements OnInit {
   employee = EMPLOYEE;
   empStatus = false;
   processStatus = false;
+  displayedColumns = ['file', 'download'];
 &nbsp;
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef&lt;DeclarationViewComponent&gt;,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService) {
@@ -217,16 +226,15 @@ export class DeclarationViewComponent implements OnInit {
 <span class="cstat-no" title="statement not covered" >    this.dialogRef.close();</span>
   }
 &nbsp;
+<span class="fstat-no" title="function not covered" >  openImage(</span>declarationFile) {
+<span class="cstat-no" title="statement not covered" >    this.dialog.open(ImageDialogComponent, {width: '40%', data: declarationFile});</span>
+  }
+&nbsp;
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  toDelete(</span></span>) {
     if (this.declarationStatus) {
 <span class="cstat-no" title="statement not covered" >      this.errorService.unableToProcess(this.declaration.status);</span>
     } else {
-      const toDelete: IMessageDialog = {
-        name: 'Bericht',
-        message: 'Declaratie verwijderen?'
-      };
-&nbsp;
-      const dialogRefMessage = <span class="cstat-no" title="statement not covered" >this.dialog.open(MessageDialogComponent, {data: toDelete});</span>
+      const dialogRefMessage = <span class="cstat-no" title="statement not covered" >this.dialog.open(MessageDialogComponent, {data: MessageCreator.toDelete()});</span>
 <span class="cstat-no" title="statement not covered" >      dialogRefMessage.afterClosed().subscribe(<span class="fstat-no" title="function not covered" >result </span>=&gt; {</span>
         if (result) {
 <span class="cstat-no" title="statement not covered" >          this.dialogRef.close(RestEnum.delete);</span>
@@ -243,6 +251,10 @@ export class DeclarationViewComponent implements OnInit {
     }
   }
 &nbsp;
+<span class="fstat-no" title="function not covered" >  downloadFile(</span>) {
+<span class="cstat-no" title="statement not covered" >    alert('Upcoming user story: download !!');</span>
+  }
+&nbsp;
   ngOnInit() {
   }
 &nbsp;
@@ -253,7 +265,7 @@ export class DeclarationViewComponent implements OnInit {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 09 2019 09:48:24 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 17 2019 11:28:43 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

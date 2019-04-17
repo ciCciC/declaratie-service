@@ -11,12 +11,14 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class ImageDialogComponent implements OnInit {
 
   private file: File;
+  fileName: string;
   fileUrl: any;
   fileType: string;
 
   constructor(private dialogRef: MatDialogRef<ImageDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: DeclarationFile,
               private sanitizer: DomSanitizer) {
     this.file = data.file;
+    this.fileName = data.filename;
   }
 
   close() {

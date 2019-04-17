@@ -4,8 +4,6 @@ import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
 
-import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
-import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -14,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,7 +24,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+//import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -67,7 +67,7 @@ public class DeclarationServiceMockitoTest {
 
             assertThat(this.declarationService.create(new DeclarationModel(declaration)), is(notNullValue()));
 
-        }catch (UnprocessableDeclarationException ex){
+        }catch (ResponseStatusException ex){
             System.out.println("Declaratie kan niet aangemaakt worden.");
         }
     }
@@ -204,10 +204,8 @@ public class DeclarationServiceMockitoTest {
             Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
             System.out.println("Declaratie is gewijzigd");
 
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Declaratie kan niet gewijzigd worden");
-        } catch (UnprocessableDeclarationException e) {
-            System.out.println("Declaratie kan niet gewijzigd worden");
+        } catch (ResponseStatusException e) {
+            System.out.println(e.getReason());
         }
     }
 
@@ -220,10 +218,13 @@ public class DeclarationServiceMockitoTest {
 
         // Call
         // Assert
-        Assertions.assertThatCode(() -> {
+        try {
             DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
-        }).hasMessage("Declaration is not processable.");
-        System.out.println("Declaratie kan niet gewijzigd worden");
+        }catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            System.out.println("Declaratie kan niet gewijzigd worden");
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Test
@@ -243,10 +244,13 @@ public class DeclarationServiceMockitoTest {
 
         // Call
         // Assert
-        Assertions.assertThatCode(() -> {
+
+        try {
             DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
-        }).hasMessage("Declaration with id=1 not found");
-        System.out.println("Declaratie kan niet gewijzigd worden");
+        }catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Test
@@ -275,15 +279,13 @@ public class DeclarationServiceMockitoTest {
             // Assert
             Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
             System.out.println("Declaratie is gewijzigd");
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Declaratie kan niet gewijzigd worden");
-        } catch (UnprocessableDeclarationException e) {
-            System.out.println("Declaratie kan niet gewijzigd worden");
+        } catch (ResponseStatusException e) {
+            System.out.println(e.getReason());
         }
     }
 
-    @Test(expected = UnprocessableDeclarationException.class)
-    public void A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen() throws DeclarationNotFoundException, UnprocessableDeclarationException {
+    @Test(expected = ResponseStatusException.class)
+    public void A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen() {
         System.out.println("Test: A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen");
 
         // Prepare
@@ -302,8 +304,8 @@ public class DeclarationServiceMockitoTest {
         DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
     }
 
-    @Test(expected = UnprocessableDeclarationException.class)
-    public void A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen() throws DeclarationNotFoundException, UnprocessableDeclarationException {
+    @Test(expected = ResponseStatusException.class)
+    public void A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen() {
         System.out.println("Test: A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen");
 
         // Prepare
@@ -344,7 +346,7 @@ public class DeclarationServiceMockitoTest {
         try{
             result = declarationService.getAll();
         }catch (ResponseStatusException ex){
-            System.out.println("Declaratie lijst bestaat niet.");
+            System.out.println(ex.getReason());
         }
 
         int expected = 5;
@@ -361,22 +363,12 @@ public class DeclarationServiceMockitoTest {
     public void A22_SR13_TG2_get_declaration_list_is_null() {
         System.out.println("Test: A22_SR13_TG2_get_declaration_list_is_null");
 
+        // Prepare
         when(declarationRepository.findAll()).thenReturn(null);
 
-        boolean result = true;
-
-        try{
-            declarationService.getAll();
-            result = false;
-        }catch (Exception ex){
-            System.out.println("Declaratie lijst bestaat niet.");
-        }
-
-        boolean expected = true;
-
-        assertEquals(expected, result);
-
-        this.printStatus(expected, result);
+        // Action
+        // Assert
+        assertThat(declarationService.getAll()).isNullOrEmpty();
     }
 
     /***
@@ -399,8 +391,8 @@ public class DeclarationServiceMockitoTest {
 
             assertThat(declaratie_bestaat, is(notNullValue()));
 
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Message: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
         }
     }
 
@@ -419,8 +411,8 @@ public class DeclarationServiceMockitoTest {
 
         try {
             declaratie_bestaat = this.declarationService.read(dummyId);
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Message: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
         }
 
         assertNull(declaratie_bestaat);
@@ -442,9 +434,9 @@ public class DeclarationServiceMockitoTest {
         try {
             doNothing().when(declarationService).delete(dummyId);
             declarationService.delete(dummyId);
-        } catch (DeclarationNotFoundException | ResponseStatusException e) {
+        } catch (ResponseStatusException e) {
             declaratie_bestaat = false;
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("Message: " + e.getReason());
         }
         assertTrue(declaratie_bestaat);
     }
@@ -462,10 +454,10 @@ public class DeclarationServiceMockitoTest {
         Long dummyId = -100L;
 
         try {
-            doThrow(DeclarationNotFoundException.class).when(declarationService).delete(dummyId);
+            doThrow(ResponseStatusException.class).when(declarationService).delete(dummyId);
             declarationService.delete(dummyId);
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Message: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
             System.out.println("Declaratie bestaat niet.");
         }
     }

@@ -2,7 +2,7 @@
   <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
 </div>
 
-<h1 mat-dialog-title>Declaratie wijzigen</h1>
+<h1 mat-dialog-title>Wijzigen</h1>
 
 <div class="mat-dialog-content" *ngIf="declaration">
 
@@ -15,6 +15,23 @@
              id="description" name="description">
       <div *ngIf="!(updateForm.controls.description.invalid && updateForm.controls.description.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
+
+    <table class="dec-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="dec-full-width" appearance="outline">
+            <mat-label>Voornaam</mat-label>
+            <input formControlName="fname" matInput id="Voornaam" name="Voornaam">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="dec-full-width" appearance="outline">
+            <mat-label>Achternaam</mat-label>
+            <input formControlName="lname" matInput id="Achternaam" name="Achternaam">
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
 
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Datum</mat-label>
@@ -42,7 +59,13 @@
             <div *ngIf="!(updateForm.controls.manMessage.invalid && updateForm.controls.manMessage.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
 
-    <button mat-raised-button dec-button-row [disabled]="!updateForm.valid" color="primary">Opslaan</button>
+    <div>
+      <app-declarationfile-upload [dataStore]="declarationFiles" (uploaded)="onUploadedFiles($event)"></app-declarationfile-upload>
+    </div>
+
+    <div>
+      <button mat-raised-button dec-button-row [disabled]="!updateForm.valid" color="primary">Opslaan</button>
+    </div>
 
     <ng-template #elseAction>
       <mat-hint align="begin">

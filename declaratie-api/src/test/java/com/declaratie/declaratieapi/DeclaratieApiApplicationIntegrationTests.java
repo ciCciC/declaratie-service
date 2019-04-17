@@ -73,7 +73,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		try {
 			addedDeclaration = declarationService.create(new DeclarationModel(toCreate));
-		}catch (UnprocessableDeclarationException ex){
+		}catch (ResponseStatusException ex){
 			System.out.println("Declaratie kan niet aangemaakt worden.");
 		}
 
@@ -130,7 +130,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		try {
 			nieuweDeclaratie = declarationService.create(null);
 
-		}catch (UnprocessableDeclarationException ex){
+		}catch (ResponseStatusException ex){
 			System.out.println("Declaratie kan niet aangemaakt worden.");
 		}
 
@@ -168,7 +168,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		try {
 			nieuweDeclaratie = declarationService.create(new DeclarationModel(toCreate));
-		}catch (UnprocessableDeclarationException ex){
+		}catch (ResponseStatusException ex){
 			System.out.println("Declaratie kan niet aangemaakt worden.");
 		}
 
@@ -214,7 +214,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 					"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
 			try {
 				declarationService.create(new DeclarationModel(declaration));
-			}catch (UnprocessableDeclarationException ex){
+			}catch (ResponseStatusException ex){
 				System.out.println("Declaratie kan niet aangemaakt worden.");
 			}
 		});
@@ -261,7 +261,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 */
 		try {
 			toRead = declarationService.create(new DeclarationModel(toSave));
-		} catch (UnprocessableDeclarationException e) {
+		} catch (ResponseStatusException e) {
 			e.printStackTrace();
 		}
 
@@ -297,8 +297,8 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		try {
 			declaratie_bestaat = declarationService.read(toRead);
-		} catch (DeclarationNotFoundException e) {
-			System.out.println("Message: " + e.getMessage());
+		} catch (ResponseStatusException e) {
+			System.out.println("Message: " + e.getReason());
 		}
 
 		/**
@@ -331,7 +331,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 */
 		try {
 			toDelete = declarationService.create(new DeclarationModel(toSave));
-		} catch (UnprocessableDeclarationException e) {
+		} catch (ResponseStatusException e) {
 			e.printStackTrace();
 		}
 
@@ -366,8 +366,8 @@ public class DeclaratieApiApplicationIntegrationTests {
 			declarationService.delete(toDelete);
 			System.out.println("Message: declaratie is verwijderd");
 			declaratie_bestaat = true;
-		} catch (DeclarationNotFoundException e) {
-			System.out.println("Message: " + e.getMessage());
+		} catch (ResponseStatusException e) {
+			System.out.println("Message: " + e.getReason());
 		}
 
 		assertFalse(declaratie_bestaat);
@@ -397,7 +397,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		 */
 		try {
 			toDelete = declarationService.create(new DeclarationModel(toSave));
-		} catch (UnprocessableDeclarationException e) {
+		} catch (ResponseStatusException e) {
 			e.printStackTrace();
 		}
 

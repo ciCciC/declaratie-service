@@ -6,6 +6,7 @@ import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material';
+import {By} from '@angular/platform-browser';
 
 describe(DeclarationViewComponent.name, () => {
   let component: DeclarationViewComponent;
@@ -36,8 +37,15 @@ describe(DeclarationViewComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('A31_shouldCreate ' + DeclarationViewComponent.name, () => {
+  it('US9_shouldShow ' + DeclarationViewComponent.name, () => {
     expect(component).toBeTruthy();
+  });
+
+  it('US8_clickOnDelete ' + DeclarationViewComponent.name, () => {
+    const spy_create = spyOn(component, 'toDelete');
+    component.toDelete();
+
+    expect(spy_create).toHaveBeenCalled();
   });
 
 });

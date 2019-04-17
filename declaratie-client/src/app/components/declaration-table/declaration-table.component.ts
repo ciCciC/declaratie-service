@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {Declaration} from '../../models/Declaration';
@@ -35,8 +35,9 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
   getDeclarationsList() {
     this.declarationService.getDeclarations().subscribe(data => {
-      console.log(data);
+      data.sort((a, b) => a.id < b.id ? 1 : -1);
       this.dataSource.data = data;
+      console.log(data);
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -52,14 +53,37 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
     this.displayedColumns.push('action');
   }
 
-  createClick() {
+  createDeclaration() {
     this.router.navigateByUrl('/declarationcreate');
     // this.router.navigate(['/declarationcreate']);
   }
 
+  // TODO
+  pageClick(event: PageEvent) {
+    console.log(event.previousPageIndex);
+    console.log(event.pageSize);
+    console.log(event.pageIndex);
+
+    const startVanaf = event.pageIndex * event.pageSize;
+    console.log('Start vanaf [i]: ' + startVanaf);
+
+    const amount = (startVanaf + event.pageSize);
+
+    if (amount < this.dataSource.data.length ) {
+      console.log('Aantal: ' + event.pageSize);
+    } else {
+      console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
+    }
+
+    const tot = event.pageSize;
+    console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
+
+
+  }
+
   toDelete(declaration: Declaration) {
 
-    if (declaration.status === StatusEnum.INPROGRESS) {
+    if (declaration.status === StatusEnum.INPROGRESS || declaration.status === StatusEnum.APPROVED) {
       this.errorService.unableToProcess(declaration.status);
     } else {
 
@@ -87,7 +111,9 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   private openUpdateDialog(selected: Declaration) {
     const dialogRefUpdate = this.dialog.open(DeclarationUpdateComponent, {data: selected});
     dialogRefUpdate.afterClosed().subscribe(resultOfUpdate => {
-      this.getDeclarationsList();
+      setTimeout(() => {
+        this.getDeclarationsList();
+      }, 1000);
     });
   }
 
@@ -99,16 +125,13 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  // private declarationListFilter(declaration: Declaration) {
-  //   this.dataSource.data = this.dataSource.data.filter(u => u !== declaration);
-  // }
-
   ngOnInit() {
     // this.paginator._intl.itemsPerPageLabel = 'Items per pagina:';
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.initTableColumnNames();
     this.getDeclarationsList();
+
   }
 
   ngOnDestroy(): void {

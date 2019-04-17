@@ -2,10 +2,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import { DeclarationUpdateComponent } from './declaration-update.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatIconModule} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatIconModule, MatTableModule} from '@angular/material';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {DeclarationfileUploadComponent} from '../declarationfile-upload/declarationfile-upload.component';
 
 describe(DeclarationUpdateComponent.name, () => {
   let component: DeclarationUpdateComponent;
@@ -17,6 +18,7 @@ describe(DeclarationUpdateComponent.name, () => {
         ReactiveFormsModule,
         MatIconModule,
         MatDialogModule,
+        MatTableModule,
         MaterialModule,
         BrowserAnimationsModule,
         NoopAnimationsModule,
@@ -26,7 +28,7 @@ describe(DeclarationUpdateComponent.name, () => {
         provide: MAT_DIALOG_DATA,
         useValue: {}
       }],
-      declarations: [ DeclarationUpdateComponent ]
+      declarations: [ DeclarationUpdateComponent, DeclarationfileUploadComponent ]
     })
     .compileComponents();
   }));
@@ -56,6 +58,7 @@ describe(DeclarationUpdateComponent.name, () => {
       component.updateForm.get('amount').setValue(50);
       component.updateForm.get('empMessage').setValue('Employee message');
       component.updateForm.get('manMessage').setValue('Manager message');
+      component.updateForm.get('files').setValue(1);
 
       // Assert
       expect(component.updateForm.valid).toEqual(true);

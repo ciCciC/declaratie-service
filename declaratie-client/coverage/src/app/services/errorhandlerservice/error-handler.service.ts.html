@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">39.39% </span>
+        <span class="strong">37.14% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/33</span>
+        <span class='fraction'>13/35</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>1/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">37.5% </span>
+        <span class="strong">35.29% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/32</span>
+        <span class='fraction'>12/34</span>
       </div>
     </div>
     <p class="quiet">
@@ -125,7 +125,16 @@
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -138,31 +147,40 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,18 +254,27 @@ export class ErrorHandlerService {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  private h</span>andle500Error(error: HttpErrorResponse) {
+<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
 <span class="cstat-no" title="statement not covered" >    this.createErrorMessage(error);</span>
 <span class="cstat-no" title="statement not covered" >    this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  private h</span>andle404Error(error: HttpErrorResponse) {
-<span class="cstat-no" title="statement not covered" >    this.createErrorMessage(error);</span>
+<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
+    // this.createErrorMessage(error);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.dialogConfig = {</span>
+      statusCode: error.status,
+      name: this.errorName,
+      message: error.error,
+    };
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  private h</span>andle400Error(error: HttpErrorResponse) {
+<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
 <span class="cstat-no" title="statement not covered" >    this.createErrorMessage(error);</span>
-<span class="cstat-no" title="statement not covered" >    this.dialogConfig.message = 'Declaratie is niet verwerkbaar';</span>
 <span class="cstat-no" title="statement not covered" >    this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});</span>
   }
 &nbsp;
@@ -289,7 +316,7 @@ export class ErrorHandlerService {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 09 2019 09:48:24 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 17 2019 11:28:43 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

@@ -8,6 +8,7 @@ import {textInputValidator} from '../validators/textInputValidator';
 import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
+import {DeclarationFile} from '../../models/DeclarationFile';
 
 
 @Component({
@@ -18,7 +19,7 @@ import {ErrorHandlerService} from '../../services/errorhandlerservice/error-hand
 export class DeclarationCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
   private disabled = true;
-  private declarationFiles: File[] = [];
+  private declarationFiles: DeclarationFile[] = [];
   processDate = new Date();
 
   constructor(private fb: FormBuilder, private location: Location,
@@ -59,7 +60,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/declarationtable');
   }
 
-  onUploadedFiles(files: File[]) {
+  onUploadedFiles(files: DeclarationFile[]) {
     this.declarationFiles = files;
     this.createForm.controls.files.setValue(this.declarationFiles.length);
   }

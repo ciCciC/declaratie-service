@@ -21,7 +21,6 @@ export class DeclarationViewComponent implements OnInit {
   employee = EMPLOYEE;
   empStatus = false;
   processStatus = false;
-
   displayedColumns = ['file', 'download'];
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationViewComponent>,
@@ -38,7 +37,7 @@ export class DeclarationViewComponent implements OnInit {
   }
 
   openImage(declarationFile) {
-    this.dialog.open(ImageDialogComponent, {width: '50%', data: declarationFile});
+    this.dialog.open(ImageDialogComponent, {width: '40%', data: declarationFile});
   }
 
   toDelete() {
