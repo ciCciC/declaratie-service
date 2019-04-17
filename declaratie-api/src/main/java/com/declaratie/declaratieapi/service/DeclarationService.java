@@ -73,7 +73,7 @@ public class DeclarationService {
         StateEnum currentState = declarationExist.get().getStatusEnum();
 
         if(currentState == StateEnum.INPROGRESS || currentState == StateEnum.APPROVED){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MessageFormat.format("Declaratie met id={0} is ", currentState));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is ", currentState));
         }
 
         try {
