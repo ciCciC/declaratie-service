@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorDialogComponent} from '../../dialogs/error-dialog/error-dialog.component';
 import {IErrorDialog} from '../../models/imodels/IErrorDialog';
+import {StatusEnum} from '../../models/StatusEnum';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class ErrorHandlerService {
   constructor(private dialog: MatDialog) { }
 
   public handleError(error: HttpErrorResponse) {
-    if (error.status === 404) {
+    if (error.status === 500) {
+      this.handle500Error(error);
+    } else if (error.status === 404) {
       this.handle404Error(error);
     } else if (error.status === 400) {
       this.handle400Error(error);
@@ -26,14 +29,28 @@ export class ErrorHandlerService {
     }
   }
 
-  private handle404Error(error: HttpErrorResponse) {
+  private handle500Error(error: HttpErrorResponse) {
+    console.log(error);
     this.createErrorMessage(error);
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
+  private handle404Error(error: HttpErrorResponse) {
+    console.log(error);
+    // this.createErrorMessage(error);
+
+    this.dialogConfig = {
+      statusCode: error.status,
+      name: this.errorName,
+      message: error.error,
+    };
+
+    this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
+  }
+
   private handle400Error(error: HttpErrorResponse) {
+    console.log(error);
     this.createErrorMessage(error);
-    this.dialogConfig.message = 'Declaratie is niet verwerkbaar';
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
@@ -43,11 +60,11 @@ export class ErrorHandlerService {
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }
 
-  public unableToDelete() {
+  public unableToProcess(status: StatusEnum) {
     this.dialogConfig = {
       statusCode: 400,
       name: this.errorName,
-      message: 'Declaratie is in proces',
+      message: 'Declaratie is ' + status,
     };
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }

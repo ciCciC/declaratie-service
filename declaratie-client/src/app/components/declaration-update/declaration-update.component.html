@@ -1,0 +1,77 @@
+<div mat-dialog-actions align="end">
+  <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
+</div>
+
+<h1 mat-dialog-title>Wijzigen</h1>
+
+<div class="mat-dialog-content" *ngIf="declaration">
+
+  <form name="declarationForm" [formGroup]="updateForm"
+        (ngSubmit)="toSave(updateForm.value)" class="declaration-container">
+
+    <mat-form-field class="dec-full-width" appearance="outline">
+      <mat-label>Omschrijving</mat-label>
+      <input formControlName="description" matInput placeholder="omschrijving"
+             id="description" name="description">
+      <div *ngIf="!(updateForm.controls.description.invalid && updateForm.controls.description.errors.lets_be_friends); else elseAction"></div>
+    </mat-form-field>
+
+    <table class="dec-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="dec-full-width" appearance="outline">
+            <mat-label>Voornaam</mat-label>
+            <input formControlName="fname" matInput id="Voornaam" name="Voornaam">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="dec-full-width" appearance="outline">
+            <mat-label>Achternaam</mat-label>
+            <input formControlName="lname" matInput id="Achternaam" name="Achternaam">
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <mat-form-field class="dec-full-width" appearance="outline">
+      <mat-label>Datum</mat-label>
+      <input matInput value="{{processDate | date}}" disabled>
+    </mat-form-field>
+
+    <mat-form-field class="dec-full-width" appearance="outline">
+      <mat-label>Bedrag</mat-label>
+      <input formControlName="amount" matInput #euro
+             name="amount" placeholder="0,00" type="number">
+      <mat-hint align="begin" *ngIf="euro.value < 0">Vul een positief getal in</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="dec-full-width">
+      <mat-label>Medewerker bericht (optioneel)</mat-label>
+      <input formControlName="empMessage" matInput id="empMessage"
+             name="empMessage" placeholder="Vul hier een bericht in">
+      <div *ngIf="!(updateForm.controls.empMessage.invalid && updateForm.controls.empMessage.errors.lets_be_friends); else elseAction"></div>
+    </mat-form-field>
+
+    <mat-form-field class="dec-full-width">
+      <mat-label>Manager bericht (optioneel)</mat-label>
+      <input formControlName="manMessage" matInput id="manMessage"
+             name="manMessage" placeholder="Vul hier een bericht in">
+            <div *ngIf="!(updateForm.controls.manMessage.invalid && updateForm.controls.manMessage.errors.lets_be_friends); else elseAction"></div>
+    </mat-form-field>
+
+    <div>
+      <app-declarationfile-upload [dataStore]="declarationFiles" (uploaded)="onUploadedFiles($event)"></app-declarationfile-upload>
+    </div>
+
+    <div>
+      <button mat-raised-button dec-button-row [disabled]="!updateForm.valid" color="primary">Opslaan</button>
+    </div>
+
+    <ng-template #elseAction>
+      <mat-hint align="begin">
+        Lets be friends
+        <mat-icon matSuffix>sentiment_satisfied_alt</mat-icon>
+      </mat-hint>
+    </ng-template>
+  </form>
+</div>

@@ -1,0 +1,18 @@
+<table class="dec-full-width" cellspacing="0">
+  <tr>
+    <td>
+      {{fileName}}
+    </td>
+    <td align="end">
+      <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
+    </td>
+  </tr>
+</table>
+<div *ngIf="fileUrl">
+  <div *ngIf="fileType !== 'pdf'; else pdfFile">
+    <img class="fileImage" [src]="fileUrl">
+  </div>
+  <ng-template #pdfFile>
+    <embed class="filePdf" [src]="fileUrl" type="application/pdf">
+  </ng-template>
+</div>

@@ -3,7 +3,7 @@ import {StatusEnum} from '../models/StatusEnum';
 
 
 export const DECLARATIONS: IDeclaration[] = [
-  { id: 0, description: 'Gasoline', amount: 1200, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',
+  { id: 0, description: 'Gasoline', amount: 1200, date: new Date().toISOString(), empId: 1, empComment: 'Trust this declaration',
     manComment: '', status: StatusEnum.INPROGRESS,
     files: []},
   { id: 1, description: 'Food for good', amount: 10, date: '1-1-2019', empId: 1, empComment: 'Trust this declaration',

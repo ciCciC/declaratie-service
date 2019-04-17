@@ -1,0 +1,32 @@
+<div class="container">
+  <h4>Upload bestand</h4>
+
+  <table mat-table [dataSource]="declarationFiles">
+
+    <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="container">
+          <input id="fileId" hidden multiple type="file" accept="{{acceptTypes}}" (change)="onFileSelect($event)">
+          <button class="uploadButton" mat-raised-button (click)="openFileBrowser($event)">
+            <mat-icon matListIcon>cloud_upload</mat-icon>
+            Kies bestand
+          </button>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.filename}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon mat-mini-fab>
+          <mat-icon class="toDelete" matTooltip="Verwijder" (click)="toDelete(element)">remove_circle_outline</mat-icon>
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <br>
+</div>

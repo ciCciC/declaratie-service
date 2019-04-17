@@ -4,15 +4,15 @@ import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
 
-import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
-import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,7 +24,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+//import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -64,110 +65,264 @@ public class DeclarationServiceMockitoTest {
 
         try{
 
-            assertThat(this.declarationService.create(declaration), is(notNullValue()));
+            assertThat(this.declarationService.create(new DeclarationModel(declaration)), is(notNullValue()));
 
-        }catch (UnprocessableDeclarationException ex){
+        }catch (ResponseStatusException ex){
             System.out.println("Declaratie kan niet aangemaakt worden.");
         }
     }
 
-    /***
-     * Tests the value of the actual and expected variables
-     */
-    @Test
-    public void A12_SR11_TG1_create_actual_values_expected_values() {
-
-        System.out.println("Test: A12_SR11_TG1_create_actual_values_expected_values");
-
-        /***
-         * Soms moeten we echte afhankelijkheidsmethoden aanroepen,
-         * maar we willen nog steeds interacties met die afhankelijkheid verifiëren of volgen, daarvoor gebruiken we een SPY.
-         */
-
-        Declaration dummyObject = spy(Declaration.class);
-        dummyObject.setDescription("auto");
-        dummyObject.setAmount(1500);
-        dummyObject.setDate(new GregorianCalendar(2019, 4, 30).getTime());
-        dummyObject.setStatusEnum(StateEnum.SUBMITTED);
-        dummyObject.setEmpComment("Wel");
-        dummyObject.setManComment("Ja");
-        dummyObject.setEmpId(2);
-
-        Declaration actualObject = spy(Declaration.class);
-        actualObject.setDescription("eten");
-        actualObject.setAmount(1000);
-        actualObject.setDate(new GregorianCalendar(2019, 4, 20).getTime());
-        actualObject.setStatusEnum(StateEnum.REJECTED);
-        actualObject.setEmpComment("Nee");
-        actualObject.setManComment("Niet");
-        actualObject.setEmpId(1);
-
-        when(declarationRepository.save(dummyObject)).thenReturn(actualObject);
-
-        DeclarationModel result = null;
-
-        try{
-            result = declarationService.create(dummyObject);
-        }catch (UnprocessableDeclarationException ex){
-            System.out.println("Declaratie kan niet aangemaakt worden.");
-        }
-
-        assertNotEquals(dummyObject.getDescription(), result.getDescription());
-        assertNotEquals(dummyObject.getAmount(), result.getAmount(), 0);
-        assertNotEquals(dummyObject.getDate(), result.getDate());
-        assertNotEquals(dummyObject.getStatusEnum(), result.getStatus());
-        assertNotEquals(dummyObject.getEmpComment(), result.getEmpComment());
-        assertNotEquals(dummyObject.getManComment(), result.getManComment());
-        assertNotEquals(dummyObject.getEmpId(), result.getEmpId().longValue());
-    }
-
-    /***
-     * Tests the value of the actual and expected variables
-     */
-    @Test
-    public void A12_SR11_TG8_create_actual_values_expected_values() {
-
-        System.out.println("Test: A12_SR11_TG8_create_actual_values_expected_values");
-
-        /***
-         * Soms moeten we echte afhankelijkheidsmethoden aanroepen,
-         * maar we willen nog steeds interacties met die afhankelijkheid verifiëren of volgen, daarvoor gebruiken we een SPY.
-         */
-
-        Date date = new GregorianCalendar(2019, 4, 30).getTime();
-
-        Declaration dummyObject = spy(Declaration.class);
-        dummyObject.setDescription("auto");
-        dummyObject.setAmount(1500);
-        dummyObject.setDate(date);
-        dummyObject.setStatusEnum(StateEnum.SUBMITTED);
-        dummyObject.setEmpComment("Wel");
-        dummyObject.setManComment("Ja");
-        dummyObject.setEmpId(2);
-
-        when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
-
-        DeclarationModel result = null;
-
-        try{
-            result = declarationService.create(dummyObject);
-        }catch (UnprocessableDeclarationException ex){
-            System.out.println("Declaratie kan niet aangemaakt worden.");
-        }
-
-        assertEquals("auto", result.getDescription());
-        assertEquals(1500, result.getAmount(), 0);
-        assertEquals(date, result.getDate());
-        assertEquals(StateEnum.SUBMITTED.name(), result.getStatus());
-        assertEquals("Wel", result.getEmpComment());
-        assertEquals("Ja", result.getManComment());
-        assertEquals(2, result.getEmpId().longValue());
-    }
-
-
+//    /***
+//     * Tests the value of the actual and expected variables
+//     */
 //    @Test
-//    public void update() {
+//    public void A12_SR11_TG1_create_actual_values_expected_values() {
+//
+//        System.out.println("Test: A12_SR11_TG1_create_actual_values_expected_values");
+//
+//        /***
+//         * Soms moeten we echte afhankelijkheidsmethoden aanroepen,
+//         * maar we willen nog steeds interacties met die afhankelijkheid verifiëren of volgen, daarvoor gebruiken we een SPY.
+//         */
+//
+//        Declaration dummyObject = spy(Declaration.class);
+//        dummyObject.setDescription("auto");
+//        dummyObject.setAmount(1500);
+//        dummyObject.setDate(new GregorianCalendar(2019, 4, 30).getTime());
+//        dummyObject.setStatusEnum(StateEnum.SUBMITTED);
+//        dummyObject.setEmpComment("Wel");
+//        dummyObject.setManComment("Ja");
+//        dummyObject.setEmpId(2);
+//
+//        Declaration actualObject = spy(Declaration.class);
+//        actualObject.setDescription("eten");
+//        actualObject.setAmount(1000);
+//        actualObject.setDate(new GregorianCalendar(2019, 4, 20).getTime());
+//        actualObject.setStatusEnum(StateEnum.REJECTED);
+//        actualObject.setEmpComment("Nee");
+//        actualObject.setManComment("Niet");
+//        actualObject.setEmpId(1);
+//
+//        when(declarationRepository.save(dummyObject)).thenReturn(actualObject);
+//
+//        DeclarationModel result = null;
+//
+//        try{
+//            result = declarationService.create(new DeclarationModel(dummyObject));
+//        }catch (UnprocessableDeclarationException ex){
+//            System.out.println("Declaratie kan niet aangemaakt worden.");
+//        }
+//
+//        assertNotEquals(dummyObject.getDescription(), result.getDescription());
+//        assertNotEquals(dummyObject.getAmount(), result.getAmount(), 0);
+//        assertNotEquals(dummyObject.getDate(), result.getDate());
+//        assertNotEquals(dummyObject.getStatusEnum(), result.getStatus());
+//        assertNotEquals(dummyObject.getEmpComment(), result.getEmpComment());
+//        assertNotEquals(dummyObject.getManComment(), result.getManComment());
+//        assertNotEquals(dummyObject.getEmpId(), result.getEmpId().longValue());
 //    }
+
+//    /***
+//     * Tests the value of the actual and expected variables
+//     */
+//    @Test
+//    public void A12_SR11_TG8_create_actual_values_expected_values() {
+//
+//        System.out.println("Test: A12_SR11_TG8_create_actual_values_expected_values");
+//
+//        /***
+//         * Soms moeten we echte afhankelijkheidsmethoden aanroepen,
+//         * maar we willen nog steeds interacties met die afhankelijkheid verifiëren of volgen, daarvoor gebruiken we een SPY.
+//         */
+//
+//        Date date = new GregorianCalendar(2019, 4, 30).getTime();
+//
+//        Declaration dummyObject = spy(new Declaration());
+//        dummyObject.setId(1L);
+//        dummyObject.setDescription("auto");
+//        dummyObject.setAmount(1500);
+//        dummyObject.setDate(date);
+//        dummyObject.setStatusEnum(StateEnum.SUBMITTED);
+//        dummyObject.setEmpComment("Wel");
+//        dummyObject.setManComment("Ja");
+//        dummyObject.setEmpId(2);
+//
+//        DeclarationModel toCreate = spy(new DeclarationModel());
+//        toCreate.setId(1L);
+//        toCreate.setDescription("auto");
+//        toCreate.setAmount(1500);
+//        toCreate.setDate(date);
+//        toCreate.setStatus(StateEnum.SUBMITTED.name());
+//        toCreate.setEmpComment("Wel");
+//        toCreate.setManComment("Ja");
+//        toCreate.setEmpId(2L);
+//
+//        when(declarationRepository.save(dummyObject)).thenReturn(dummyObject);
+//
+//        DeclarationModel result = null;
+//
+//        try{
+//            result = declarationService.create(toCreate);
+//        }catch (UnprocessableDeclarationException ex){
+//            System.out.println("Declaratie kan niet aangemaakt worden.");
+//        }
+//
+//        assertEquals("auto", result.getDescription());
+//        assertEquals(1500, result.getAmount(), 0);
+//        assertEquals(date, result.getDate());
+//        assertEquals(StateEnum.SUBMITTED.name(), result.getStatus());
+//        assertEquals("Wel", result.getEmpComment());
+//        assertEquals("Ja", result.getManComment());
+//        assertEquals(2, result.getEmpId().longValue());
+//    }
+
+
+    @Test
+    public void A42_SR9_TG1_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG1_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+            System.out.println("Declaratie is gewijzigd");
+
+        } catch (ResponseStatusException e) {
+            System.out.println(e.getReason());
+        }
+    }
+
+    @Test
+    public void A42_SR9_TG2_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG2_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        DeclarationModel declarationModel = null;
+
+        // Call
+        // Assert
+        try {
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        }catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            System.out.println("Declaratie kan niet gewijzigd worden");
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Test
+    public void A42_SR9_TG4_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG4_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Call
+        // Assert
+
+        try {
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        }catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Test
+    public void A42_SR9_TG6_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG6_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.REJECTED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+            System.out.println("Declaratie is gewijzigd");
+        } catch (ResponseStatusException e) {
+            System.out.println(e.getReason());
+        }
+    }
+
+    @Test(expected = ResponseStatusException.class)
+    public void A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.INPROGRESS;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+
+        // Call
+        // Assert
+        DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+    }
+
+    @Test(expected = ResponseStatusException.class)
+    public void A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen() {
+        System.out.println("Test: A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen");
+
+        // Prepare
+        StateEnum currentState = StateEnum.APPROVED;
+        Declaration declaratieDb = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("Gasoline");
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+
+        // Call
+        // Assert
+        DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+    }
 
     /***
      * Tests the value of the actual and expected variables
@@ -186,12 +341,12 @@ public class DeclarationServiceMockitoTest {
 
         when(declarationRepository.findAll()).thenReturn(declarationsList);
 
-        List<Declaration> result = null;
+        List<DeclarationModel> result = null;
 
         try{
             result = declarationService.getAll();
         }catch (ResponseStatusException ex){
-            System.out.println("Declaratie lijst bestaat niet.");
+            System.out.println(ex.getReason());
         }
 
         int expected = 5;
@@ -208,22 +363,12 @@ public class DeclarationServiceMockitoTest {
     public void A22_SR13_TG2_get_declaration_list_is_null() {
         System.out.println("Test: A22_SR13_TG2_get_declaration_list_is_null");
 
+        // Prepare
         when(declarationRepository.findAll()).thenReturn(null);
 
-        boolean result = true;
-
-        try{
-            declarationService.getAll();
-            result = false;
-        }catch (Exception ex){
-            System.out.println("Declaratie lijst bestaat niet.");
-        }
-
-        boolean expected = true;
-
-        assertEquals(expected, result);
-
-        this.printStatus(expected, result);
+        // Action
+        // Assert
+        assertThat(declarationService.getAll()).isNullOrEmpty();
     }
 
     /***
@@ -246,8 +391,8 @@ public class DeclarationServiceMockitoTest {
 
             assertThat(declaratie_bestaat, is(notNullValue()));
 
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Message: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
         }
     }
 
@@ -266,8 +411,8 @@ public class DeclarationServiceMockitoTest {
 
         try {
             declaratie_bestaat = this.declarationService.read(dummyId);
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Message: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
         }
 
         assertNull(declaratie_bestaat);
@@ -289,9 +434,9 @@ public class DeclarationServiceMockitoTest {
         try {
             doNothing().when(declarationService).delete(dummyId);
             declarationService.delete(dummyId);
-        } catch (DeclarationNotFoundException | ResponseStatusException e) {
+        } catch (ResponseStatusException e) {
             declaratie_bestaat = false;
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("Message: " + e.getReason());
         }
         assertTrue(declaratie_bestaat);
     }
@@ -309,10 +454,10 @@ public class DeclarationServiceMockitoTest {
         Long dummyId = -100L;
 
         try {
-            doThrow(DeclarationNotFoundException.class).when(declarationService).delete(dummyId);
+            doThrow(ResponseStatusException.class).when(declarationService).delete(dummyId);
             declarationService.delete(dummyId);
-        } catch (DeclarationNotFoundException e) {
-            System.out.println("Message: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
             System.out.println("Declaratie bestaat niet.");
         }
     }

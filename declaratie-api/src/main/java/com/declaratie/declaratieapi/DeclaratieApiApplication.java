@@ -1,6 +1,7 @@
 package com.declaratie.declaratieapi;
 
 import com.declaratie.declaratieapi.controller.DeclarationController;
+import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
@@ -14,8 +15,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -24,29 +30,38 @@ public class DeclaratieApiApplication {
 	private static final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 
 	public static void main(String[] args) {
-
 		logger.info("Called application class.");
-
 		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
 
 	@Bean
 	ApplicationRunner initSomeExampleList(DeclarationService declarationService) {
+
 		return args -> {
-			Stream.of("Benzine", "Eten", "Auto", "Alcohol").forEach(description -> {
+			Random rand = new Random();
+
+			final File file = new File("./testimg");
+			List<File> files = Arrays.asList(file.listFiles()).stream().filter(value -> value.getName() != ".DS_Store").collect(Collectors.toList());
+
+			Stream.of("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6").forEach(description -> {
+
+				int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
+				int randomFile = rand.nextInt((1 - 0) + 1) + 0;
 
 				Declaration declaration = new Declaration(description, new Date(), 120,
-						"Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
+						"Hier staat medewerker zijn bericht", "Hier staat manager zijn bericht", StateEnum.values()[randomChoice], 12);
 
-				byte [] tmp = new byte []{111, 127};
+				byte [] tmp = new byte[0];
 
 				try{
-					declaration.addDeclarationFile(new DeclarationFile("holidaypicture.jpg", tmp));
-					declaration.addDeclarationFile(new DeclarationFile("badboydancing.png", tmp));
+					tmp = Files.readAllBytes(files.get(randomFile).toPath());
 
-					DeclarationModel dec = declarationService.create(declaration);
+					declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
+					declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
 
-				}catch(UnprocessableDeclarationException ex){
+					DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
+
+				}catch(ResponseStatusException | IOException ex){
 					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
 				}
 			});

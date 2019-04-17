@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8">
   <div mat-dialog-actions align="end">
-    <button mat-raised-button align="end" class="createbutton" (click)="createClick()">aanmaken</button>
+    <button mat-raised-button align="end" class="createbutton" (click)="createDeclaration()">aanmaken</button>
   </div>
 
   <div>
@@ -28,7 +28,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" (page)="pageClick($event)" showFirstLastButtons></mat-paginator>
 
   </div>
 </div>

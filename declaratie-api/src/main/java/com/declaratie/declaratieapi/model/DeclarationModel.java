@@ -1,17 +1,13 @@
 package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
-import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
-import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import javax.validation.constraints.Size;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class DeclarationModel {
+public class DeclarationModel implements Comparable<DeclarationModel> {
 
     private Long id;
     private String description;
@@ -50,8 +46,14 @@ public class DeclarationModel {
     }
 
     public Declaration toDeclaration(){
-        return new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
+        Declaration transformed = new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
                 StateEnum.valueOf(this.status), this.empId);
+
+        transformed.setFiles(this.getFiles() != null ? this.getFiles()
+                .stream().map(data -> data.toDeclarationFile())
+                .collect(Collectors.toList()) : new ArrayList<>());
+
+        return transformed;
     }
 
     public Long getId() {
@@ -126,6 +128,12 @@ public class DeclarationModel {
         this.files = files;
     }
 
+    public void addFile(DeclarationFileModel file) {
+        this.getFiles().add(file);
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -160,5 +168,10 @@ public class DeclarationModel {
                 ", empId=" + empId +
                 ", files=" + files.size() +
                 '}';
+    }
+
+    @Override
+    public int compareTo(DeclarationModel o) {
+        return this.getId() < o.getId() ? 1 : -1;
     }
 }

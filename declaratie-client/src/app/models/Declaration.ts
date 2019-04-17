@@ -8,7 +8,7 @@ export class Declaration implements IDeclaration {
   date: string;
   amount: number;
   status: StatusEnum;
-  files: DeclarationFile[];
+  files: any;
   manComment: string;
   empComment: string;
   empId: number;

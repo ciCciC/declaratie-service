@@ -5,7 +5,8 @@ import com.declaratie.declaratieapi.model.DeclarationModel;
 public class ContentUtils {
 
     public static void CLEAN_DELCARATION_VALUES(DeclarationModel model){
-        model.setDescription(REPLACE_XSS_CHARS(model.getDescription()));
+        if(model.getDescription() != null)
+            model.setDescription(REPLACE_XSS_CHARS(model.getDescription()));
 
         if(model.getEmpComment() != null)
             model.setEmpComment(REPLACE_XSS_CHARS(model.getEmpComment()));

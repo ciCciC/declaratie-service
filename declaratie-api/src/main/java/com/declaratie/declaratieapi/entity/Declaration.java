@@ -3,12 +3,13 @@ import com.declaratie.declaratieapi.enums.StateEnum;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
-@Table(name = "Declaration")
+@Table
 public class Declaration {
 
     public Declaration(){
@@ -29,32 +30,40 @@ public class Declaration {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "description", nullable = false)
-    @Length(min = 1, max = 255)
+    @Column
+    @NotNull(message = "Beschrijving should not be null.")
+    @Size(min = 1, max = 255, message = "Beschrijving should be between 1 and 255 characters.")
     private String description;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date", nullable = false)
+    @Column
+    @NotNull(message = "Datum should not be null.")
     private Date date;
 
-    @Column(name = "amount", nullable = false)
-    @Min(0)
+    @Column
+    @NotNull(message = "Bedrag should not be null.")
+    @DecimalMin(value = "0.01", message = "Bedrag must be greater than or equal to 0,01.")
     private double amount;
 
-    @Column(name = "empComment")
+    @Column
     private String empComment;
 
-    @Column(name = "manComment")
+    @Column
     private String manComment;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false)
+    @Column
+    @NotNull(message = "Status should not be null.")
     private StateEnum state;
 
-    @Column(name = "empId", nullable = false)
+    @Column
+    private String city;
+
+    @Column
+    @NotNull(message = "Medewerker ID should not be null.")
     private long empId;
 
-    @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(targetEntity = DeclarationFile.class, mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DeclarationFile> files;
 
     public Long getId() {
@@ -131,7 +140,9 @@ public class Declaration {
     }
 
     public void setFiles(List<DeclarationFile> files) {
-        this.files = files;
+        for (DeclarationFile file:files) {
+            this.addDeclarationFile(file);
+        }
     }
 
     @Override

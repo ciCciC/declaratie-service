@@ -17,6 +17,7 @@ import {of} from 'rxjs';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
 
 describe(DeclarationTableComponent.name, () => {
 
@@ -109,6 +110,13 @@ describe(DeclarationTableComponent.name, () => {
     // Assert
     expect(spy).toHaveBeenCalled();
 
+  });
+
+  it('US8_clickOnDelete ' + DeclarationTableComponent.name, () => {
+    const spy_create = spyOn(component, 'toDelete');
+    component.toDelete();
+
+    expect(spy_create).toHaveBeenCalled();
   });
 
 });
