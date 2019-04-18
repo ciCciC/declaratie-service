@@ -32,7 +32,7 @@ public class DeclarationService {
     public DeclarationModel create(DeclarationModel declarationModel) {
 
         if(declarationModel == null)
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
 
         try {
             return new DeclarationModel(this.declarationRepository.save(declarationModel.toDeclaration()));

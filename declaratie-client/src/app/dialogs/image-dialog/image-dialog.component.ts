@@ -38,7 +38,6 @@ export class ImageDialogComponent implements OnInit {
   ngOnInit() {
     if (this.file) {
       this.fileType = this.file.type.split('/')[1];
-
       if (this.fileType !== 'pdf') {
         this.showImage();
       } else {

@@ -18,7 +18,6 @@ export class DeclarationfileUploadComponent implements OnInit {
   private allowedTypes = ['jpg', 'jpeg', 'png', 'pdf'];
   private maxSize = 10;
 
-
   @Input() set dataStore(declarationFiles) { this.declarationFiles.data = declarationFiles; this.files = declarationFiles; }
   @Output() uploaded = new EventEmitter<any>();
 
@@ -35,8 +34,8 @@ export class DeclarationfileUploadComponent implements OnInit {
     if (event.target.files.length > 0) {
       for (const file of event.target.files) {
         const selectedFile = <File>file;
-        const splittedFilename = selectedFile.name.split('.');
-        const fileExtension = splittedFilename[(splittedFilename.length - 1)];
+        const splittedFiletype = selectedFile.type.split('/');
+        const fileExtension = splittedFiletype[(splittedFiletype.length - 1)];
         this.addDeclarationFile(selectedFile, fileExtension);
       }
     }
@@ -46,7 +45,7 @@ export class DeclarationfileUploadComponent implements OnInit {
     const dialogRef = this.dialog.open(MessageDialogComponent, {data: MessageCreator.toDelete()});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.files = this.files.filter(u => u.id !== declarationFile.id);
+        this.files = this.files.filter(u => u !== declarationFile);
         this.declarationFiles.data = this.files;
         this.uploaded.emit(this.files);
       }
@@ -58,12 +57,19 @@ export class DeclarationfileUploadComponent implements OnInit {
       this.convertByteToMb(file.size) < this.maxSize) {
       const declarationFile = new DeclarationFile();
       declarationFile.file = file;
-      declarationFile.filename = file.name;
+      declarationFile.filename = this.cleanFilename(file.name);
       declarationFile.fileUrl = '';
       this.files.push(declarationFile);
       this.declarationFiles.data = this.files;
       this.uploaded.emit(this.files);
     }
+  }
+
+  private cleanFilename(filename: string): string {
+    const splitted = filename.split('.');
+    return splitted.slice(0, splitted.length - 1)
+      .join('')
+      .replace(/(\b)(on\S+)(\s*)=|javascript|(<\s*)(\/*)script|#/, '') + '.' + splitted[splitted.length - 1];
   }
 
   private convertByteToMb(byte: number) {

@@ -31,6 +31,7 @@ public class DeclaratieApiApplication {
 
 	public static void main(String[] args) {
 		logger.info("Called application class.");
+
 		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
 
@@ -41,7 +42,7 @@ public class DeclaratieApiApplication {
 			Random rand = new Random();
 
 			final File file = new File("./testimg");
-			List<File> files = Arrays.asList(file.listFiles()).stream().filter(value -> value.getName() != ".DS_Store").collect(Collectors.toList());
+			List<File> files = Arrays.asList(file.listFiles()).stream().filter(value -> !value.getName().equals(".DS_Store")).collect(Collectors.toList());
 
 			Stream.of("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6").forEach(description -> {
 

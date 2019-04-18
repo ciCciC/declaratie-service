@@ -17,6 +17,10 @@ public class ContentUtils {
         model.setStatus(REPLACE_XSS_CHARS(model.getStatus()));
     }
 
+    public static void CLEAN_FILENAME(String filename) {
+        REPLACE_XSS_CHARS(filename);
+    }
+
     private static String REPLACE_XSS_CHARS(String value){
         value = value.replaceAll("eval\\((.*)\\)", "");
         value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");

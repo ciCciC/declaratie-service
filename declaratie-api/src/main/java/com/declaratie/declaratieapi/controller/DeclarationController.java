@@ -101,12 +101,20 @@ public class DeclarationController {
         ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
 
         String splitter [] = null;
+        DeclarationFileModel tmp = null;
+        String filename = null;
 
         for (MultipartFile fileModel: declarationfiles) {
-            DeclarationFileModel tmp = new DeclarationFileModel();
-            splitter = fileModel.getOriginalFilename().split("-");
-            tmp.setId(Long.parseLong(splitter[1]));
+            tmp = new DeclarationFileModel();
+            splitter = fileModel.getOriginalFilename().split("#");
+//            filename = fileModel.getOriginalFilename();
+
+            if(!splitter[splitter.length-1].equals("noid")){
+                tmp.setId(Long.parseLong(splitter[splitter.length-1]));
+            }
+
             tmp.setFile(fileModel.getBytes());
+//            tmp.setFilename(filename.substring(0, (filename.length() - splitter[splitter.length-1].length())-1));
             tmp.setFilename(splitter[0]);
             declarationModel.addFile(tmp);
         }
@@ -114,14 +122,14 @@ public class DeclarationController {
         return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<DeclarationModel> updateDeclaration(@PathVariable("id") Long id, @RequestBody DeclarationModel declarationModel) {
-        logger.info(MessageFormat.format("Update declaration with id={0} is been called", id));
-
-        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
-
-        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
-    }
+//    @PostMapping("/{id}")
+//    public ResponseEntity<DeclarationModel> updateDeclaration(@PathVariable("id") Long id, @RequestBody DeclarationModel declarationModel) {
+//        logger.info(MessageFormat.format("Update declaration with id={0} is been called", id));
+//
+//        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
+//
+//        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
+//    }
 
     /***
      * Deletes a declaration

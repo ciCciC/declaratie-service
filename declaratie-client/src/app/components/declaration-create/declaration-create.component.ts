@@ -53,7 +53,8 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.createForm.reset();
-    this.location.back();
+    this.backToList();
+    // this.location.back();
   }
 
   private backToList() {
@@ -61,6 +62,7 @@ export class DeclarationCreateComponent implements OnInit, OnDestroy {
   }
 
   onUploadedFiles(files: DeclarationFile[]) {
+    console.log(JSON.stringify(files));
     this.declarationFiles = files;
     this.createForm.controls.files.setValue(this.declarationFiles.length);
   }

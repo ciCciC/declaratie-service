@@ -57,9 +57,6 @@ public class Declaration {
     private StateEnum state;
 
     @Column
-    private String city;
-
-    @Column
     @NotNull(message = "Medewerker ID should not be null.")
     private long empId;
 

@@ -101,7 +101,6 @@ export class DeclarationUpdateComponent implements OnInit {
 
   onUploadedFiles(files: DeclarationFile[]) {
     this.declarationFiles = files;
-    console.log(this.declarationFiles.length);
     this.updateForm.controls.files.setValue(this.declarationFiles.length);
   }
 

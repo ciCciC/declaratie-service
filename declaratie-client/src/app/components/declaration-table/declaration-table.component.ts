@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
@@ -18,7 +18,7 @@ import {MessageCreator} from '../../models/MessageCreator';
   templateUrl: './declaration-table.component.html',
   styleUrls: ['./declaration-table.component.css']
 })
-export class DeclarationTableComponent implements OnInit, OnDestroy {
+export class DeclarationTableComponent implements OnInit {
 
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<IDeclaration>();
@@ -37,7 +37,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
     this.declarationService.getDeclarations().subscribe(data => {
       data.sort((a, b) => a.id < b.id ? 1 : -1);
       this.dataSource.data = data;
-      console.log(data);
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -77,8 +76,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 
     const tot = event.pageSize;
     console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
-
-
   }
 
   toDelete(declaration: Declaration) {
@@ -126,15 +123,10 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.paginator._intl.itemsPerPageLabel = 'Items per pagina:';
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.initTableColumnNames();
     this.getDeclarationsList();
-
-  }
-
-  ngOnDestroy(): void {
   }
 
 }
