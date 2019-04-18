@@ -7,6 +7,8 @@ import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,12 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.List;
 
@@ -102,7 +109,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A42_SR9_UpdateDeclarationEndpoint() {
+    public void A42_SR9_UpdateDeclarationEndpoint() throws IOException {
 
         declarationService.deleteAll();
 
@@ -114,11 +121,25 @@ public class DeclarationControllerTest {
         DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
 
         DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
         toUpdate.setDescription("Gasoline");
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
-                endpoint+"/"+createdModel.getId(), toUpdate,
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
                 DeclarationModel.class);
 
         // Assert
@@ -127,7 +148,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A42_SR9_UpdateDeclarationUnprocessableEndpoint() {
+    public void A42_SR9_UpdateDeclarationUnprocessableEndpoint() throws JsonProcessingException {
 
         declarationService.deleteAll();
 
@@ -139,11 +160,25 @@ public class DeclarationControllerTest {
         DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
 
         DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
         toUpdate.setDescription("Gasoline");
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
-                endpoint+"/"+createdModel.getId(), toUpdate,
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
                 DeclarationModel.class);
 
         // Assert
@@ -151,7 +186,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A42_SR9_UpdateDeclarationNotFoundEndpoint() {
+    public void A42_SR9_UpdateDeclarationNotFoundEndpoint() throws JsonProcessingException {
 
         declarationService.deleteAll();
 
@@ -163,13 +198,27 @@ public class DeclarationControllerTest {
         DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
 
         DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
         toUpdate.setDescription("Gasoline");
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         long nonExistingId = 100;
 
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
-                endpoint+"/"+nonExistingId, toUpdate,
+                endpoint+"/updateDeclaration/"+nonExistingId, requestEntity,
                 DeclarationModel.class);
 
         // Assert
