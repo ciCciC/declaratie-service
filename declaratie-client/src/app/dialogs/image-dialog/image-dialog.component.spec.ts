@@ -5,7 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatIconModule} from '@an
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PlatformModule} from '@angular/cdk/platform';
 
-describe('ImageDialogComponent', () => {
+describe(ImageDialogComponent.name, () => {
   let component: ImageDialogComponent;
   let fixture: ComponentFixture<ImageDialogComponent>;
 
@@ -33,7 +33,7 @@ describe('ImageDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('US29_should create_' + ImageDialogComponent.name, () => {
     expect(component).toBeTruthy();
   });
 });

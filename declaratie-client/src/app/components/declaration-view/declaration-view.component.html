@@ -48,7 +48,7 @@
     <input matInput value="{{declaration.empComment}}" disabled>
   </mat-form-field>
 
-  <div *ngIf="empStatus">
+  <div *ngIf="declaration.manComment.length > 1">
     <mat-form-field class="dec-full-width">
       <mat-label>Manager bericht</mat-label>
       <input matInput value="{{declaration.manComment}}" disabled>

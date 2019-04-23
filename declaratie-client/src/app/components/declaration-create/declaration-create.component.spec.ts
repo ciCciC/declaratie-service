@@ -15,7 +15,8 @@ describe(DeclarationCreateComponent.name, () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule,
+      imports: [
+        ReactiveFormsModule,
         MaterialModule,
         BrowserAnimationsModule,
         NoopAnimationsModule,

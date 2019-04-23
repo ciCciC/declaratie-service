@@ -1,15 +1,18 @@
 package com.declaratie.declaratieapi.controller;
 
 import com.declaratie.declaratieapi.entity.DeclarationFile;
+import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationFileModel;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import com.declaratie.declaratieapi.model.EmployeeModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.ContentUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
 @RestController
 @RequestMapping("/api/declarations")
 public class DeclarationController {
@@ -76,7 +79,7 @@ public class DeclarationController {
             declarationModel.addFile(tmp);
         }
 
-        return new ResponseEntity<>(declarationService.create(declarationModel), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(declarationService.create(declarationModel));
     }
 
     /***
@@ -88,7 +91,7 @@ public class DeclarationController {
     public ResponseEntity<DeclarationModel> getDeclaration(@PathVariable("id") Long id) {
         logger.info(MessageFormat.format("Declaration with id={0} is been called", id));
 
-        return new ResponseEntity<>(declarationService.read(id), HttpStatus.OK);
+        return ResponseEntity.ok(declarationService.read(id));
     }
 
     @PostMapping("/updateDeclaration/{id}")
@@ -107,19 +110,18 @@ public class DeclarationController {
         for (MultipartFile fileModel: declarationfiles) {
             tmp = new DeclarationFileModel();
             splitter = fileModel.getOriginalFilename().split("#");
-//            filename = fileModel.getOriginalFilename();
 
             if(!splitter[splitter.length-1].equals("noid")){
                 tmp.setId(Long.parseLong(splitter[splitter.length-1]));
             }
 
             tmp.setFile(fileModel.getBytes());
-//            tmp.setFilename(filename.substring(0, (filename.length() - splitter[splitter.length-1].length())-1));
-            tmp.setFilename(splitter[0]);
+            tmp.setFilename(ContentUtils.CLEAN_FILENAME(splitter[0]));
             declarationModel.addFile(tmp);
         }
 
-        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
+        return ResponseEntity.ok(this.declarationService.update(id, declarationModel));
+//        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
     }
 
 //    @PostMapping("/{id}")
@@ -146,7 +148,8 @@ public class DeclarationController {
     public ResponseEntity<List<DeclarationModel>> getAllDeclarations() {
         logger.info("All declarations is been called");
 
-        return new ResponseEntity<>(this.declarationService.getAll(), HttpStatus.OK);
+        return ResponseEntity.ok(this.declarationService.getAll());
+//        return new ResponseEntity<>(this.declarationService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/paging/{from}/{to}")
@@ -163,9 +166,15 @@ public class DeclarationController {
         return new ResponseEntity<>(this.declarationService.getAll().subList(from, to), HttpStatus.OK);
     }
 
-//    @ExceptionHandler(UnprocessableDeclarationException.class)
-//    private void handle(UnprocessableDeclarationException ex, @RequestBody DeclarationModel declarationModel) {
-//        new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Declaratie is niet te verwerken", ex);
-//    }
+    @GetMapping("/lolz")
+    public ResponseEntity<List<DeclarationModel>> getAllDeclarations(@RequestHeader HttpHeaders headers) throws IOException {
+        System.out.println("Rol: " + headers.get("user"));
 
+        EmployeeModel model = new ObjectMapper().readValue(headers.get("user").get(0), EmployeeModel.class);
+
+        String build = "";
+
+//        return model.toString();
+        return ResponseEntity.ok(this.declarationService.getAll(model.getId()));
+    }
 }

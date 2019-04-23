@@ -1,6 +1,7 @@
 package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
 
 import javax.validation.constraints.Size;
@@ -124,8 +125,8 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
         return files;
     }
 
-    public void setFiles(List<DeclarationFileModel> files) {
-        this.files = files;
+    public void setFiles(List<DeclarationFileModel> declarationFileModels) {
+        this.files = declarationFileModels;
     }
 
     public void addFile(DeclarationFileModel file) {

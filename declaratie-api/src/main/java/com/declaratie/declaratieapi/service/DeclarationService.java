@@ -57,6 +57,7 @@ public class DeclarationService {
 
         Declaration toReturn = toRead.get();
         toReturn.getFiles();
+
         return new DeclarationModel(toReturn);
     }
 
@@ -88,11 +89,29 @@ public class DeclarationService {
     }
 
     @Transactional
+    public List<DeclarationModel> getAll(Long userId) {
+
+        List<Declaration> toReturn = this.declarationRepository.getAllByEmpId(userId);
+
+        return Optional.ofNullable(toReturn).orElse(Collections.emptyList()).stream()
+                .map(data -> {
+                    DeclarationModel transformed = new DeclarationModel(data);
+                    transformed.setFiles(null);
+                    return transformed;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public List<DeclarationModel> getAll() {
         List<Declaration> toReturn = this.declarationRepository.findAll();
 
         return Optional.ofNullable(toReturn).orElse(Collections.emptyList()).stream()
-                .map(DeclarationModel::new)
+                .map(data -> {
+                    DeclarationModel transformed = new DeclarationModel(data);
+                    transformed.setFiles(null);
+                    return transformed;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -100,7 +119,7 @@ public class DeclarationService {
         Sort sortFirst = Sort.by("id").descending();
 
         return this.declarationRepository.findAll(sortFirst).stream()
-                .map(DeclarationModel::new)
+                .map(data -> new DeclarationModel(data))
                 .collect(Collectors.toList());
 
 //        Sort sortFirst = Sort.by("id").descending();

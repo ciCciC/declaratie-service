@@ -8,9 +8,9 @@ import {DeclarationViewComponent} from './components/declaration-view/declaratio
 import {DeclarationfileUploadComponent} from './components/declarationfile-upload/declarationfile-upload.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/declarationtable', pathMatch: 'full' },
+  { path: '', redirectTo: '/declarations', pathMatch: 'full' },
   { path: 'app', component: AppComponent },
-  { path: 'declarationtable', component: DeclarationTableComponent },
+  { path: 'declarations', component: DeclarationTableComponent },
   { path: 'declarationcreate', component: DeclarationCreateComponent },
   { path: 'declarationview', component: DeclarationViewComponent },
   { path: 'declarationfile', component: DeclarationfileUploadComponent }

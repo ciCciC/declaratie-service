@@ -8,6 +8,8 @@ import {ErrorHandlerService} from '../../services/errorhandlerservice/error-hand
 import {RestEnum} from '../../models/RestEnum';
 import {ImageDialogComponent} from '../../dialogs/image-dialog/image-dialog.component';
 import {MessageCreator} from '../../models/MessageCreator';
+import {DeclarationService} from '../../services/declaration/declaration.service';
+import {AuthHandlerService} from '../../services/authservice/auth-handler.service';
 
 @Component({
   selector: 'app-declaration-view',
@@ -20,16 +22,26 @@ export class DeclarationViewComponent implements OnInit {
   declaration: Declaration;
   employee = EMPLOYEE;
   empStatus = false;
-  processStatus = false;
+  processStatus = true;
   displayedColumns = ['file', 'download'];
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationViewComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService) {
-    this.declaration = data;
+              @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
+              private declarationService: DeclarationService ) {
     this.declarationId = data.id;
+    this.getDeclaration(data.id);
+    // this.empStatus = this.authHandlerService.getRol() === 'medewerker';
+    this.empStatus = true;
     this.processStatus = data.status !== StatusEnum.INPROGRESS && data.status !== StatusEnum.APPROVED;
     this.declarationStatus = !this.processStatus;
-    this.empStatus = this.declaration.manComment != null && this.declaration.manComment.length > 0;
+  }
+
+  private getDeclaration(id: number) {
+    this.declarationService.getDeclaration(id).subscribe(data => {
+      this.declaration = data;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
   }
 
   close() {

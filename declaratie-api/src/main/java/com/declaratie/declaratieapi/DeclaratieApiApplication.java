@@ -44,29 +44,36 @@ public class DeclaratieApiApplication {
 			final File file = new File("./testimg");
 			List<File> files = Arrays.asList(file.listFiles()).stream().filter(value -> !value.getName().equals(".DS_Store")).collect(Collectors.toList());
 
-			Stream.of("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6").forEach(description -> {
+			List<String> descriptions = Arrays.asList("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6");
 
-				int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
-				int randomFile = rand.nextInt((1 - 0) + 1) + 0;
+			this.fillDatabase(1, descriptions, rand, files, declarationService);
 
-				Declaration declaration = new Declaration(description, new Date(), 120,
-						"Hier staat medewerker zijn bericht", "Hier staat manager zijn bericht", StateEnum.values()[randomChoice], 12);
-
-				byte [] tmp = new byte[0];
-
-				try{
-					tmp = Files.readAllBytes(files.get(randomFile).toPath());
-
-					declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
-					declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
-
-					DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
-
-				}catch(ResponseStatusException | IOException ex){
-					logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
-				}
-			});
+			this.fillDatabase(2, descriptions, rand, files, declarationService);
 		};
+	}
+
+	private void fillDatabase(long empid, List<String> descriptions, Random rand, List<File> files, DeclarationService declarationService) {
+		for (String desc: descriptions) {
+			int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
+			int randomFile = rand.nextInt((1 - 0) + 1) + 0;
+
+			Declaration declaration = new Declaration(desc, new Date(), 120, "Hier staat medewerker zijn bericht",
+					"Hier staat manager zijn bericht", StateEnum.values()[randomChoice], empid);
+
+			byte [] tmp = new byte[0];
+
+			try{
+				tmp = Files.readAllBytes(files.get(randomFile).toPath());
+
+				declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
+				declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
+
+				DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
+
+			}catch(ResponseStatusException | IOException ex){
+				logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");
+			}
+		}
 	}
 
 }
