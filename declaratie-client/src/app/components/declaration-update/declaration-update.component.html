@@ -6,8 +6,12 @@
 
 <div class="mat-dialog-content" *ngIf="declaration">
 
-  <form name="declarationForm" [formGroup]="updateForm"
-        (ngSubmit)="toSave(updateForm.value)" class="declaration-container">
+  <div class="loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <form name="declarationForm" [formGroup]="updateForm" (ngSubmit)="toSave(updateForm.value)" class="declaration-container">
 
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Omschrijving</mat-label>

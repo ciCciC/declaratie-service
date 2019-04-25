@@ -5,6 +5,8 @@ import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.*;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import com.declaratie.declaratieapi.model.EmployeeModel;
+import com.declaratie.declaratieapi.util.StateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.plaf.nimbus.State;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +64,33 @@ public class DeclarationService {
         return new DeclarationModel(toReturn);
     }
 
+    public DeclarationModel update(Long id, DeclarationModel declarationModel, EmployeeModel employeeModel) {
+        DeclarationModel toReturn = null;
+
+        if(declarationModel == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
+
+        Optional<Declaration> declarationExist = this.declarationRepository.findById(id);
+
+        if(!declarationExist.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MessageFormat.format("Declaratie met id={0} niet gevonden", id));
+
+        Declaration toUpdate = declarationExist.get();
+
+        // Check if employee is true and state is allowed for the employee to change the declaration
+        if (employeeModel.getId() == toUpdate.getEmpId() && employeeModel.getId() != toUpdate.getManId() && StateUtils.empIsAllowed(toUpdate.getStatusEnum())) {
+            toReturn = this.update(id, declarationModel);
+        }
+        // Check if manager is true and state is allowed for the manager to change the declaration
+        else if (employeeModel.getId() == toUpdate.getManId() && StateUtils.manIsAllowed(toUpdate.getStatusEnum())) {
+            toReturn = this.update(id, declarationModel);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is ", toUpdate.getStatusEnum()));
+        }
+
+        return toReturn;
+    }
+
     public DeclarationModel update(Long id, DeclarationModel declarationModel) {
 
         if(declarationModel == null)
@@ -89,9 +119,14 @@ public class DeclarationService {
     }
 
     @Transactional
-    public List<DeclarationModel> getAll(Long userId) {
+    public List<DeclarationModel> getAll(EmployeeModel employeeModel) {
 
-        List<Declaration> toReturn = this.declarationRepository.getAllByEmpId(userId);
+        List<Declaration> toReturn = null;
+
+        if (employeeModel.getId() == employeeModel.getManagerId())
+            toReturn = this.declarationRepository.getAllByManId(employeeModel.getId());
+        else
+            toReturn = this.declarationRepository.getAllByEmpId(employeeModel.getId());
 
         return Optional.ofNullable(toReturn).orElse(Collections.emptyList()).stream()
                 .map(data -> {
@@ -155,6 +190,26 @@ public class DeclarationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is in behandeling", id));
 
         this.declarationRepository.deleteById(id);
+    }
+
+    public void delete(Long id, EmployeeModel employeeModel) {
+
+        Optional<Declaration> declarationExist = this.declarationRepository.findById(id);
+
+        if(!declarationExist.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MessageFormat.format("Declaratie met id={0} niet gevonden", id));
+
+        Declaration declaration = declarationExist.get();
+
+        // Check if employee is true and state is allowed for the employee to delete the declaration
+        if(employeeModel.getId() == declaration.getEmpId() && StateUtils.empIsAllowed(declaration.getStatusEnum()))
+            this.declarationRepository.deleteById(id);
+
+        // Check if manager is true and state is allowed for the manager to delete the declaration
+        else if(employeeModel.getId() == declaration.getManId() && StateUtils.manIsAllowedToDelete(declaration.getStatusEnum()))
+            this.declarationRepository.deleteById(id);
+        else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is in behandeling", id));
     }
 
     public void deleteAll() {

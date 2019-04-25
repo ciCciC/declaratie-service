@@ -21,7 +21,7 @@ import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.
 import { DeclarationUpdateComponent } from './components/declaration-update/declaration-update.component';
 import { DeclarationfileUploadComponent } from './components/declarationfile-upload/declarationfile-upload.component';
 import { ImageDialogComponent } from './dialogs/image-dialog/image-dialog.component';
-import {AuthHandlerService} from './services/authservice/auth-handler.service';
+import {AuthenticationService} from './services/authservice/authentication.service';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -50,7 +50,7 @@ import {AuthHandlerService} from './services/authservice/auth-handler.service';
   ],
   entryComponents: [DeclarationTableComponent, DeclarationViewComponent,
     ErrorDialogComponent, MessageDialogComponent, DeclarationUpdateComponent, ImageDialogComponent],
-  providers: [ErrorHandlerService, DeclarationService, AuthHandlerService],
+  providers: [ErrorHandlerService, DeclarationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

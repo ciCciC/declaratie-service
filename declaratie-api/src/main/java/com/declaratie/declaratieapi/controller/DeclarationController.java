@@ -1,9 +1,5 @@
 package com.declaratie.declaratieapi.controller;
 
-import com.declaratie.declaratieapi.entity.DeclarationFile;
-import com.declaratie.declaratieapi.enums.StateEnum;
-import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
-import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationFileModel;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.model.EmployeeModel;
@@ -17,20 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.List;
 
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"}, exposedHeaders = "user")
 @RestController
 @RequestMapping("/api/declarations")
 public class DeclarationController {
@@ -52,7 +41,7 @@ public class DeclarationController {
     @PostMapping("/")
     public ResponseEntity<DeclarationModel> createDeclaration(@RequestBody @Valid DeclarationModel declarationModel) {
         logger.info("Create declaration is been called");
-        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
+        ContentUtils.cleanDelcarationValues(declarationModel);
         return new ResponseEntity<>(declarationService.create(declarationModel), HttpStatus.CREATED);
     }
 
@@ -70,12 +59,12 @@ public class DeclarationController {
 
         DeclarationModel declarationModel = new ObjectMapper().readValue(declaration, DeclarationModel.class);
 
-        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
+        ContentUtils.cleanDelcarationValues(declarationModel);
 
         for (MultipartFile fileModel: declarationfiles) {
             DeclarationFileModel tmp = new DeclarationFileModel();
             tmp.setFile(fileModel.getBytes());
-            tmp.setFilename(fileModel.getOriginalFilename());
+            tmp.setFilename(ContentUtils.cleanFilename(fileModel.getOriginalFilename()));
             declarationModel.addFile(tmp);
         }
 
@@ -94,6 +83,20 @@ public class DeclarationController {
         return ResponseEntity.ok(declarationService.read(id));
     }
 
+    // Met header
+    @GetMapping("/testget/{id}")
+    public ResponseEntity<DeclarationModel> getDeclaration(@PathVariable("id") Long id, @RequestHeader HttpHeaders headers) throws IOException {
+        logger.info(MessageFormat.format("Declaration with id={0} is been called", id));
+
+        EmployeeModel model = new ObjectMapper().readValue(headers.get("user").get(0), EmployeeModel.class);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        String userInHeader = new ObjectMapper().writeValueAsString(model);
+        responseHeaders.add("user", userInHeader);
+
+        return ResponseEntity.ok().headers(responseHeaders).body(declarationService.read(id));
+    }
+
     @PostMapping("/updateDeclaration/{id}")
     public ResponseEntity<DeclarationModel> updateDeclaration(@PathVariable("id") Long id, @RequestParam("declaration") String declaration,
                                                    @RequestParam("declarationfiles") MultipartFile [] declarationfiles) throws IOException {
@@ -101,37 +104,34 @@ public class DeclarationController {
 
         DeclarationModel declarationModel = new ObjectMapper().readValue(declaration, DeclarationModel.class);
 
-        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
+        ContentUtils.cleanDelcarationValues(declarationModel);
 
-        String splitter [] = null;
-        DeclarationFileModel tmp = null;
-        String filename = null;
-
-        for (MultipartFile fileModel: declarationfiles) {
-            tmp = new DeclarationFileModel();
-            splitter = fileModel.getOriginalFilename().split("#");
-
-            if(!splitter[splitter.length-1].equals("noid")){
-                tmp.setId(Long.parseLong(splitter[splitter.length-1]));
-            }
-
-            tmp.setFile(fileModel.getBytes());
-            tmp.setFilename(ContentUtils.CLEAN_FILENAME(splitter[0]));
-            declarationModel.addFile(tmp);
-        }
+        ContentUtils.transformAndAddMultiPart(declarationfiles, declarationModel);
 
         return ResponseEntity.ok(this.declarationService.update(id, declarationModel));
-//        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
     }
 
-//    @PostMapping("/{id}")
-//    public ResponseEntity<DeclarationModel> updateDeclaration(@PathVariable("id") Long id, @RequestBody DeclarationModel declarationModel) {
-//        logger.info(MessageFormat.format("Update declaration with id={0} is been called", id));
-//
-//        ContentUtils.CLEAN_DELCARATION_VALUES(declarationModel);
-//
-//        return new ResponseEntity<>(this.declarationService.update(id, declarationModel), HttpStatus.OK);
-//    }
+    // Met Header
+    @PostMapping("/testupdate/{id}")
+    public ResponseEntity<DeclarationModel> updateDeclaration(@PathVariable("id") Long id, @RequestParam("declaration") String declaration,
+                                                              @RequestParam("declarationfiles") MultipartFile [] declarationfiles,
+                                                              @RequestHeader HttpHeaders headers) throws IOException {
+        logger.info(MessageFormat.format("Update declaration with id={0} is been called", id));
+
+        EmployeeModel model = new ObjectMapper().readValue(headers.get("user").get(0), EmployeeModel.class);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        String userInHeader = new ObjectMapper().writeValueAsString(model);
+        responseHeaders.add("user", userInHeader);
+
+        DeclarationModel declarationModel = new ObjectMapper().readValue(declaration, DeclarationModel.class);
+
+        ContentUtils.cleanDelcarationValues(declarationModel);
+
+        ContentUtils.transformAndAddMultiPart(declarationfiles, declarationModel);
+
+        return ResponseEntity.ok().headers(responseHeaders).body(this.declarationService.update(id, declarationModel, model));
+    }
 
     /***
      * Deletes a declaration
@@ -142,6 +142,15 @@ public class DeclarationController {
     public void deleteDeclaration(@PathVariable("id") Long id) {
         logger.info(MessageFormat.format("Delete declaration with id={0} is been called", id));
         this.declarationService.delete(id);
+    }
+
+    @DeleteMapping("/testdelete/{id}")
+    public void deleteDeclaration(@PathVariable("id") Long id, @RequestHeader HttpHeaders headers) throws IOException {
+        logger.info(MessageFormat.format("Delete declaration with id={0} is been called", id));
+
+        EmployeeModel model = new ObjectMapper().readValue(headers.get("user").get(0), EmployeeModel.class);
+
+        this.declarationService.delete(id, model);
     }
 
     @GetMapping
@@ -166,15 +175,17 @@ public class DeclarationController {
         return new ResponseEntity<>(this.declarationService.getAll().subList(from, to), HttpStatus.OK);
     }
 
-    @GetMapping("/lolz")
+    // Met header
+    @GetMapping("/testgetall")
     public ResponseEntity<List<DeclarationModel>> getAllDeclarations(@RequestHeader HttpHeaders headers) throws IOException {
         System.out.println("Rol: " + headers.get("user"));
 
         EmployeeModel model = new ObjectMapper().readValue(headers.get("user").get(0), EmployeeModel.class);
 
-        String build = "";
+        HttpHeaders responseHeaders = new HttpHeaders();
+        String userInHeader = new ObjectMapper().writeValueAsString(model);
+        responseHeaders.add("user", userInHeader);
 
-//        return model.toString();
-        return ResponseEntity.ok(this.declarationService.getAll(model.getId()));
+        return ResponseEntity.ok().headers(responseHeaders).body(this.declarationService.getAll(model));
     }
 }

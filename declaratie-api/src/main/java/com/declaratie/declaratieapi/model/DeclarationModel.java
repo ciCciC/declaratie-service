@@ -18,6 +18,7 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
     private String manComment;
     private String status;
     private Long empId;
+    private Long manId;
     private List<DeclarationFileModel> files;
 
     public DeclarationModel() {
@@ -29,6 +30,7 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
         this.manComment = "";
         this.status = "";
         this.empId = 0L;
+        this.manId = 0L;
     }
 
     public DeclarationModel(Declaration declaration){
@@ -40,6 +42,7 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
         this.manComment = declaration.getManComment();
         this.status = declaration.getStatusEnum().name();
         this.empId = declaration.getEmpId();
+        this.manId = declaration.getManId();
 
         this.files = declaration.getFiles() != null ? declaration.getFiles()
                 .stream().map(DeclarationFileModel::new)
@@ -49,6 +52,8 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
     public Declaration toDeclaration(){
         Declaration transformed = new Declaration(this.description, this.date, this.amount, this.empComment, this.manComment,
                 StateEnum.valueOf(this.status), this.empId);
+
+        transformed.setManId(this.getManId());
 
         transformed.setFiles(this.getFiles() != null ? this.getFiles()
                 .stream().map(data -> data.toDeclarationFile())
@@ -113,6 +118,14 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
         this.empId = emp_id;
     }
 
+    public Long getManId() {
+        return manId;
+    }
+
+    public void setManId(Long manId) {
+        this.manId = manId;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -132,8 +145,6 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
     public void addFile(DeclarationFileModel file) {
         this.getFiles().add(file);
     }
-
-
 
     @Override
     public boolean equals(Object o) {

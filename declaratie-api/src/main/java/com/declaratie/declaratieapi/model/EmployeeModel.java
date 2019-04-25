@@ -25,11 +25,12 @@ public class EmployeeModel {
      * @param lname lastname employee
      * @param role manager or employee
      */
-    public EmployeeModel(long id, String fname, String lname, String role) {
+    public EmployeeModel(long id, long managerId, String fname, String lname, String role) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.role = role;
+        this.managerId = managerId;
     }
 
     /***
@@ -112,12 +113,12 @@ public class EmployeeModel {
         return id == that.id &&
                 fname.equals(that.fname) &&
                 lname.equals(that.lname) &&
-                role.equals(that.role);
+                role.equals(that.role) && managerId == that.managerId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fname, lname, role);
+        return Objects.hash(id, fname, lname, role, managerId);
     }
 
     @Override
@@ -126,7 +127,8 @@ public class EmployeeModel {
                 "id=" + id +
                 ", fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
-                ", role=" + role +
+                ", role='" + role + '\'' +
+                ", managerId=" + managerId +
                 '}';
     }
 }

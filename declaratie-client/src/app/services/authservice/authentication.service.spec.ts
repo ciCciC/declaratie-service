@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthHandlerService } from './auth-handler.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthenticationService} from './authentication.service';
 
-describe('AuthHandlerService', () => {
+describe('AuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
@@ -15,7 +15,7 @@ describe('AuthHandlerService', () => {
   }));
 
   it('should be created', () => {
-    const service: AuthHandlerService = TestBed.get(AuthHandlerService);
+    const service: AuthenticationService = TestBed.get(AuthenticationService);
     expect(service).toBeTruthy();
   });
 });

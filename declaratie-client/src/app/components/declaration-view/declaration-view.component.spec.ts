@@ -7,7 +7,6 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material';
 import {By} from '@angular/platform-browser';
-import {AuthHandlerService} from '../../services/authservice/auth-handler.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe(DeclarationViewComponent.name, () => {

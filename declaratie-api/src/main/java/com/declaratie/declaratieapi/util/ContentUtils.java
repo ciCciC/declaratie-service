@@ -1,27 +1,49 @@
 package com.declaratie.declaratieapi.util;
 
+import com.declaratie.declaratieapi.model.DeclarationFileModel;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public class ContentUtils {
 
-    public static void CLEAN_DELCARATION_VALUES(DeclarationModel model){
+    public static void cleanDelcarationValues(DeclarationModel model){
         if(model.getDescription() != null)
-            model.setDescription(REPLACE_XSS_CHARS(model.getDescription()));
+            model.setDescription(replaceXssChars(model.getDescription()));
 
         if(model.getEmpComment() != null)
-            model.setEmpComment(REPLACE_XSS_CHARS(model.getEmpComment()));
+            model.setEmpComment(replaceXssChars(model.getEmpComment()));
 
         if(model.getManComment() != null)
-            model.setManComment(REPLACE_XSS_CHARS(model.getManComment()));
+            model.setManComment(replaceXssChars(model.getManComment()));
 
-        model.setStatus(REPLACE_XSS_CHARS(model.getStatus()));
+        model.setStatus(replaceXssChars(model.getStatus()));
     }
 
-    public static String CLEAN_FILENAME(String filename) {
-        return REPLACE_XSS_CHARS(filename);
+    public static String cleanFilename(String filename) {
+        return replaceXssChars(filename);
     }
 
-    private static String REPLACE_XSS_CHARS(String value){
+    public static void transformAndAddMultiPart(MultipartFile[] declarationfiles, DeclarationModel declarationModel) throws IOException {
+        String splitter [] = null;
+        DeclarationFileModel tmp = null;
+
+        for (MultipartFile fileModel: declarationfiles) {
+            tmp = new DeclarationFileModel();
+            splitter = fileModel.getOriginalFilename().split("#");
+
+            if(!splitter[splitter.length-1].equals("noid")){
+                tmp.setId(Long.parseLong(splitter[splitter.length-1]));
+            }
+
+            tmp.setFile(fileModel.getBytes());
+            tmp.setFilename(cleanFilename(splitter[0]));
+            declarationModel.addFile(tmp);
+        }
+    }
+
+    private static String replaceXssChars(String value){
         value = value.replaceAll("eval\\((.*)\\)", "");
         value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
         value = value.replaceAll("(?i)<script.*?>.*?<script.*?>", "");

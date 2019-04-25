@@ -12,7 +12,6 @@ import {Router} from '@angular/router';
 import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
 import {RestEnum} from '../../models/RestEnum';
 import {MessageCreator} from '../../models/MessageCreator';
-import {AuthHandlerService} from '../../services/authservice/auth-handler.service';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -60,25 +59,25 @@ export class DeclarationTableComponent implements OnInit {
   }
 
   // TODO
-  // pageClick(event: PageEvent) {
-  //   console.log(event.previousPageIndex);
-  //   console.log(event.pageSize);
-  //   console.log(event.pageIndex);
-  //
-  //   const startVanaf = event.pageIndex * event.pageSize;
-  //   console.log('Start vanaf [i]: ' + startVanaf);
-  //
-  //   const amount = (startVanaf + event.pageSize);
-  //
-  //   if (amount < this.dataSource.data.length ) {
-  //     console.log('Aantal: ' + event.pageSize);
-  //   } else {
-  //     console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
-  //   }
-  //
-  //   const tot = event.pageSize;
-  //   console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
-  // }
+  pageClick(event: PageEvent) {
+    console.log(event.previousPageIndex);
+    console.log(event.pageSize);
+    console.log(event.pageIndex);
+
+    const startVanaf = event.pageIndex * event.pageSize;
+    console.log('Start vanaf [i]: ' + startVanaf);
+
+    const amount = (startVanaf + event.pageSize);
+
+    if (amount < this.dataSource.data.length ) {
+      console.log('Aantal: ' + event.pageSize);
+    } else {
+      console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
+    }
+
+    const tot = event.pageSize;
+    console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
+  }
 
   toDelete(declaration: Declaration) {
 
@@ -107,7 +106,7 @@ export class DeclarationTableComponent implements OnInit {
   }
 
   private openUpdateDialog(selected: Declaration) {
-    const dialogRefUpdate = this.dialog.open(DeclarationUpdateComponent, {data: selected});
+    const dialogRefUpdate = this.dialog.open(DeclarationUpdateComponent, {data: selected, disableClose: true});
     dialogRefUpdate.afterClosed().subscribe(resultOfUpdate => {
       setTimeout(() => {
         this.getDeclarationsList();

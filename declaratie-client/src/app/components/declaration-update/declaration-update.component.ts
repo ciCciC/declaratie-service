@@ -10,7 +10,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {textInputValidator} from '../validators/textInputValidator';
 import {MessageCreator} from '../../models/MessageCreator';
 import {DeclarationFile} from '../../models/DeclarationFile';
-import {AuthHandlerService} from '../../services/authservice/auth-handler.service';
+import {AuthenticationService} from '../../services/authservice/authentication.service';
+import {RoleEnum} from '../../models/RoleEnum';
 
 @Component({
   selector: 'app-declaration-update',
@@ -21,6 +22,7 @@ export class DeclarationUpdateComponent implements OnInit {
   updateForm: FormGroup;
   employee = EMPLOYEE[0];
   empStatus: boolean;
+  isLoadingResults = true;
   processDate = new Date();
   private disabledForAll = true;
   private declaration: Declaration;
@@ -34,13 +36,17 @@ export class DeclarationUpdateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationUpdateComponent>,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
-              private declarationService: DeclarationService, private fb: FormBuilder) {
-    this.declarationId = data.id;
-    this.declaration = new Declaration();
-    // this.empStatus = this.authHandlerService.getRol() === 'medewerker';
-    this.empStatus = true;
+              private declarationService: DeclarationService, private fb: FormBuilder,
+              private authenticationService: AuthenticationService) {
     this.initForm();
-    this.getDeclaration(data.id);
+    this.declarationId = data.id;
+    this.declaration = data;
+    this.authenticationService.checkUser(data.id).subscribe(value => {
+      this.empStatus = value.role;
+      this.declaration = new Declaration();
+      this.getDeclaration(data.id);
+      this.isLoadingResults = false;
+    });
   }
 
   private initForm() {
@@ -88,17 +94,17 @@ export class DeclarationUpdateComponent implements OnInit {
   }
 
   private fillInForm() {
-    this.updateForm.controls.description.setValue(this.declaration.description);
-    this.updateForm.controls.amount.setValue(this.declaration.amount);
-    this.updateForm.controls.empMessage.setValue(this.declaration.empComment);
-    this.updateForm.controls.manMessage.setValue(this.declaration.manComment);
-    this.updateForm.controls.currentStatus.setValue(this.declaration.status);
-
     if (this.empStatus) {
       this.disableForEmployee();
     } else {
       this.disableForManager();
     }
+
+    this.updateForm.controls.description.setValue(this.declaration.description);
+    this.updateForm.controls.amount.setValue(this.declaration.amount);
+    this.updateForm.controls.empMessage.setValue(this.declaration.empComment);
+    this.updateForm.controls.manMessage.setValue(this.declaration.manComment);
+    this.updateForm.controls.currentStatus.setValue(this.declaration.status);
   }
 
   changeStatus(chosenStatus: StatusEnum) {
@@ -108,9 +114,9 @@ export class DeclarationUpdateComponent implements OnInit {
   private getDeclaration(id: number) {
     this.declarationService.getDeclaration(id).subscribe(data => {
       this.declaration = data;
+      this.fillInForm();
       this.declarationFiles = data.files;
       this.updateForm.controls.files.setValue(this.declarationFiles.length);
-      this.fillInForm();
       this.declarationNotEditable = data.status === StatusEnum.INPROGRESS || data.status === StatusEnum.APPROVED;
       this.declarationStatus = data.status;
     }, (error) => {
@@ -159,12 +165,12 @@ export class DeclarationUpdateComponent implements OnInit {
   private executeDeclarationUpdate(updateFormValue) {
     const declaration: Declaration = {
       id: this.declarationId,
-      description: updateFormValue.description,
+      description: this.empStatus ? updateFormValue.description : this.declaration.description,
       date: new Date().toISOString(),
       empId: this.employee.id,
       status: this.declarationStatus,
-      amount: updateFormValue.amount,
-      empComment: updateFormValue.empMessage,
+      amount: this.empStatus ? updateFormValue.amount : this.declaration.amount,
+      empComment: this.empStatus ? updateFormValue.empMessage : this.declaration.empComment,
       manComment: updateFormValue.manMessage,
       files: []
     };

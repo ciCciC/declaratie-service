@@ -23,7 +23,6 @@ import org.springframework.util.MultiValueMap;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +53,7 @@ public class DeclarationControllerTest {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
+        toCreate.setManId(15);
 
         declarationService.create(new DeclarationModel(toCreate));
 
@@ -78,6 +78,7 @@ public class DeclarationControllerTest {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
+        toCreate.setManId(15);
 
         toCreate.addDeclarationFile(new DeclarationFile("eenfoto.jpg", new byte[]{12,12,12}));
 
@@ -117,6 +118,7 @@ public class DeclarationControllerTest {
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
 
         DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
 
@@ -156,6 +158,7 @@ public class DeclarationControllerTest {
         StateEnum currentState = StateEnum.INPROGRESS;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
 
         DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
 
@@ -194,6 +197,7 @@ public class DeclarationControllerTest {
         StateEnum currentState = StateEnum.REJECTED;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
 
         DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
 
@@ -230,6 +234,7 @@ public class DeclarationControllerTest {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
+        toCreate.setManId(15);
 
         DeclarationModel toDelete = declarationService.create(new DeclarationModel(toCreate));
 
@@ -267,6 +272,7 @@ public class DeclarationControllerTest {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.INPROGRESS, 12);
+        toCreate.setManId(15);
 
         DeclarationModel toDelete = declarationService.create(new DeclarationModel(toCreate));
 

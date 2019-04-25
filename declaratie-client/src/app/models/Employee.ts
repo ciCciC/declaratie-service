@@ -4,5 +4,6 @@ export class Employee implements IEmployee {
   id: number;
   fname: string;
   lname: string;
-  role: string;
+  role: any;
+  managerId: number;
 }

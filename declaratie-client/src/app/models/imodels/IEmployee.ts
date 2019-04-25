@@ -3,4 +3,5 @@ export interface IEmployee {
   fname: string;
   lname: string;
   role: string;
+  managerId: number;
 }

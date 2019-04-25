@@ -12,4 +12,5 @@ public interface DeclarationRepository extends JpaRepository<Declaration, Long> 
     boolean existsById(Long id);
 
     List<Declaration> getAllByEmpId(Long id);
+    List<Declaration> getAllByManId(Long id);
 }

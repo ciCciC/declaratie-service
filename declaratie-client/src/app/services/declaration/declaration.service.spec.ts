@@ -5,7 +5,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DECLARATIONS} from '../../mocks/mock-declarations';
 import {of} from 'rxjs';
-import {AuthHandlerService} from '../authservice/auth-handler.service';
 
 describe(DeclarationService.name, () => {
 

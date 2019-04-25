@@ -1,11 +1,9 @@
 package com.declaratie.declaratieapi;
 
 import com.declaratie.declaratieapi.controller.DeclarationController;
-import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
-import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import org.slf4j.LoggerFactory;
@@ -22,7 +20,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 public class DeclaratieApiApplication {
@@ -37,7 +34,6 @@ public class DeclaratieApiApplication {
 
 	@Bean
 	ApplicationRunner initSomeExampleList(DeclarationService declarationService) {
-
 		return args -> {
 			Random rand = new Random();
 
@@ -46,19 +42,22 @@ public class DeclaratieApiApplication {
 
 			List<String> descriptions = Arrays.asList("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6");
 
-			this.fillDatabase(1, descriptions, rand, files, declarationService);
+			this.fillDatabase(1, 2, descriptions, rand, files, declarationService);
 
-			this.fillDatabase(2, descriptions, rand, files, declarationService);
+			this.fillDatabase(2, 2, descriptions, rand, files, declarationService);
+
+			this.fillDatabase(3, 4, descriptions, rand, files, declarationService);
 		};
 	}
 
-	private void fillDatabase(long empid, List<String> descriptions, Random rand, List<File> files, DeclarationService declarationService) {
+	private void fillDatabase(long empid, long manId, List<String> descriptions, Random rand, List<File> files, DeclarationService declarationService) {
 		for (String desc: descriptions) {
 			int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
 			int randomFile = rand.nextInt((1 - 0) + 1) + 0;
 
 			Declaration declaration = new Declaration(desc, new Date(), 120, "Hier staat medewerker zijn bericht",
 					"Hier staat manager zijn bericht", StateEnum.values()[randomChoice], empid);
+			declaration.setManId(manId);
 
 			byte [] tmp = new byte[0];
 

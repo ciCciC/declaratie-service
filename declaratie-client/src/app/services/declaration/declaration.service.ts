@@ -6,18 +6,12 @@ import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {environment} from '../../../environments/environment';
 import {DeclarationFile} from '../../models/DeclarationFile';
 import {map} from 'rxjs/operators';
-import {StatusEnum} from '../../models/StatusEnum';
-import {AuthHandlerService} from '../authservice/auth-handler.service';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeclarationService {
-
-  private declarations: IDeclaration[] = [];
-
-  // constructor(private http: HttpClient, private authHandlerService: AuthHandlerService) { }
 
   constructor(private http: HttpClient) { }
 
@@ -67,52 +61,11 @@ export class DeclarationService {
   // }
 
   getDeclarations(): Observable<IDeclaration[]> {
-    const toReturn = this.http.get<IDeclaration[]>(environment.urlAddress + '/lolz', {headers: this.generateHeaders()});
+    const toReturn = this.http.get<IDeclaration[]>(environment.urlAddress + '/testgetall', {headers: this.generateHeaders()});
 
-    // todo
-    // let testrol = '';
-    // this.authHandlerService.checkUser().subscribe(value => {
-    //   console.log(value.keys());
-    //   testrol = 'medewerker';
-    // });
-    // this.authHandlerService.setRol(testrol);
+    // return this.http.get<IDeclaration[]>(environment.urlAddress + '/', {headers: this.generateHeaders()});
     return toReturn;
   }
-
-  // getDeclarations(): Observable<IDeclaration[]> {
-  //   return this.http.get<IDeclaration[]>(environment.urlAddress + '/lolz', this.generateHeaders());
-  // }
-
-  // getDeclarations(): Observable<IDeclaration[]> {
-  //   return this.http.get<IDeclaration[]>(environment.urlAddress).pipe(
-  //     map( values => {
-  //       return values.map(declaration => {
-  //         const fileAtt: DeclarationFile[] = [];
-  //
-  //         declaration.files.map(data => {
-  //           const aa = new DeclarationFile();
-  //           const splitted = data.filename.split('.');
-  //           let filetype = splitted[splitted.length - 1];
-  //           if (filetype === 'pdf') {
-  //             filetype = 'application/' + filetype;
-  //           } else {
-  //             filetype = 'image/' + filetype;
-  //           }
-  //
-  //           const blob = this.dataURItoBlob(data.file, filetype);
-  //           aa.filename = data.filename;
-  //           aa.file = new File([blob], data.filename, { type: filetype });
-  //           aa.id = data.id;
-  //           aa.fileUrl = '';
-  //           fileAtt.push(aa);
-  //
-  //         });
-  //         declaration.files = fileAtt;
-  //         return declaration;
-  //       });
-  //     })
-  //   );
-  // }
 
   private transformRetrievedFiles(data): DeclarationFile {
     const declarationFile = new DeclarationFile();
@@ -142,8 +95,9 @@ export class DeclarationService {
   }
 
   private generateHeaders() {
-    const generated = new HttpHeaders({'user': JSON.stringify(EMPLOYEE[0])});
+    const generated = new HttpHeaders({'Content-Type': 'application/json', 'user': JSON.stringify(EMPLOYEE[0])});
     return generated;
+
     // return new HttpHeaders({'Content-Type': 'application/json'});
   }
 }

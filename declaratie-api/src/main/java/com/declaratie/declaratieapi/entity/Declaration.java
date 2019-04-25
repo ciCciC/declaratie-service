@@ -1,6 +1,5 @@
 package com.declaratie.declaratieapi.entity;
 import com.declaratie.declaratieapi.enums.StateEnum;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -23,6 +22,7 @@ public class Declaration {
         this.manComment = manComment;
         this.state = state;
         this.empId = empId;
+        this.manId = 0;
         this.files = new ArrayList<>();
     }
 
@@ -59,6 +59,10 @@ public class Declaration {
     @Column
     @NotNull(message = "Medewerker ID should not be null.")
     private long empId;
+
+    @Column
+    @NotNull(message = "Manager ID should not be null.")
+    private long manId;
 
     @OneToMany(targetEntity = DeclarationFile.class, mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DeclarationFile> files;
@@ -125,6 +129,14 @@ public class Declaration {
 
     public void setEmpId(long emp_id) {
         this.empId = emp_id;
+    }
+
+    public long getManId() {
+        return manId;
+    }
+
+    public void setManId(long manId) {
+        this.manId = manId;
     }
 
     public void addDeclarationFile(DeclarationFile declarationFile){
