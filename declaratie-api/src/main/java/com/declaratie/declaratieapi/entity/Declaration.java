@@ -2,6 +2,7 @@ package com.declaratie.declaratieapi.entity;
 import com.declaratie.declaratieapi.enums.StateEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -43,6 +44,7 @@ public class Declaration {
     @Column
     @NotNull(message = "Bedrag should not be null.")
     @DecimalMin(value = "0.01", message = "Bedrag must be greater than or equal to 0,01.")
+    @DecimalMax(value = "100000", message = "Bedrag must be smaller than or equal to 100000.")
     private double amount;
 
     @Column
@@ -64,7 +66,8 @@ public class Declaration {
     @NotNull(message = "Manager ID should not be null.")
     private long manId;
 
-    @OneToMany(targetEntity = DeclarationFile.class, mappedBy = "declaration", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(targetEntity = DeclarationFile.class, mappedBy = "declaration",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DeclarationFile> files;
 
     public Long getId() {

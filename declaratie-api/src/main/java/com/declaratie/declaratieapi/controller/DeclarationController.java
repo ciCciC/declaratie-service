@@ -1,5 +1,8 @@
 package com.declaratie.declaratieapi.controller;
 
+import com.declaratie.declaratieapi.entity.Declaration;
+import com.declaratie.declaratieapi.entity.DeclarationFile;
+import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.model.DeclarationFileModel;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.model.EmployeeModel;
@@ -13,10 +16,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"}, exposedHeaders = "user")
@@ -54,19 +65,14 @@ public class DeclarationController {
      */
     @PostMapping("/addDeclaration")
     public ResponseEntity<DeclarationModel> createDeclaration(@RequestParam("declaration") String declaration,
-                                                              @RequestParam("declarationfiles") MultipartFile [] declarationfiles) throws IOException {
+                                                              @RequestParam("declarationfiles") MultipartFile [] declarationfiles)throws IOException {
         logger.info("Create declaration is been called");
 
         DeclarationModel declarationModel = new ObjectMapper().readValue(declaration, DeclarationModel.class);
 
         ContentUtils.cleanDelcarationValues(declarationModel);
 
-        for (MultipartFile fileModel: declarationfiles) {
-            DeclarationFileModel tmp = new DeclarationFileModel();
-            tmp.setFile(fileModel.getBytes());
-            tmp.setFilename(ContentUtils.cleanFilename(fileModel.getOriginalFilename()));
-            declarationModel.addFile(tmp);
-        }
+        ContentUtils.transformMultiPart(declarationfiles, declarationModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(declarationService.create(declarationModel));
     }
@@ -97,6 +103,14 @@ public class DeclarationController {
         return ResponseEntity.ok().headers(responseHeaders).body(declarationService.read(id));
     }
 
+    /***
+     *
+     * @param id of declaration to update
+     * @param declaration which will be updated
+     * @param declarationfiles the uploaded files
+     * @return representative declarationmodel
+     * @throws IOException
+     */
     @PostMapping("/updateDeclaration/{id}")
     public ResponseEntity<DeclarationModel> updateDeclaration(@PathVariable("id") Long id, @RequestParam("declaration") String declaration,
                                                    @RequestParam("declarationfiles") MultipartFile [] declarationfiles) throws IOException {
@@ -106,7 +120,7 @@ public class DeclarationController {
 
         ContentUtils.cleanDelcarationValues(declarationModel);
 
-        ContentUtils.transformAndAddMultiPart(declarationfiles, declarationModel);
+        ContentUtils.transformMultiPart(declarationfiles, declarationModel);
 
         return ResponseEntity.ok(this.declarationService.update(id, declarationModel));
     }
@@ -128,7 +142,7 @@ public class DeclarationController {
 
         ContentUtils.cleanDelcarationValues(declarationModel);
 
-        ContentUtils.transformAndAddMultiPart(declarationfiles, declarationModel);
+        ContentUtils.transformMultiPart(declarationfiles, declarationModel);
 
         return ResponseEntity.ok().headers(responseHeaders).body(this.declarationService.update(id, declarationModel, model));
     }

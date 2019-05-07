@@ -21,7 +21,8 @@ export class DeclarationService {
     dataToPost.append('declaration', JSON.stringify(toSave));
 
     for (const file of files) {
-      dataToPost.append('declarationfiles', file.file, file.filename);
+      dataToPost.append('declarationfiles', file.file, file.filename + '#noid');
+      console.log(file.filename + '#' + (file.id === undefined ? 'undefined' : file.id));
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/addDeclaration', dataToPost);
@@ -46,7 +47,6 @@ export class DeclarationService {
 
     for (const file of declarationFiles) {
       dataToPost.append('declarationfiles', file.file, file.filename + '#' + (file.id === undefined ? 'noid' : file.id));
-      console.log(file.filename + '#' + (file.id === undefined ? 'undefined' : file.id));
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/updateDeclaration/' + toUpdate.id, dataToPost);

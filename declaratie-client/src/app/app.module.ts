@@ -11,7 +11,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material/material.module';
 import {DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
 
-import { DeclarationStepperComponent } from './components/declaration-stepper/declaration-stepper.component';
 import {DeclarationService} from './services/declaration/declaration.service';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
 import { DeclarationViewComponent } from './components/declaration-view/declaration-view.component';
@@ -31,7 +30,6 @@ import {AuthenticationService} from './services/authservice/authentication.servi
     AppComponent,
     DeclarationTableComponent,
     DeclarationCreateComponent,
-    DeclarationStepperComponent,
     DeclarationViewComponent,
     ErrorDialogComponent,
     MessageDialogComponent,

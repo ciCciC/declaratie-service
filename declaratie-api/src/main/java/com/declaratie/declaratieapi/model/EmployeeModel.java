@@ -1,7 +1,5 @@
 package com.declaratie.declaratieapi.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class EmployeeModel {

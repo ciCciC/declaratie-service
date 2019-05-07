@@ -8,6 +8,12 @@ import java.io.IOException;
 
 public class ContentUtils {
 
+    private static final Long DIVIDER = 1000000L;
+    private static final int MAXFILESIZE = 10;
+
+    private ContentUtils(){
+    }
+
     public static void cleanDelcarationValues(DeclarationModel model){
         if(model.getDescription() != null)
             model.setDescription(replaceXssChars(model.getDescription()));
@@ -25,22 +31,28 @@ public class ContentUtils {
         return replaceXssChars(filename);
     }
 
-    public static void transformAndAddMultiPart(MultipartFile[] declarationfiles, DeclarationModel declarationModel) throws IOException {
+    public static void transformMultiPart(MultipartFile[] declarationfiles, DeclarationModel declarationModel) throws IOException {
         String splitter [] = null;
         DeclarationFileModel tmp = null;
 
         for (MultipartFile fileModel: declarationfiles) {
             tmp = new DeclarationFileModel();
-            splitter = fileModel.getOriginalFilename().split("#");
 
-            if(!splitter[splitter.length-1].equals("noid")){
-                tmp.setId(Long.parseLong(splitter[splitter.length-1]));
+            if(convertByteToMb(fileModel.getSize()) <= MAXFILESIZE) {
+                splitter = fileModel.getOriginalFilename().split("#");
+
+                if(!splitter[splitter.length-1].equals("noid")){
+                    tmp.setId(Long.parseLong(splitter[splitter.length-1]));
+                }
+                tmp.setFile(fileModel.getBytes());
+                tmp.setFilename(cleanFilename(splitter[0]));
+                declarationModel.addFile(tmp);
             }
-
-            tmp.setFile(fileModel.getBytes());
-            tmp.setFilename(cleanFilename(splitter[0]));
-            declarationModel.addFile(tmp);
         }
+    }
+
+    private static Long convertByteToMb(Long byteSize) {
+        return byteSize / DIVIDER;
     }
 
     private static String replaceXssChars(String value){

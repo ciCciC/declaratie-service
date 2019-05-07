@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">47.83% </span>
+        <span class="strong">42.86% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>22/46</span>
+        <span class='fraction'>21/49</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">27.27% </span>
+        <span class="strong">16.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/11</span>
+        <span class='fraction'>2/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45% </span>
+        <span class="strong">44.19% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/40</span>
+        <span class='fraction'>19/43</span>
       </div>
     </div>
     <p class="quiet">
@@ -122,7 +122,13 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,19 +140,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -187,6 +192,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,8 +230,7 @@ export class DeclarationfileUploadComponent implements OnInit {
   private allowedTypes = ['jpg', 'jpeg', 'png', 'pdf'];
   private maxSize = 10;
 &nbsp;
-&nbsp;
-  @Input() set dataStore(declarationFiles) { this.declarationFiles.data = declarationFiles; this.files = declarationFiles; }
+  @Input() <span class="fstat-no" title="function not covered" >set d</span>ataStore(declarationFiles) { <span class="cstat-no" title="statement not covered" >this.declarationFiles.data = declarationFiles; <span class="cstat-no" title="statement not covered" ></span>this.files = declarationFiles; </span>}
   @Output() uploaded = new EventEmitter&lt;any&gt;();
 &nbsp;
   constructor(private dialog: MatDialog) {
@@ -235,8 +246,8 @@ export class DeclarationfileUploadComponent implements OnInit {
     if (event.target.files.length &gt; 0) {
       for (const file<span class="cstat-no" title="statement not covered" > of e</span>vent.target.files) {
         const selectedFile = &lt;File&gt;<span class="cstat-no" title="statement not covered" >file;</span>
-        const splittedFilename = <span class="cstat-no" title="statement not covered" >selectedFile.name.split('.');</span>
-        const fileExtension = <span class="cstat-no" title="statement not covered" >splittedFilename[(splittedFilename.length - 1)];</span>
+        const splittedFiletype = <span class="cstat-no" title="statement not covered" >selectedFile.type.split('/');</span>
+        const fileExtension = <span class="cstat-no" title="statement not covered" >splittedFiletype[(splittedFiletype.length - 1)];</span>
 <span class="cstat-no" title="statement not covered" >        this.addDeclarationFile(selectedFile, fileExtension);</span>
       }
     }
@@ -246,7 +257,7 @@ export class DeclarationfileUploadComponent implements OnInit {
     const dialogRef = <span class="cstat-no" title="statement not covered" >this.dialog.open(MessageDialogComponent, {data: MessageCreator.toDelete()});</span>
 <span class="cstat-no" title="statement not covered" >    dialogRef.afterClosed().subscribe(<span class="fstat-no" title="function not covered" >result </span>=&gt; {</span>
       if (result) {
-<span class="cstat-no" title="statement not covered" >        this.files = this.files.filter(<span class="fstat-no" title="function not covered" >u </span>=&gt; <span class="cstat-no" title="statement not covered" >u.id !== declarationFile.id);</span></span>
+<span class="cstat-no" title="statement not covered" >        this.files = this.files.filter(<span class="fstat-no" title="function not covered" >u </span>=&gt; <span class="cstat-no" title="statement not covered" >u !== declarationFile);</span></span>
 <span class="cstat-no" title="statement not covered" >        this.declarationFiles.data = this.files;</span>
 <span class="cstat-no" title="statement not covered" >        this.uploaded.emit(this.files);</span>
       }
@@ -258,12 +269,19 @@ export class DeclarationfileUploadComponent implements OnInit {
       this.convertByteToMb(file.size) &lt; this.maxSize) {
       const declarationFile = <span class="cstat-no" title="statement not covered" >new DeclarationFile();</span>
 <span class="cstat-no" title="statement not covered" >      declarationFile.file = file;</span>
-<span class="cstat-no" title="statement not covered" >      declarationFile.filename = file.name;</span>
+<span class="cstat-no" title="statement not covered" >      declarationFile.filename = this.cleanFilename(file.name);</span>
 <span class="cstat-no" title="statement not covered" >      declarationFile.fileUrl = '';</span>
 <span class="cstat-no" title="statement not covered" >      this.files.push(declarationFile);</span>
 <span class="cstat-no" title="statement not covered" >      this.declarationFiles.data = this.files;</span>
 <span class="cstat-no" title="statement not covered" >      this.uploaded.emit(this.files);</span>
     }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  private c</span>leanFilename(filename: string): string {
+    const splitted = <span class="cstat-no" title="statement not covered" >filename.split('.');</span>
+<span class="cstat-no" title="statement not covered" >    return splitted.slice(0, splitted.length - 1)</span>
+      .join('')
+      .replace(/(\b)(on\S+)(\s*)=|javascript|(&lt;\s*)(\/*)script|#/, '') + '.' + splitted[splitted.length - 1];
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  private c</span>onvertByteToMb(byte: number) {
@@ -280,7 +298,7 @@ export class DeclarationfileUploadComponent implements OnInit {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 17 2019 11:28:43 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Apr 25 2019 14:51:29 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

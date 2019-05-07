@@ -58,11 +58,10 @@ export class DeclarationCreateComponent implements OnInit {
   }
 
   private backToList() {
-    this.router.navigateByUrl('/declarationtable');
+    this.router.navigateByUrl('/declarations');
   }
 
   onUploadedFiles(files: DeclarationFile[]) {
-    console.log(JSON.stringify(files));
     this.declarationFiles = files;
     this.createForm.controls.files.setValue(this.declarationFiles.length);
   }

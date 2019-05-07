@@ -41,7 +41,7 @@ describe(DeclarationCreateComponent.name, () => {
   it('form should be valid', () => {
     component.createForm.get('description').setValue('This is my description');
     component.processDate = new Date();
-    component.createForm.get('amount').setValue(100.50);
+    component.createForm.get('amount').setValue(10);
     component.createForm.get('empMessage').setValue('I like beer');
     component.createForm.get('files').setValue(1);
 
@@ -51,7 +51,7 @@ describe(DeclarationCreateComponent.name, () => {
 
   it('form should be invalid', () => {
     component.createForm.get('description').setValue('');
-    component.createForm.get('empMessage').setValue('');
+    component.createForm.get('amount').setValue(-10);
 
     expect(component.createForm.valid).toEqual(false);
     expect(component.createForm.get('description').value).toEqual('');

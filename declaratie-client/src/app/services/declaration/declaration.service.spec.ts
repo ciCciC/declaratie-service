@@ -155,7 +155,7 @@ describe(DeclarationService.name, () => {
 
   describe('Update call', () => {
 
-    it('A42_SR9_shouldUpdateDeclaration', () => {
+    it('US6_shouldUpdateDeclaration', () => {
       // Arrange
       declarationService = new DeclarationService(undefined);
 
@@ -172,7 +172,7 @@ describe(DeclarationService.name, () => {
       expect(response).toEqual(DECLARATIONS[0]);
     });
 
-    it('A42_SR9_shouldCallUpdateDeclaration', () => {
+    it('US6_shouldCallUpdateDeclaration', () => {
       // Arrange
       declarationService = new DeclarationService(undefined);
 

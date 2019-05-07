@@ -3,8 +3,6 @@ package com.declaratie.declaratieapi;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
-import com.declaratie.declaratieapi.exceptionHandler.UnprocessableDeclarationException;
-import com.declaratie.declaratieapi.exceptionHandler.DeclarationNotFoundException;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
@@ -38,7 +36,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 	 * Voor de testen wordt gebruik gemaakt van H2 database.
 	 *
 	 * A = verwijst naar de acceptatie ID in het testrapport
-	 * SR = System requirement ID
+	 * US = User story als testbasis
 	 * TG = verwijst naar het testgeval in het testrapport
 	 */
 
@@ -269,7 +267,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 
 		try {
 			declaratie_bestaat = declarationService.read(toRead.getId());
-		} catch (DeclarationNotFoundException e) {
+		} catch (ResponseStatusException e) {
 			System.out.println("Message: " + e.getMessage());
 		}
 
@@ -342,7 +340,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 			declarationService.delete(toDelete.getId());
 			System.out.println("Message: declaratie is verwijderd");
 			declaratie_bestaat = true;
-		} catch (DeclarationNotFoundException e) {
+		} catch (ResponseStatusException e) {
 			System.out.println("Message: " + e.getMessage());
 		}
 
@@ -408,7 +406,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 			declarationService.delete(toDelete.getId());
 			System.out.println("Message: declaratie is verwijderd");
 			declaratie_bestaat = true;
-		} catch (ResponseStatusException | DeclarationNotFoundException e) {
+		} catch (ResponseStatusException e) {
 			System.out.println("Message: " + e.getMessage());
 		}
 

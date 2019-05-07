@@ -39,20 +39,13 @@ describe(DeclarationUpdateComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('A41_TG1_should_create_' + DeclarationUpdateComponent.name, () => {
+  it('should_create_component' + DeclarationUpdateComponent.name, () => {
     expect(component).toBeTruthy();
   });
 
-  it('A41_TG2_should_not_create_' + DeclarationUpdateComponent.name, () => {
-    component = null;
-    fixture.detectChanges();
-    expect(component).toBeNull();
-  });
-
-  describe('De medewerker kan geen verkeerde data opslaan', () => {
-
-    it('US6_A43_TG1_InvoerIsValide', () => {
-      // Action
+  describe('US6_MedewerkerKanEenAfgekeurdeOfIngediendeDeclaratieWijzigen', () => {
+    it('TG1', () => {
+      // Prepare
       component.updateForm.get('description').setValue('Food');
       component.processDate = new Date();
       component.updateForm.get('amount').setValue(50);
@@ -64,83 +57,100 @@ describe(DeclarationUpdateComponent.name, () => {
       expect(component.updateForm.valid).toEqual(true);
     });
 
-    it('US6_A43_TG2_InvoerIsNietValide', () => {
+    it('TG2', () => {
       // Prepare
-      const maxLimit = 255;
+      let karakters = '';
 
-      let description = '';
-
-      for (let i = 0; i <= maxLimit; i++) {
-        description += 'z';
+      for (let i = 0; i < 260; i++) {
+        karakters += '' + 1;
       }
 
-      // Action
-      component.updateForm.get('description').setValue(description);
+      component.updateForm.get('description').setValue(karakters);
       component.processDate = new Date();
       component.updateForm.get('amount').setValue(50);
       component.updateForm.get('empMessage').setValue('Employee message');
       component.updateForm.get('manMessage').setValue('Manager message');
+      component.updateForm.get('files').setValue(1);
 
       // Assert
-      expect(component.updateForm.valid).toBe(false);
+      expect(component.updateForm.valid).toEqual(false);
     });
 
-    it('US6_A43_TG4_InvoerIsNietValide', () => {
+    it('TG4', () => {
       // Prepare
-      const amount = -50;
-
-      // Action
       component.updateForm.get('description').setValue('Food');
       component.processDate = new Date();
-      component.updateForm.get('amount').setValue(amount);
+      component.updateForm.get('amount').setValue(-50);
       component.updateForm.get('empMessage').setValue('Employee message');
       component.updateForm.get('manMessage').setValue('Manager message');
+      component.updateForm.get('files').setValue(1);
 
       // Assert
-      expect(component.updateForm.valid).toBe(false);
+      expect(component.updateForm.valid).toEqual(false);
     });
 
-    it('US6_A43_TG6_InvoerIsNietValide', () => {
+    it('TG6', () => {
       // Prepare
-      const maxLimit = 255;
+      let karakters = '';
 
-      let empMessage = '';
-
-      for (let i = 0; i <= maxLimit; i++) {
-        empMessage += 'z';
+      for (let i = 0; i < 260; i++) {
+        karakters += '' + 1;
       }
 
-      // Action
       component.updateForm.get('description').setValue('Food');
       component.processDate = new Date();
       component.updateForm.get('amount').setValue(50);
-      component.updateForm.get('empMessage').setValue(empMessage);
+      component.updateForm.get('empMessage').setValue(karakters);
       component.updateForm.get('manMessage').setValue('Manager message');
+      component.updateForm.get('files').setValue(1);
 
       // Assert
-      expect(component.updateForm.valid).toBe(false);
+      expect(component.updateForm.valid).toEqual(false);
     });
 
-    it('US6_A43_TG8_InvoerIsNietValide', () => {
+    it('TG8', () => {
       // Prepare
-      const maxLimit = 255;
+      let karakters = '';
 
-      let manMessage = '';
-
-      for (let i = 0; i <= maxLimit; i++) {
-        manMessage += 'z';
+      for (let i = 0; i < 260; i++) {
+        karakters += '' + 1;
       }
 
-      // Action
       component.updateForm.get('description').setValue('Food');
       component.processDate = new Date();
       component.updateForm.get('amount').setValue(50);
       component.updateForm.get('empMessage').setValue('Employee message');
-      component.updateForm.get('manMessage').setValue(manMessage);
+      component.updateForm.get('manMessage').setValue(karakters);
+      component.updateForm.get('files').setValue(1);
 
       // Assert
-      expect(component.updateForm.valid).toBe(false);
+      expect(component.updateForm.valid).toEqual(false);
     });
 
+    it('TG9', () => {
+      // Prepare
+      component.updateForm.get('description').setValue('');
+      component.processDate = new Date();
+      component.updateForm.get('amount').setValue(50);
+      component.updateForm.get('empMessage').setValue('Employee message');
+      component.updateForm.get('manMessage').setValue('Manager message');
+      component.updateForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.updateForm.valid).toEqual(false);
+    });
+
+    it('TG10', () => {
+      // Prepare
+      component.updateForm.get('description').setValue('');
+      component.processDate = new Date();
+      component.updateForm.get('amount').setValue(150000);
+      component.updateForm.get('empMessage').setValue('Employee message');
+      component.updateForm.get('manMessage').setValue('Manager message');
+      component.updateForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.updateForm.valid).toEqual(false);
+    });
   });
 });

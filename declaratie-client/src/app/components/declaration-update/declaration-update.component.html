@@ -1,8 +1,13 @@
-<div mat-dialog-actions align="end">
-  <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
-</div>
-
-<h1 mat-dialog-title>Wijzigen</h1>
+<table class="dec-full-width" cellspacing="0">
+  <tr>
+    <td>
+      <h1 mat-dialog-title>Wijzigen</h1>
+    </td>
+    <td align="end">
+      <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
+    </td>
+  </tr>
+</table>
 
 <div class="mat-dialog-content" *ngIf="declaration">
 

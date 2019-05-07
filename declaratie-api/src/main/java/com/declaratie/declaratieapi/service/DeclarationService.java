@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.swing.plaf.nimbus.State;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +38,7 @@ public class DeclarationService {
         try {
             return new DeclarationModel(this.declarationRepository.save(declarationModel.toDeclaration()));
         }catch (TransactionSystemException ex) {
-            ApiError apiError = RestExceptionHandler.handleBadRequest(ex);
+            ApiError apiError = RestExceptionHandler.handleException(ex);
             throw new ResponseStatusException(apiError.getHttpStatus(), apiError.getMessage());
         }
     }
@@ -91,10 +89,13 @@ public class DeclarationService {
         return toReturn;
     }
 
+    /***
+     * To update declaration
+     * @param id of declaration to update
+     * @param declarationModel the representative model
+     * @return representative model
+     */
     public DeclarationModel update(Long id, DeclarationModel declarationModel) {
-
-        if(declarationModel == null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
 
         Optional<Declaration> declarationExist = this.declarationRepository.findById(id);
 
@@ -104,7 +105,7 @@ public class DeclarationService {
         StateEnum currentState = declarationExist.get().getStatusEnum();
 
         if(currentState == StateEnum.INPROGRESS || currentState == StateEnum.APPROVED){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is ", currentState));
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, MessageFormat.format("Declaratie met id={0} is {1}", id, currentState));
         }
 
         try {
@@ -113,7 +114,7 @@ public class DeclarationService {
 
             return new DeclarationModel(this.declarationRepository.save(toUpdate));
         }catch (TransactionSystemException ex) {
-            ApiError apiError = RestExceptionHandler.handleBadRequest(ex);
+            ApiError apiError = RestExceptionHandler.handleException(ex);
             throw new ResponseStatusException(apiError.getHttpStatus(), apiError.getMessage());
         }
     }
@@ -139,7 +140,7 @@ public class DeclarationService {
 
     @Transactional
     public List<DeclarationModel> getAll() {
-        List<Declaration> toReturn = this.declarationRepository.findAll();
+        List<Declaration> toReturn = this.declarationRepository.findAll(Sort.by("id").descending());
 
         return Optional.ofNullable(toReturn).orElse(Collections.emptyList()).stream()
                 .map(data -> {
@@ -158,7 +159,7 @@ public class DeclarationService {
                 .collect(Collectors.toList());
 
 //        Sort sortFirst = Sort.by("id").descending();
-//
+
 //        return this.declarationRepository.findAll(sortFirst).subList(2, 4).stream()
 //                .map(DeclarationModel::new)
 //                .collect(Collectors.toList());

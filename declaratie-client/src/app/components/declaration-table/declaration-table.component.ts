@@ -36,7 +36,6 @@ export class DeclarationTableComponent implements OnInit {
 
   getDeclarationsList() {
     this.declarationService.getDeclarations().subscribe(data => {
-      data.sort((a, b) => a.id < b.id ? 1 : -1);
       this.dataSource.data = data;
     }, (error) => {
       this.errorService.handleError(error);
@@ -54,7 +53,8 @@ export class DeclarationTableComponent implements OnInit {
   }
 
   createDeclaration() {
-    this.router.navigateByUrl('/declarationcreate');
+    this.router.navigateByUrl('/declarations/create');
+    // this.router.navigateByUrl('/declarationcreate');
     // this.router.navigate(['/declarationcreate']);
   }
 

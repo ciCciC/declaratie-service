@@ -27,7 +27,7 @@ public class DeclaratieApiApplication {
 	private static final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 
 	public static void main(String[] args) {
-		logger.info("Called application class.");
+		logger.info("Started declaration proces application.");
 
 		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
@@ -46,16 +46,21 @@ public class DeclaratieApiApplication {
 
 			this.fillDatabase(2, 2, descriptions, rand, files, declarationService);
 
-			this.fillDatabase(3, 4, descriptions, rand, files, declarationService);
+//			this.fillDatabase(3, 4, descriptions, rand, files, declarationService);
 		};
 	}
 
 	private void fillDatabase(long empid, long manId, List<String> descriptions, Random rand, List<File> files, DeclarationService declarationService) {
+
+		int count = 0;
+
 		for (String desc: descriptions) {
 			int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
 			int randomFile = rand.nextInt((1 - 0) + 1) + 0;
 
-			Declaration declaration = new Declaration(desc, new Date(), 120, "Hier staat medewerker zijn bericht",
+			GregorianCalendar date = new GregorianCalendar(2019, 5 + count, 10);
+
+			Declaration declaration = new Declaration(desc, date.getTime(), 120, "Hier staat medewerker zijn bericht",
 					"Hier staat manager zijn bericht", StateEnum.values()[randomChoice], empid);
 			declaration.setManId(manId);
 
@@ -68,6 +73,8 @@ public class DeclaratieApiApplication {
 				declaration.addDeclarationFile(new DeclarationFile(files.get(randomFile).getName(), tmp));
 
 				DeclarationModel dec = declarationService.create(new DeclarationModel(declaration));
+
+				count++;
 
 			}catch(ResponseStatusException | IOException ex){
 				logger.info("Voorbeeld declaraties kan niet aangemaakt worden.");

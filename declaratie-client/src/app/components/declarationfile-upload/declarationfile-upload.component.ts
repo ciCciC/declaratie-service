@@ -3,6 +3,7 @@ import {MatDialog, MatTableDataSource} from '@angular/material';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {MessageCreator} from '../../models/MessageCreator';
 import {DeclarationFile} from '../../models/DeclarationFile';
+import {SecurityUtils} from '../../utils/SecurityUtils';
 
 @Component({
   selector: 'app-declarationfile-upload',
@@ -10,13 +11,13 @@ import {DeclarationFile} from '../../models/DeclarationFile';
   styleUrls: ['./declarationfile-upload.component.css']
 })
 export class DeclarationfileUploadComponent implements OnInit {
-  actionValue = 'action';
   displayedColumns: string[] = ['name', 'action'];
   declarationFiles = new MatTableDataSource<DeclarationFile>();
   private files: DeclarationFile[] = [];
   acceptTypes = 'image/jpeg,image/jpg,image/png,application/pdf';
   private allowedTypes = ['jpg', 'jpeg', 'png', 'pdf'];
   private maxSize = 10;
+  private divider = 1000000;
 
   @Input() set dataStore(declarationFiles) { this.declarationFiles.data = declarationFiles; this.files = declarationFiles; }
   @Output() uploaded = new EventEmitter<any>();
@@ -32,11 +33,19 @@ export class DeclarationfileUploadComponent implements OnInit {
 
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
-      for (const file of event.target.files) {
-        const selectedFile = <File>file;
-        const splittedFiletype = selectedFile.type.split('/');
-        const fileExtension = splittedFiletype[(splittedFiletype.length - 1)];
-        this.addDeclarationFile(selectedFile, fileExtension);
+      this.procesSelectedFiles(event.target.files);
+    }
+  }
+
+  procesSelectedFiles(files: File[]) {
+    for (const file of files) {
+      const selectedFile = <File>file;
+      const splittedFiletype = selectedFile.type.split('/');
+      const fileExtension = splittedFiletype[(splittedFiletype.length - 1)];
+
+      if (this.allowedTypes.some(value => value === fileExtension) &&
+        this.convertByteToMb(file.size) <= this.maxSize) {
+        this.addDeclarationFile(selectedFile);
       }
     }
   }
@@ -45,35 +54,25 @@ export class DeclarationfileUploadComponent implements OnInit {
     const dialogRef = this.dialog.open(MessageDialogComponent, {data: MessageCreator.toDelete()});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.files = this.files.filter(u => u !== declarationFile);
+        this.files = this.files.filter(x => x !== declarationFile);
         this.declarationFiles.data = this.files;
         this.uploaded.emit(this.files);
       }
     });
   }
 
-  private addDeclarationFile(file: File, fileExtension: string) {
-    if (this.allowedTypes.some(value => value === fileExtension) &&
-      this.convertByteToMb(file.size) < this.maxSize) {
-      const declarationFile = new DeclarationFile();
-      declarationFile.file = file;
-      declarationFile.filename = this.cleanFilename(file.name);
-      declarationFile.fileUrl = '';
-      this.files.push(declarationFile);
-      this.declarationFiles.data = this.files;
-      this.uploaded.emit(this.files);
-    }
-  }
-
-  private cleanFilename(filename: string): string {
-    const splitted = filename.split('.');
-    return splitted.slice(0, splitted.length - 1)
-      .join('')
-      .replace(/(\b)(on\S+)(\s*)=|javascript|(<\s*)(\/*)script|#/, '') + '.' + splitted[splitted.length - 1];
+  private addDeclarationFile(file: File) {
+    const declarationFile = new DeclarationFile();
+    declarationFile.file = file;
+    declarationFile.filename = SecurityUtils.cleanFilename(file.name);
+    declarationFile.fileUrl = '';
+    this.files.push(declarationFile);
+    this.declarationFiles.data = this.files;
+    this.uploaded.emit(this.files);
   }
 
   private convertByteToMb(byte: number) {
-    return byte / 1000000;
+    return byte / this.divider;
   }
 
   ngOnInit() {

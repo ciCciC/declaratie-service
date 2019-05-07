@@ -110,12 +110,12 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A42_SR9_UpdateDeclarationEndpoint() throws IOException {
+    public void US6_TG1_UpdateDeclarationEndpoint_Semantisch() throws IOException {
 
         declarationService.deleteAll();
 
         // Prepare
-        StateEnum currentState = StateEnum.SUBMITTED;
+        StateEnum currentState = StateEnum.REJECTED;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
         toCreate.setManId(15);
@@ -150,7 +150,85 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A42_SR9_UpdateDeclarationUnprocessableEndpoint() throws JsonProcessingException {
+    public void US6_TG2_UpdateDeclarationEndpoint_Semantisch() throws JsonProcessingException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
+        toUpdate.setDescription("Gasoline");
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", null);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US6_TG4_UpdateDeclarationEndpoint_Semantisch() throws JsonProcessingException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(100L);
+        toUpdate.setDescription("Gasoline");
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void US6_TG7_UpdateDeclarationEndpoint_Semantisch() throws JsonProcessingException {
 
         declarationService.deleteAll();
 
@@ -185,17 +263,17 @@ public class DeclarationControllerTest {
                 DeclarationModel.class);
 
         // Assert
-        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
     @Test
-    public void A42_SR9_UpdateDeclarationNotFoundEndpoint() throws JsonProcessingException {
+    public void US6_TG1_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
 
         declarationService.deleteAll();
 
         // Prepare
-        StateEnum currentState = StateEnum.REJECTED;
-        Declaration toCreate = new Declaration("Food", new Date(), 50,
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
         toCreate.setManId(15);
 
@@ -203,7 +281,8 @@ public class DeclarationControllerTest {
 
         DeclarationModel toUpdate = new DeclarationModel(toCreate);
         toUpdate.setId(createdModel.getId());
-        toUpdate.setDescription("Gasoline");
+        toUpdate.setDescription("Food");
+        toUpdate.setAmount(10);
 
         String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
 
@@ -218,15 +297,174 @@ public class DeclarationControllerTest {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        long nonExistingId = 100;
-
         // Do call
         ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
-                endpoint+"/updateDeclaration/"+nonExistingId, requestEntity,
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
                 DeclarationModel.class);
 
         // Assert
-        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void US6_TG2_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
+        toUpdate.setDescription("Food");
+        toUpdate.setAmount(-10);
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US6_TG4_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
+        toUpdate.setDescription("Food");
+        toUpdate.setAmount(110000);
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US6_TG7_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
+
+        for (int i = 0; i < 270; i++) {
+            toUpdate.setDescription(toUpdate.getDescription() + "" + 1);
+        }
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US6_TG9_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        DeclarationModel createdModel = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = new DeclarationModel(toCreate);
+        toUpdate.setId(createdModel.getId());
+        toUpdate.setDescription("");
+
+        String toUpdateJson = new ObjectMapper().writeValueAsString(toUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toUpdateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/updateDeclaration/"+toUpdate.getId(), requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
