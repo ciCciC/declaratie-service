@@ -21,8 +21,7 @@ export class DeclarationService {
     dataToPost.append('declaration', JSON.stringify(toSave));
 
     for (const file of files) {
-      dataToPost.append('declarationfiles', file.file, file.filename + '#noid');
-      console.log(file.filename + '#' + (file.id === undefined ? 'undefined' : file.id));
+      dataToPost.append('declarationfiles', file.file, file.filename);
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/addDeclaration', dataToPost);

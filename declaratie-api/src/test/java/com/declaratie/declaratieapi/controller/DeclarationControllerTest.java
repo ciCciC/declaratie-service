@@ -495,7 +495,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void US1_EenGeuploadBestandVerwijderen() throws IOException {
+    public void US3_EenGeuploadBestandVerwijderen() throws IOException {
 
         declarationService.deleteAll();
 

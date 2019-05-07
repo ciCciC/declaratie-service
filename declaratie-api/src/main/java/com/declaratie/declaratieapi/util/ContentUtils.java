@@ -39,13 +39,19 @@ public class ContentUtils {
             tmp = new DeclarationFileModel();
 
             if(convertByteToMb(fileModel.getSize()) <= MAXFILESIZE) {
-                splitter = fileModel.getOriginalFilename().split("#");
 
-                if(!splitter[splitter.length-1].equals("noid")){
-                    tmp.setId(Long.parseLong(splitter[splitter.length-1]));
+                if(fileModel.getOriginalFilename().contains("#")){
+                    splitter = fileModel.getOriginalFilename().split("#");
+
+                    if(!splitter[splitter.length-1].equals("noid")){
+                        tmp.setId(Long.parseLong(splitter[splitter.length-1]));
+                    }
+
+                    tmp.setFilename(cleanFilename(splitter[0]));
+                } else {
+                    tmp.setFilename(cleanFilename(fileModel.getOriginalFilename()));
                 }
                 tmp.setFile(fileModel.getBytes());
-                tmp.setFilename(cleanFilename(splitter[0]));
                 declarationModel.addFile(tmp);
             }
         }
