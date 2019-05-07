@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:32769/declarationdb</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="db" uuid="8d8cee52-b1c0-46e5-8054-06286fc8ff44">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:mem:db;DB_CLOSE_DELAY=-1</jdbc-url>
+    </data-source>
   </component>
 </project>

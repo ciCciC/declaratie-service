@@ -21,7 +21,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.declaratie.declaratieapi.service", "com.declaratie.declaratieapi.dao"})
 @EnableTransactionManagement
 public class H2TestJpaConfig {
 

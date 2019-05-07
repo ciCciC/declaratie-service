@@ -23,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.List;
 
@@ -465,6 +466,64 @@ public class DeclarationControllerTest {
 
         // Assert
         assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US1_EenBestandUploaden() throws IOException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        byte [] fileBytes = Files.readAllBytes(fileToSave.toPath());
+
+        toCreate.addDeclarationFile(new DeclarationFile(fileToSave.getName(), fileBytes));
+        toCreate.addDeclarationFile(new DeclarationFile(fileToSave.getName(), fileBytes));
+
+        // Do call
+        DeclarationModel created = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel fetchedData = declarationService.read(created.getId());
+
+        // Assert
+        assertThat(fetchedData.getFiles().size()).isEqualTo(2);
+    }
+
+    @Test
+    public void US1_EenGeuploadBestandVerwijderen() throws IOException {
+
+        declarationService.deleteAll();
+
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        byte [] fileBytes = Files.readAllBytes(fileToSave.toPath());
+
+        toCreate.addDeclarationFile(new DeclarationFile(fileToSave.getName(), fileBytes));
+        toCreate.addDeclarationFile(new DeclarationFile(fileToSave.getName(), fileBytes));
+
+        // Do call
+        DeclarationModel created = declarationService.create(new DeclarationModel(toCreate));
+
+        DeclarationModel toUpdate = declarationService.read(created.getId());
+
+        toUpdate.getFiles().remove(1);
+
+        declarationService.update(toUpdate.getId(), toUpdate);
+
+        DeclarationModel fetchedData = declarationService.read(created.getId());
+
+        // Assert
+        assertThat(fetchedData.getFiles().size()).isEqualTo(1);
     }
 
     @Test
