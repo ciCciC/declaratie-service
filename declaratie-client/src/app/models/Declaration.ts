@@ -1,5 +1,4 @@
 import {IDeclaration} from './imodels/IDeclaration';
-import {DeclarationFile} from './DeclarationFile';
 import {StatusEnum} from './StatusEnum';
 
 export class Declaration implements IDeclaration {

@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">53.52% </span>
+        <span class="strong">52.17% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>38/71</span>
+        <span class='fraction'>36/69</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">25% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>1/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">31.82% </span>
+        <span class="strong">28.57% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>7/22</span>
+        <span class='fraction'>6/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.1% </span>
+        <span class="strong">52.54% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>33/61</span>
+        <span class='fraction'>31/59</span>
       </div>
     </div>
     <p class="quiet">
@@ -178,15 +178,7 @@
 <a name='L130'></a><a href='#L130'>130</a>
 <a name='L131'></a><a href='#L131'>131</a>
 <a name='L132'></a><a href='#L132'>132</a>
-<a name='L133'></a><a href='#L133'>133</a>
-<a name='L134'></a><a href='#L134'>134</a>
-<a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a>
-<a name='L137'></a><a href='#L137'>137</a>
-<a name='L138'></a><a href='#L138'>138</a>
-<a name='L139'></a><a href='#L139'>139</a>
-<a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L133'></a><a href='#L133'>133</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -220,12 +212,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -267,8 +259,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -285,7 +275,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -314,19 +303,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Component, OnInit, ViewChild} from '@angular/core';
 &nbsp;
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
@@ -346,7 +330,7 @@ import {MessageCreator} from '../../models/MessageCreator';
   templateUrl: './declaration-table.component.html',
   styleUrls: ['./declaration-table.component.css']
 })
-export class DeclarationTableComponent implements OnInit, OnDestroy {
+export class DeclarationTableComponent implements OnInit {
 &nbsp;
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource&lt;IDeclaration&gt;();
@@ -359,13 +343,13 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 &nbsp;
   constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService,
-              private dialog: MatDialog, private router: Router) { }
+              private dialog: MatDialog, private router: Router) {
+  }
 &nbsp;
   getDeclarationsList() {
     this.declarationService.getDeclarations().subscribe(data =&gt; {
       data.sort((a, b) =&gt; a.id &lt; b.id ? <span class="branch-0 cbranch-no" title="branch not covered" >1 </span>: -1);
       this.dataSource.data = data;
-      console.log(data);
     }, <span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >      this.errorService.handleError(error);</span>
     });
@@ -405,8 +389,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 &nbsp;
     const tot = <span class="cstat-no" title="statement not covered" >event.pageSize;</span>
 <span class="cstat-no" title="statement not covered" >    console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));</span>
-&nbsp;
-&nbsp;
   }
 &nbsp;
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  toDelete(</span></span>declaration: Declaration) {
@@ -425,7 +407,6 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   }
 &nbsp;
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  openDialog(</span></span>selected: Declaration) {
-&nbsp;
     const dialogRefView = <span class="cstat-no" title="statement not covered" >this.dialog.open(DeclarationViewComponent, {data: selected});</span>
 <span class="cstat-no" title="statement not covered" >    dialogRefView.afterClosed().subscribe(<span class="fstat-no" title="function not covered" >result </span>=&gt; {</span>
       if (result === RestEnum.delete) {
@@ -437,7 +418,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   }
 &nbsp;
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  private o</span></span>penUpdateDialog(selected: Declaration) {
-    const dialogRefUpdate = <span class="cstat-no" title="statement not covered" >this.dialog.open(DeclarationUpdateComponent, {data: selected});</span>
+    const dialogRefUpdate = <span class="cstat-no" title="statement not covered" >this.dialog.open(DeclarationUpdateComponent, {data: selected, disableClose: true});</span>
 <span class="cstat-no" title="statement not covered" >    dialogRefUpdate.afterClosed().subscribe(<span class="fstat-no" title="function not covered" >resultOfUpdate </span>=&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >        this.getDeclarationsList();</span>
@@ -454,15 +435,10 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
   }
 &nbsp;
   ngOnInit() {
-    // this.paginator._intl.itemsPerPageLabel = 'Items per pagina:';
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.initTableColumnNames();
     this.getDeclarationsList();
-&nbsp;
-  }
-&nbsp;
-  ngOnDestroy(): void {
   }
 &nbsp;
 }
@@ -472,7 +448,7 @@ export class DeclarationTableComponent implements OnInit, OnDestroy {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 17 2019 11:28:43 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Apr 25 2019 14:51:29 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

@@ -4,52 +4,44 @@ import {browser, by, element} from 'protractor';
 describe('declaration-create', () => {
   let page: DeclaratieCreatePo;
 
+  const path = require('path');
+
   beforeEach(() => {
     page = new DeclaratieCreatePo();
+    // Given
     page.navigateTo();
     browser.driver.sleep(500);
   });
 
-  it('Create form should be invalid', () => {
+  it('GAT2_AC2_De medewerker kan een declaratie met invalide data niet indienen', () => {
 
+    // When
     page.getDescription().sendKeys('');
-
-    page.getDate().click();
-    const fieldForDate = element(by.id('mat-input-4'));
-    fieldForDate.sendKeys('');
-    page.erase_back_space(fieldForDate.getAttribute('value'));
-
-    for (const price of page.getPrice()) {
-      price.sendKeys(0);
-    }
-
+    page.getPrice().sendKeys(-123);
     page.getEmpMessage().sendKeys('');
-
     const form  = page.getForm().getAttribute('class');
 
+    // browser.driver.sleep(3000);
+
+    // Then
     expect(form).toContain('ng-invalid');
   });
 
-  it('Create form should be valid', () => {
+  it('GAT1_AC1_De medewerker kan een declaratie indienen', () => {
+    // browser.driver.sleep(6500);
 
+    // When
     page.getDescription().sendKeys('Dit is mijn omschrijving');
-
-    browser.driver.sleep(500);
-
-    page.getDate().click();
-    const fieldForDate = element(by.id('mat-input-4'));
-    fieldForDate.sendKeys('');
-    page.erase_back_space(fieldForDate.getAttribute('value'));
-    const date = new Date().toISOString();
-    fieldForDate.sendKeys(date);
-
-    page.getPrice()[0].sendKeys(500);
-    page.getPrice()[1].sendKeys(50);
-
+    page.getPrice().sendKeys(500);
     page.getEmpMessage().sendKeys('Ik hou van bier :D');
-
+    const fileToUpload = '../testfiles/testimage.png';
+    const absolutePath = path.resolve(__dirname, fileToUpload);
+    element(by.css('input[type="file"]')).sendKeys(absolutePath);
     const form  = page.getForm().getAttribute('class');
 
+    // browser.driver.sleep(3000);
+
+    // Then
     expect(form).toContain('ng-valid');
   });
 });

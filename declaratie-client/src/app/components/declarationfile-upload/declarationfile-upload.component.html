@@ -6,7 +6,7 @@
     <ng-container matColumnDef="name" sticky>
       <th mat-header-cell *matHeaderCellDef>
         <div class="container">
-          <input id="fileId" hidden multiple type="file" accept="{{acceptTypes}}" (change)="onFileSelect($event)">
+          <input hidden multiple id="fileId" type="file" accept="{{acceptTypes}}" (change)="onFileSelect($event)">
           <button class="uploadButton" mat-raised-button (click)="openFileBrowser($event)">
             <mat-icon matListIcon>cloud_upload</mat-icon>
             Kies bestand

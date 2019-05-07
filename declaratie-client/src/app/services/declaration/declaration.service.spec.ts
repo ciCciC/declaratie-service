@@ -24,69 +24,69 @@ describe(DeclarationService.name, () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  // it('should create ' + DeclarationService.name, () => {
-  //   const service: DeclarationService = TestBed.get(DeclarationService);
-  //   expect(service).toBeTruthy();
-  // });
-  //
-  // describe('Create call', () => {
-  //
-  //   it('A1_SR11_shouldAddDeclaration', () => {
-  //     declarationService = new DeclarationService(undefined);
-  //
-  //     let response;
-  //
-  //     spyOn(declarationService, 'addDeclaration').and.returnValues(of(DECLARATIONS[0]));
-  //
-  //     declarationService.addDeclaration(DECLARATIONS[0]).subscribe( data => {
-  //       response = data;
-  //     });
-  //
-  //     expect(response).toEqual(DECLARATIONS[0]);
-  //   });
-  //
-  //   it('A1_SR11_shouldCallAddDeclaration', () => {
-  //     // Arrange
-  //     declarationService = new DeclarationService(undefined);
-  //
-  //     const spy_create = spyOn(declarationService, 'addDeclaration');
-  //
-  //     // Act
-  //     declarationService.addDeclaration(DECLARATIONS[0]);
-  //
-  //     // Assert
-  //     expect(spy_create).toHaveBeenCalled();
-  //   });
-  //
-  // });
-  //
-  // describe('GetAll call', () => {
-  //
-  //   it('A6_SR12_shouldReturnListOfDeclarations', () => {
-  //     declarationService = new DeclarationService(undefined);
-  //
-  //     let response;
-  //
-  //     spyOn(declarationService, 'getDeclarations').and.returnValues(of(DECLARATIONS));
-  //
-  //     declarationService.getDeclarations().subscribe( data => {
-  //       response = data;
-  //     });
-  //
-  //     expect(response).toEqual(DECLARATIONS);
-  //     expect(response.length).toBe(DECLARATIONS.length);
-  //   });
-  //
-  //   it('A6_SR12_shouldCallGetDeclarations', () => {
-  //     declarationService = new DeclarationService(undefined);
-  //     const spy_getAll = spyOn(declarationService, 'getDeclarations').and.returnValues(of(DECLARATIONS));
-  //
-  //     declarationService.getDeclarations();
-  //
-  //     expect(spy_getAll).toHaveBeenCalled();
-  //   });
-  //
-  // });
+  it('should create ' + DeclarationService.name, () => {
+    const service: DeclarationService = TestBed.get(DeclarationService);
+    expect(service).toBeTruthy();
+  });
+
+  describe('Create call', () => {
+
+    it('A1_SR11_shouldAddDeclaration', () => {
+      declarationService = new DeclarationService(undefined);
+
+      let response;
+
+      spyOn(declarationService, 'addDeclaration').and.returnValues(of(DECLARATIONS[0]));
+
+      declarationService.addDeclaration(DECLARATIONS[0], DECLARATIONS[0].files).subscribe( data => {
+        response = data;
+      });
+
+      expect(response).toEqual(DECLARATIONS[0]);
+    });
+
+    it('A1_SR11_shouldCallAddDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      const spy_create = spyOn(declarationService, 'addDeclaration');
+
+      // Act
+      declarationService.addDeclaration(DECLARATIONS[0], DECLARATIONS[0].files);
+
+      // Assert
+      expect(spy_create).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('GetAll call', () => {
+
+    it('A6_SR12_shouldReturnListOfDeclarations', () => {
+      declarationService = new DeclarationService(undefined);
+
+      let response;
+
+      spyOn(declarationService, 'getDeclarations').and.returnValues(of(DECLARATIONS));
+
+      declarationService.getDeclarations().subscribe( data => {
+        response = data;
+      });
+
+      expect(response).toEqual(DECLARATIONS);
+      expect(response.length).toBe(DECLARATIONS.length);
+    });
+
+    it('A6_SR12_shouldCallGetDeclarations', () => {
+      declarationService = new DeclarationService(undefined);
+      const spy_getAll = spyOn(declarationService, 'getDeclarations').and.returnValues(of(DECLARATIONS));
+
+      declarationService.getDeclarations();
+
+      expect(spy_getAll).toHaveBeenCalled();
+    });
+
+  });
 
   describe('Read call', () => {
 
@@ -153,38 +153,38 @@ describe(DeclarationService.name, () => {
 
   });
 
-  // describe('Update call', () => {
-  //
-  //   it('A42_SR9_shouldUpdateDeclaration', () => {
-  //     // Arrange
-  //     declarationService = new DeclarationService(undefined);
-  //
-  //     let response;
-  //
-  //     spyOn(declarationService, 'updateDeclaration').and.returnValues(of(DECLARATIONS[0]));
-  //
-  //     // Act
-  //     declarationService.updateDeclaration(DECLARATIONS[0], DECLARATIONS[0].files).subscribe( data => {
-  //       response = data;
-  //     });
-  //
-  //     // Assert
-  //     expect(response).toEqual(DECLARATIONS[0]);
-  //   });
-  //
-  //   it('A42_SR9_shouldCallUpdateDeclaration', () => {
-  //     // Arrange
-  //     declarationService = new DeclarationService(undefined);
-  //
-  //     const spy_create = spyOn(declarationService, 'updateDeclaration');
-  //
-  //     // Act
-  //     declarationService.updateDeclaration(DECLARATIONS[0], DECLARATIONS[0].files);
-  //
-  //     // Assert
-  //     expect(spy_create).toHaveBeenCalled();
-  //   });
-  //
-  // });
+  describe('Update call', () => {
+
+    it('US6_shouldUpdateDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      let response;
+
+      spyOn(declarationService, 'updateDeclaration').and.returnValues(of(DECLARATIONS[0]));
+
+      // Act
+      declarationService.updateDeclaration(DECLARATIONS[0], DECLARATIONS[0].files).subscribe( data => {
+        response = data;
+      });
+
+      // Assert
+      expect(response).toEqual(DECLARATIONS[0]);
+    });
+
+    it('US6_shouldCallUpdateDeclaration', () => {
+      // Arrange
+      declarationService = new DeclarationService(undefined);
+
+      const spy_create = spyOn(declarationService, 'updateDeclaration');
+
+      // Act
+      declarationService.updateDeclaration(DECLARATIONS[0], DECLARATIONS[0].files);
+
+      // Assert
+      expect(spy_create).toHaveBeenCalled();
+    });
+
+  });
 
 });

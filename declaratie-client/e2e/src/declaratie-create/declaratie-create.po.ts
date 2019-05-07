@@ -10,19 +10,23 @@ export class DeclaratieCreatePo {
   }
 
   getUser() {
-    return [element(by.name('emp_id')), element(by.name('Voornaam')), element(by.name('Achternaam'))];
+    return [element(by.name('Voornaam')), element(by.name('Achternaam'))];
   }
 
   getDate() {
-    return element(by.name('serDate'));
+    return element(by.name('date'));
   }
 
   getPrice() {
-    return [element(by.name('bigNum')), element(by.name('smallNum'))];
+    return element(by.name('amount'));
   }
 
   getEmpMessage() {
     return element(by.name('empMessage'));
+  }
+
+  getFiles() {
+    return element(by.name('uploadfiles'));
   }
 
   getForm() {

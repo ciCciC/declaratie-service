@@ -11,6 +11,11 @@
 
 <div class="mat-dialog-content" *ngIf="declaration">
 
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
   <mat-form-field class="dec-full-width" appearance="outline">
     <mat-label>Omschrijving</mat-label>
     <input matInput value="{{declaration.description}}" disabled>
@@ -48,7 +53,7 @@
     <input matInput value="{{declaration.empComment}}" disabled>
   </mat-form-field>
 
-  <div *ngIf="empStatus">
+  <div *ngIf="declaration.manComment.length > 1">
     <mat-form-field class="dec-full-width">
       <mat-label>Manager bericht</mat-label>
       <input matInput value="{{declaration.manComment}}" disabled>
@@ -78,17 +83,19 @@
   </table>
 </div>
 
-<table *ngIf="processStatus" class="dec-full-width" cellspacing="0">
-  <tr>
-    <td>
-      <button mat-raised-button dec-button-row class="myDelete" (click)="toDelete()">
-        <mat-icon matTooltip="Verwijder">remove_circle_outline</mat-icon>
-      </button>
-    </td>
-    <td>
-      <button mat-raised-button dec-button-row class="myEdit" (click)="toEdit()">
-        <mat-icon matTooltip="Wijzig">edit</mat-icon>
-      </button>
-    </td>
-  </tr>
-</table>
+<ng-container *ngIf="processStatus">
+  <table class="dec-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <button mat-raised-button dec-button-row class="myDelete" (click)="toDelete()">
+          <mat-icon matTooltip="Verwijder">remove_circle_outline</mat-icon>
+        </button>
+      </td>
+      <td>
+        <button mat-raised-button dec-button-row class="myEdit" (click)="toEdit()">
+          <mat-icon matTooltip="Wijzig">edit</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+</ng-container>

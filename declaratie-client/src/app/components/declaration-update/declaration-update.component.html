@@ -1,13 +1,22 @@
-<div mat-dialog-actions align="end">
-  <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
-</div>
-
-<h1 mat-dialog-title>Wijzigen</h1>
+<table class="dec-full-width" cellspacing="0">
+  <tr>
+    <td>
+      <h1 mat-dialog-title>Wijzigen</h1>
+    </td>
+    <td align="end">
+      <mat-icon class="myClose" (click)="close()" matTooltip="sluit dit scherm">close</mat-icon>
+    </td>
+  </tr>
+</table>
 
 <div class="mat-dialog-content" *ngIf="declaration">
 
-  <form name="declarationForm" [formGroup]="updateForm"
-        (ngSubmit)="toSave(updateForm.value)" class="declaration-container">
+  <div class="loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <form name="declarationForm" [formGroup]="updateForm" (ngSubmit)="toSave(updateForm.value)" class="declaration-container">
 
     <mat-form-field class="dec-full-width" appearance="outline">
       <mat-label>Omschrijving</mat-label>
@@ -45,6 +54,29 @@
       <mat-hint align="begin" *ngIf="euro.value < 0">Vul een positief getal in</mat-hint>
     </mat-form-field>
 
+    <table class="dec-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="dec-full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <input matInput name="currentStatus" formControlName="currentStatus">
+          </mat-form-field>
+        </td>
+        <td>
+          <ng-container *ngIf="!empStatus">
+            <mat-form-field>
+              <mat-label>Keuren</mat-label>
+              <mat-select name="changeStatus" formControlName="changeStatus">
+                <mat-option *ngFor="let status of statusList" [value]="status" (click)="changeStatus(status)">
+                  {{status}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+        </td>
+      </tr>
+    </table>
+
     <mat-form-field class="dec-full-width">
       <mat-label>Medewerker bericht (optioneel)</mat-label>
       <input formControlName="empMessage" matInput id="empMessage"
@@ -59,9 +91,11 @@
             <div *ngIf="!(updateForm.controls.manMessage.invalid && updateForm.controls.manMessage.errors.lets_be_friends); else elseAction"></div>
     </mat-form-field>
 
-    <div>
-      <app-declarationfile-upload [dataStore]="declarationFiles" (uploaded)="onUploadedFiles($event)"></app-declarationfile-upload>
-    </div>
+    <ng-container *ngIf="empStatus">
+      <div>
+        <app-declarationfile-upload [dataStore]="declarationFiles" (uploaded)="onUploadedFiles($event)"></app-declarationfile-upload>
+      </div>
+    </ng-container>
 
     <div>
       <button mat-raised-button dec-button-row [disabled]="!updateForm.valid" color="primary">Opslaan</button>

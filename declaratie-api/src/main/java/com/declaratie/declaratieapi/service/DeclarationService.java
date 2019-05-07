@@ -5,6 +5,8 @@ import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.exceptionHandler.*;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import com.declaratie.declaratieapi.model.EmployeeModel;
+import com.declaratie.declaratieapi.util.StateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -32,12 +33,12 @@ public class DeclarationService {
     public DeclarationModel create(DeclarationModel declarationModel) {
 
         if(declarationModel == null)
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
 
         try {
             return new DeclarationModel(this.declarationRepository.save(declarationModel.toDeclaration()));
         }catch (TransactionSystemException ex) {
-            ApiError apiError = RestExceptionHandler.handleBadRequest(ex);
+            ApiError apiError = RestExceptionHandler.handleException(ex);
             throw new ResponseStatusException(apiError.getHttpStatus(), apiError.getMessage());
         }
     }
@@ -57,10 +58,12 @@ public class DeclarationService {
 
         Declaration toReturn = toRead.get();
         toReturn.getFiles();
+
         return new DeclarationModel(toReturn);
     }
 
-    public DeclarationModel update(Long id, DeclarationModel declarationModel) {
+    public DeclarationModel update(Long id, DeclarationModel declarationModel, EmployeeModel employeeModel) {
+        DeclarationModel toReturn = null;
 
         if(declarationModel == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Declaration should not be null.");
@@ -70,10 +73,39 @@ public class DeclarationService {
         if(!declarationExist.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, MessageFormat.format("Declaratie met id={0} niet gevonden", id));
 
+        Declaration toUpdate = declarationExist.get();
+
+        // Check if employee is true and state is allowed for the employee to change the declaration
+        if (employeeModel.getId() == toUpdate.getEmpId() && employeeModel.getId() != toUpdate.getManId() && StateUtils.empIsAllowed(toUpdate.getStatusEnum())) {
+            toReturn = this.update(id, declarationModel);
+        }
+        // Check if manager is true and state is allowed for the manager to change the declaration
+        else if (employeeModel.getId() == toUpdate.getManId() && StateUtils.manIsAllowed(toUpdate.getStatusEnum())) {
+            toReturn = this.update(id, declarationModel);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is ", toUpdate.getStatusEnum()));
+        }
+
+        return toReturn;
+    }
+
+    /***
+     * To update declaration
+     * @param id of declaration to update
+     * @param declarationModel the representative model
+     * @return representative model
+     */
+    public DeclarationModel update(Long id, DeclarationModel declarationModel) {
+
+        Optional<Declaration> declarationExist = this.declarationRepository.findById(id);
+
+        if(!declarationExist.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MessageFormat.format("Declaratie met id={0} niet gevonden", id));
+
         StateEnum currentState = declarationExist.get().getStatusEnum();
 
         if(currentState == StateEnum.INPROGRESS || currentState == StateEnum.APPROVED){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is ", currentState));
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, MessageFormat.format("Declaratie met id={0} is {1}", id, currentState));
         }
 
         try {
@@ -82,17 +114,40 @@ public class DeclarationService {
 
             return new DeclarationModel(this.declarationRepository.save(toUpdate));
         }catch (TransactionSystemException ex) {
-            ApiError apiError = RestExceptionHandler.handleBadRequest(ex);
+            ApiError apiError = RestExceptionHandler.handleException(ex);
             throw new ResponseStatusException(apiError.getHttpStatus(), apiError.getMessage());
         }
     }
 
     @Transactional
-    public List<DeclarationModel> getAll() {
-        List<Declaration> toReturn = this.declarationRepository.findAll();
+    public List<DeclarationModel> getAll(EmployeeModel employeeModel) {
+
+        List<Declaration> toReturn = null;
+
+        if (employeeModel.getId() == employeeModel.getManagerId())
+            toReturn = this.declarationRepository.getAllByManId(employeeModel.getId());
+        else
+            toReturn = this.declarationRepository.getAllByEmpId(employeeModel.getId());
 
         return Optional.ofNullable(toReturn).orElse(Collections.emptyList()).stream()
-                .map(DeclarationModel::new)
+                .map(data -> {
+                    DeclarationModel transformed = new DeclarationModel(data);
+                    transformed.setFiles(null);
+                    return transformed;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<DeclarationModel> getAll() {
+        List<Declaration> toReturn = this.declarationRepository.findAll(Sort.by("id").descending());
+
+        return Optional.ofNullable(toReturn).orElse(Collections.emptyList()).stream()
+                .map(data -> {
+                    DeclarationModel transformed = new DeclarationModel(data);
+                    transformed.setFiles(null);
+                    return transformed;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -100,11 +155,11 @@ public class DeclarationService {
         Sort sortFirst = Sort.by("id").descending();
 
         return this.declarationRepository.findAll(sortFirst).stream()
-                .map(DeclarationModel::new)
+                .map(data -> new DeclarationModel(data))
                 .collect(Collectors.toList());
 
 //        Sort sortFirst = Sort.by("id").descending();
-//
+
 //        return this.declarationRepository.findAll(sortFirst).subList(2, 4).stream()
 //                .map(DeclarationModel::new)
 //                .collect(Collectors.toList());
@@ -136,6 +191,26 @@ public class DeclarationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is in behandeling", id));
 
         this.declarationRepository.deleteById(id);
+    }
+
+    public void delete(Long id, EmployeeModel employeeModel) {
+
+        Optional<Declaration> declarationExist = this.declarationRepository.findById(id);
+
+        if(!declarationExist.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MessageFormat.format("Declaratie met id={0} niet gevonden", id));
+
+        Declaration declaration = declarationExist.get();
+
+        // Check if employee is true and state is allowed for the employee to delete the declaration
+        if(employeeModel.getId() == declaration.getEmpId() && StateUtils.empIsAllowed(declaration.getStatusEnum()))
+            this.declarationRepository.deleteById(id);
+
+        // Check if manager is true and state is allowed for the manager to delete the declaration
+        else if(employeeModel.getId() == declaration.getManId() && StateUtils.manIsAllowedToDelete(declaration.getStatusEnum()))
+            this.declarationRepository.deleteById(id);
+        else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is in behandeling", id));
     }
 
     public void deleteAll() {

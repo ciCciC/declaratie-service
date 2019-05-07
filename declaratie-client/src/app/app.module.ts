@@ -11,7 +11,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material/material.module';
 import {DeclarationTableComponent } from './components/declaration-table/declaration-table.component';
 
-import { DeclarationStepperComponent } from './components/declaration-stepper/declaration-stepper.component';
 import {DeclarationService} from './services/declaration/declaration.service';
 import {DeclarationCreateComponent} from './components/declaration-create/declaration-create.component';
 import { DeclarationViewComponent } from './components/declaration-view/declaration-view.component';
@@ -21,6 +20,7 @@ import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.
 import { DeclarationUpdateComponent } from './components/declaration-update/declaration-update.component';
 import { DeclarationfileUploadComponent } from './components/declarationfile-upload/declarationfile-upload.component';
 import { ImageDialogComponent } from './dialogs/image-dialog/image-dialog.component';
+import {AuthenticationService} from './services/authservice/authentication.service';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,7 +30,6 @@ import { ImageDialogComponent } from './dialogs/image-dialog/image-dialog.compon
     AppComponent,
     DeclarationTableComponent,
     DeclarationCreateComponent,
-    DeclarationStepperComponent,
     DeclarationViewComponent,
     ErrorDialogComponent,
     MessageDialogComponent,
@@ -49,7 +48,7 @@ import { ImageDialogComponent } from './dialogs/image-dialog/image-dialog.compon
   ],
   entryComponents: [DeclarationTableComponent, DeclarationViewComponent,
     ErrorDialogComponent, MessageDialogComponent, DeclarationUpdateComponent, ImageDialogComponent],
-  providers: [ErrorHandlerService, DeclarationService],
+  providers: [ErrorHandlerService, DeclarationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import javax.validation.ConstraintViolationException;
 
 public class RestExceptionHandler {
 
-    public static ApiError handleBadRequest(final RuntimeException ex) {
+    public static ApiError handleException(final RuntimeException ex) {
         Throwable cause = ((TransactionSystemException) ex).getRootCause();
         ApiError apiError = new ApiError();
 

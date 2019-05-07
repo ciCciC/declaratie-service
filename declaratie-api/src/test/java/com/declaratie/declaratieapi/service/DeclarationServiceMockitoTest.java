@@ -4,7 +4,9 @@ import com.declaratie.declaratieapi.dao.DeclarationRepository;
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.enums.StateEnum;
 
+import com.declaratie.declaratieapi.exceptionHandler.RestExceptionHandler;
 import com.declaratie.declaratieapi.model.DeclarationModel;
+import javassist.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +14,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.ConstraintViolationException;
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Stream;
@@ -176,19 +182,15 @@ public class DeclarationServiceMockitoTest {
 //        assertEquals(2, result.getEmpId().longValue());
 //    }
 
-
     @Test
-    public void A42_SR9_TG1_HetSysteemKanEenDeclaratieWijzigen() {
-        System.out.println("Test: A42_SR9_TG1_HetSysteemKanEenDeclaratieWijzigen");
-
+    public void US6_TG1_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Semantisch() {
         // Prepare
-        StateEnum currentState = StateEnum.SUBMITTED;
+        StateEnum currentState = StateEnum.REJECTED;
         Declaration declaratieDb = new Declaration("Food", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
         declaratieDb.setId(1L);
 
         DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
-        declarationModel.setDescription("Gasoline");
 
         Declaration toSave = declarationModel.toDeclaration();
         toSave.setId(declaratieDb.getId());
@@ -210,9 +212,7 @@ public class DeclarationServiceMockitoTest {
     }
 
     @Test
-    public void A42_SR9_TG2_HetSysteemKanEenDeclaratieWijzigen() {
-        System.out.println("Test: A42_SR9_TG2_HetSysteemKanEenDeclaratieWijzigen");
-
+    public void US6_TG2_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Semantisch() {
         // Prepare
         DeclarationModel declarationModel = null;
 
@@ -222,15 +222,12 @@ public class DeclarationServiceMockitoTest {
             DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
         }catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            System.out.println("Declaratie kan niet gewijzigd worden");
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 
     @Test
-    public void A42_SR9_TG4_HetSysteemKanEenDeclaratieWijzigen() {
-        System.out.println("Test: A42_SR9_TG4_HetSysteemKanEenDeclaratieWijzigen");
-
+    public void US6_TG4_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Semantisch() {
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration declaratieDb = new Declaration("Food", new Date(), 50,
@@ -238,13 +235,14 @@ public class DeclarationServiceMockitoTest {
         declaratieDb.setId(1L);
 
         DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
-        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
 
         when(this.declarationRepository.findById(1L)).thenReturn(Optional.empty());
 
         // Call
         // Assert
-
         try {
             DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
         }catch (ResponseStatusException ex) {
@@ -254,17 +252,14 @@ public class DeclarationServiceMockitoTest {
     }
 
     @Test
-    public void A42_SR9_TG6_HetSysteemKanEenDeclaratieWijzigen() {
-        System.out.println("Test: A42_SR9_TG6_HetSysteemKanEenDeclaratieWijzigen");
-
+    public void US6_TG6_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Semantisch() {
         // Prepare
-        StateEnum currentState = StateEnum.REJECTED;
+        StateEnum currentState = StateEnum.SUBMITTED;
         Declaration declaratieDb = new Declaration("Food", new Date(), 50,
                 "Employee message", "Manager message", currentState, 1);
         declaratieDb.setId(1L);
 
         DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
-        declarationModel.setDescription("Gasoline");
 
         Declaration toSave = declarationModel.toDeclaration();
         toSave.setId(declaratieDb.getId());
@@ -279,15 +274,14 @@ public class DeclarationServiceMockitoTest {
             // Assert
             Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
             System.out.println("Declaratie is gewijzigd");
+
         } catch (ResponseStatusException e) {
             System.out.println(e.getReason());
         }
     }
 
-    @Test(expected = ResponseStatusException.class)
-    public void A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen() {
-        System.out.println("Test: A42_SR9_TG7_HetSysteemKanEenDeclaratieWijzigen");
-
+    @Test
+    public void US6_TG7_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Semantisch() {
         // Prepare
         StateEnum currentState = StateEnum.INPROGRESS;
         Declaration declaratieDb = new Declaration("Food", new Date(), 50,
@@ -295,19 +289,26 @@ public class DeclarationServiceMockitoTest {
         declaratieDb.setId(1L);
 
         DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
-        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
 
         when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
 
-        // Call
-        // Assert
-        DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+        }
     }
 
-    @Test(expected = ResponseStatusException.class)
-    public void A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen() {
-        System.out.println("Test: A42_SR9_TG8_HetSysteemKanEenDeclaratieWijzigen");
-
+    @Test
+    public void US6_TG8_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Semantisch() {
         // Prepare
         StateEnum currentState = StateEnum.APPROVED;
         Declaration declaratieDb = new Declaration("Food", new Date(), 50,
@@ -315,13 +316,174 @@ public class DeclarationServiceMockitoTest {
         declaratieDb.setId(1L);
 
         DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
-        declarationModel.setDescription("Gasoline");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
 
         when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
 
-        // Call
-        // Assert
-        DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Test
+    public void US6_TG1_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Syntactisch() {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(any(Declaration.class))).thenReturn(toSave);
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+            // Assert
+            Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Test
+    public void US6_TG2_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Syntactisch() {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setAmount(-10L);
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(toSave))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bedrag must be greater than or equal to 0,01."));
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            // Assert
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Test
+    public void US6_TG4_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Syntactisch() {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 110000;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setAmount(-10L);
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(toSave))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bedrag must be smaller than or equal to 100000."));
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            // Assert
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Test
+    public void US6_TG7_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Syntactisch() {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+
+        for (int i = 0; i < 270; i++) {
+            declarationModel.setDescription(declarationModel.getDescription()+""+1);
+        }
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(toSave))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Beschrijving should be between 1 and 255 characters."));
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            // Assert
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Test
+    public void US6_TG9_MedewerkerKanEenAfgekeurdeOfIngediendeDecaratieWijzigen_Syntactisch() {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration declaratieDb = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        declaratieDb.setId(1L);
+
+        DeclarationModel declarationModel = new DeclarationModel(declaratieDb);
+        declarationModel.setDescription("");
+
+        Declaration toSave = declarationModel.toDeclaration();
+        toSave.setId(declaratieDb.getId());
+
+        when(this.declarationRepository.findById(1L)).thenReturn(Optional.of(declaratieDb));
+        when(this.declarationRepository.save(toSave))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Beschrijving should be between 1 and 255 characters."));
+
+        try {
+            // Call
+            DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getReason());
+            // Assert
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /***
@@ -339,7 +501,7 @@ public class DeclarationServiceMockitoTest {
             declarationsList.add(declaration);
         });
 
-        when(declarationRepository.findAll()).thenReturn(declarationsList);
+        when(declarationRepository.findAll(Sort.by("id").descending())).thenReturn(declarationsList);
 
         List<DeclarationModel> result = null;
 

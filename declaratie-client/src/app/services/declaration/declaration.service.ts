@@ -6,6 +6,7 @@ import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {environment} from '../../../environments/environment';
 import {DeclarationFile} from '../../models/DeclarationFile';
 import {map} from 'rxjs/operators';
+import {EMPLOYEE} from '../../mocks/mock-employee';
 
 @Injectable({
   providedIn: 'root'
@@ -14,50 +15,27 @@ export class DeclarationService {
 
   constructor(private http: HttpClient) { }
 
-  addDeclaration(toSave: IDeclaration): Observable<IDeclaration> {
-    toSave.amount = null;
-    return this.http.post<IDeclaration>(environment.urlAddress + '/', toSave, this.generateHeaders());
-  }
-
-  addTest(toSave: Declaration, files: DeclarationFile[]): Observable<IDeclaration> {
+  addDeclaration(toSave: Declaration, files: DeclarationFile[]): Observable<IDeclaration> {
 
     const dataToPost = new FormData();
     dataToPost.append('declaration', JSON.stringify(toSave));
 
     for (const file of files) {
-      dataToPost.append('declarationfiles', file.file, file.filename);
+      dataToPost.append('declarationfiles', file.file, file.filename + '#noid');
+      console.log(file.filename + '#' + (file.id === undefined ? 'undefined' : file.id));
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/addDeclaration', dataToPost);
   }
 
-  // getDeclaration(id: number): Observable<IDeclaration> {
-  //   return this.http.get<IDeclaration>(environment.urlAddress + '/read/' + id);
-  // }
-
   getDeclaration(id: number): Observable<IDeclaration> {
     return this.http.get<IDeclaration>(environment.urlAddress + '/' + id).pipe(
       map(declaration => {
-        const fileAtt: DeclarationFile[] = [];
+        const declarationFiles: DeclarationFile[] = [];
         declaration.files.map(data => {
-          const aa = new DeclarationFile();
-          const splitted = data.filename.split('.');
-          let filetype = splitted[splitted.length - 1];
-          if (filetype === 'pdf') {
-            filetype = 'application/' + filetype;
-          } else {
-            filetype = 'image/' + filetype;
-          }
-
-          const blob = this.dataURItoBlob(data.file, filetype);
-          aa.filename = data.filename;
-          aa.file = new File([blob], data.filename, { type: filetype });
-          aa.id = data.id;
-          aa.fileUrl = '';
-          fileAtt.push(aa);
-
+          declarationFiles.push(this.transformRetrievedFiles(data));
         });
-        declaration.files = fileAtt;
+        declaration.files = declarationFiles;
         return declaration;
       })
     );
@@ -68,7 +46,7 @@ export class DeclarationService {
     dataToPost.append('declaration', JSON.stringify(toUpdate));
 
     for (const file of declarationFiles) {
-      dataToPost.append('declarationfiles', file.file, file.filename + '-' + file.id);
+      dataToPost.append('declarationfiles', file.file, file.filename + '#' + (file.id === undefined ? 'noid' : file.id));
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/updateDeclaration/' + toUpdate.id, dataToPost);
@@ -78,40 +56,32 @@ export class DeclarationService {
     return this.http.delete<any>(environment.urlAddress + '/' + id);
   }
 
-  getChunkDeclarations(from: number, pagesize: number): Observable<IDeclaration[]> {
-
-    return this.http.get<IDeclaration[]>(environment.urlAddress + '/paging/' + from + '/' + pagesize);
-  }
+  // getChunkDeclarations(from: number, pagesize: number): Observable<IDeclaration[]> {
+  //   return this.http.get<IDeclaration[]>(environment.urlAddress + '/paging/' + from + '/' + pagesize);
+  // }
 
   getDeclarations(): Observable<IDeclaration[]> {
-    return this.http.get<IDeclaration[]>(environment.urlAddress).pipe(
-      map( values => {
-        return values.map(declaration => {
-          const fileAtt: DeclarationFile[] = [];
+    const toReturn = this.http.get<IDeclaration[]>(environment.urlAddress + '/testgetall', {headers: this.generateHeaders()});
 
-          declaration.files.map(data => {
-            const aa = new DeclarationFile();
-            const splitted = data.filename.split('.');
-            let filetype = splitted[splitted.length - 1];
-            if (filetype === 'pdf') {
-              filetype = 'application/' + filetype;
-            } else {
-              filetype = 'image/' + filetype;
-            }
+    // return this.http.get<IDeclaration[]>(environment.urlAddress + '/', {headers: this.generateHeaders()});
+    return toReturn;
+  }
 
-            const blob = this.dataURItoBlob(data.file, filetype);
-            aa.filename = data.filename;
-            aa.file = new File([blob], data.filename, { type: filetype });
-            aa.id = data.id;
-            aa.fileUrl = '';
-            fileAtt.push(aa);
-
-          });
-          declaration.files = fileAtt;
-          return declaration;
-        });
-      })
-    );
+  private transformRetrievedFiles(data): DeclarationFile {
+    const declarationFile = new DeclarationFile();
+    const splitted = data.filename.split('.');
+    let filetype = splitted[splitted.length - 1];
+    if (filetype === 'pdf') {
+      filetype = 'application/' + filetype;
+    } else {
+      filetype = 'image/' + filetype;
+    }
+    const blob = this.dataURItoBlob(data.file, filetype);
+    declarationFile.filename = data.filename;
+    declarationFile.file = new File([blob], data.filename, { type: filetype });
+    declarationFile.id = data.id;
+    declarationFile.fileUrl = '';
+    return declarationFile;
   }
 
   private dataURItoBlob(dataURI, filetype) {
@@ -121,19 +91,13 @@ export class DeclarationService {
     for (let i = 0; i < byteString.length; i++) {
       int8Array[i] = byteString.charCodeAt(i);
     }
-    const blob = new Blob([int8Array], { type: filetype });
-    return blob;
+    return new Blob([int8Array], { type: filetype });
   }
 
   private generateHeaders() {
-    return {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
-    };
+    const generated = new HttpHeaders({'Content-Type': 'application/json', 'user': JSON.stringify(EMPLOYEE[0])});
+    return generated;
+
+    // return new HttpHeaders({'Content-Type': 'application/json'});
   }
-
-  // getDeclarations(): Observable<IDeclaration[]> {
-  //   return of(DECLARATIONS);
-  // }
-
-
 }

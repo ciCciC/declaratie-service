@@ -1,7 +1,5 @@
 package com.declaratie.declaratieapi.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class EmployeeModel {
@@ -9,9 +7,8 @@ public class EmployeeModel {
     private long id;
     private String fname;
     private String lname;
-    private String bankAccountNumber;
     private String role;
-    private List<DeclarationModel> declarationModels;
+    private long managerId;
 
     /***
      *
@@ -24,15 +21,14 @@ public class EmployeeModel {
      * @param id employee id
      * @param fname firstname employee
      * @param lname lastname employee
-     * @param bankAccountNumber bankAccountNumber of employee
      * @param role manager or employee
      */
-    public EmployeeModel(long id, String fname, String lname, String bankAccountNumber, String role) {
+    public EmployeeModel(long id, long managerId, String fname, String lname, String role) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
-        this.bankAccountNumber = bankAccountNumber;
         this.role = role;
+        this.managerId = managerId;
     }
 
     /***
@@ -84,22 +80,6 @@ public class EmployeeModel {
     }
 
     /***
-     * Gets the bankaccountnumber
-     * @return String for getting the bankaccountnumber
-     */
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
-
-    /***
-     * Sets the bankaccountnumber
-     * @param bankAccountNumber for setting the bankaccountnumber
-     */
-    public void setBankAccountNumber(String bankAccountNumber) {
-        this.bankAccountNumber = bankAccountNumber;
-    }
-
-    /***
      * Gets the employee function
      * @return roleEnum for getting the employee function
      */
@@ -115,18 +95,12 @@ public class EmployeeModel {
         this.role = role;
     }
 
-    public void addDeclarationModel(DeclarationModel declarationModel){
-        if(!this.declarationModels.contains(declarationModel)){
-            this.declarationModels.add(declarationModel);
-        }
+    public long getManagerId() {
+        return managerId;
     }
 
-    public List<DeclarationModel> getDeclarationModels() {
-        return declarationModels;
-    }
-
-    public void setDeclarationModels(ArrayList<DeclarationModel> declarationModels) {
-        this.declarationModels = declarationModels;
+    public void setManagerId(long managerId) {
+        this.managerId = managerId;
     }
 
     @Override
@@ -137,14 +111,12 @@ public class EmployeeModel {
         return id == that.id &&
                 fname.equals(that.fname) &&
                 lname.equals(that.lname) &&
-                bankAccountNumber.equals(that.bankAccountNumber) &&
-                role.equals(that.role) &&
-                declarationModels.equals(that.declarationModels);
+                role.equals(that.role) && managerId == that.managerId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fname, lname, bankAccountNumber, role, declarationModels);
+        return Objects.hash(id, fname, lname, role, managerId);
     }
 
     @Override
@@ -153,8 +125,8 @@ public class EmployeeModel {
                 "id=" + id +
                 ", fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
-                ", bankAccountNumber='" + bankAccountNumber + '\'' +
-                ", role=" + role +
+                ", role='" + role + '\'' +
+                ", managerId=" + managerId +
                 '}';
     }
 }
