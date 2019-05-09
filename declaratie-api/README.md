@@ -6,11 +6,11 @@ Dit komt doordat de blob bestanden worden opgeslagen in tabel "pg_largeobject". 
 <h3><b>Work around</b></h3>
 <p>Om dit probleem te kunnen oplossen moet bij het aanmaken van de database de volgende RULES worden aangemaakt en uitgevoerd:</p>
 
-<p>Om te kunnen verwijderen<p>
+<b>verwijderen</b>
 - CREATE RULE dropdeclarationfile AS ON DELETE TO declaration_file
     DO SELECT lo_unlink( OLD.file );
 
-<p>Om te kunnen verwijderen</p>
+<b>updaten</b>
 - CREATE RULE repdeclarationfile AS ON UPDATE TO declaration_file
     DO SELECT lo_unlink( OLD.file )
        where OLD.file <> NEW.file;
