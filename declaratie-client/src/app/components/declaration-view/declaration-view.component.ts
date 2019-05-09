@@ -11,6 +11,7 @@ import {DeclarationService} from '../../services/declaration/declaration.service
 import {AuthenticationService} from '../../services/authservice/authentication.service';
 import {StateUtils} from '../../utils/StateUtils';
 import {RoleEnum} from '../../models/RoleEnum';
+import {NotificationService} from '../../services/notificationService/notification.service';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class DeclarationViewComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationViewComponent>,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
-              private declarationService: DeclarationService, private authenticationService: AuthenticationService ) {
+              private declarationService: DeclarationService, private authenticationService: AuthenticationService) {
     this.declarationId = data.id;
     authenticationService.checkUser(data.id).subscribe(value => {
       this.empStatus = value.role;

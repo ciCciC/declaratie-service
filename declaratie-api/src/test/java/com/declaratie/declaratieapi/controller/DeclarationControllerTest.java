@@ -9,6 +9,7 @@ import com.declaratie.declaratieapi.service.DeclarationService;
 import com.declaratie.declaratieapi.util.H2TestJpaConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,11 +48,221 @@ public class DeclarationControllerTest {
 
     private static String endpoint = "/api/declarations";
 
+    @Before
+    public void setUp() throws Exception {
+        declarationService.deleteAll();
+    }
+
+    @Test
+    public void US7_TG1_DeMedewerkerKanEenDeclaratieIndienen_Semantisch() throws JsonProcessingException {
+        // Prepare
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration("Food", new Date(), 50,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        String toCreateJson = new ObjectMapper().writeValueAsString(new DeclarationModel(toCreate));
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toCreateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/addDeclaration", requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    }
+
+    @Test
+    public void US7_TG2_DeMedewerkerKanEenDeclaratieIndienen_Semantisch() {
+        try {
+            // Prepare
+            // Do call
+            declarationService.create(null);
+        } catch (ResponseStatusException ex) {
+            System.out.println(ex.getMessage());
+            // Assert
+            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Test
+    public void US7_TG1_DeMedewerkerKanEenDeclaratieIndienen_Syntactisch() throws JsonProcessingException {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        String toCreateJson = new ObjectMapper().writeValueAsString(new DeclarationModel(toCreate));
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toCreateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/addDeclaration", requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    }
+
+    @Test
+    public void US7_TG2_DeMedewerkerKanEenDeclaratieIndienen_Syntactisch() throws JsonProcessingException {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = -10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        String toCreateJson = new ObjectMapper().writeValueAsString(new DeclarationModel(toCreate));
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toCreateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/addDeclaration", requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US7_TG4_DeMedewerkerKanEenDeclaratieIndienen_Syntactisch() throws JsonProcessingException {
+        // Prepare
+        String beschrijving = "Food";
+        double bedrag = 110000;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        String toCreateJson = new ObjectMapper().writeValueAsString(new DeclarationModel(toCreate));
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toCreateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/addDeclaration", requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US7_TG7_DeMedewerkerKanEenDeclaratieIndienen_Syntactisch() throws JsonProcessingException {
+        // Prepare
+        String beschrijving = "Food";
+
+        for (int i = 0; i < 270; i++) {
+            beschrijving += "" + 1;
+        }
+
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        String toCreateJson = new ObjectMapper().writeValueAsString(new DeclarationModel(toCreate));
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toCreateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/addDeclaration", requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void US7_TG9_DeMedewerkerKanEenDeclaratieIndienen_Syntactisch() throws JsonProcessingException {
+        // Prepare
+        String beschrijving = "";
+        double bedrag = 10;
+        StateEnum currentState = StateEnum.SUBMITTED;
+        Declaration toCreate = new Declaration(beschrijving, new Date(), bedrag,
+                "Employee message", "Manager message", currentState, 1);
+        toCreate.setManId(15);
+
+        String toCreateJson = new ObjectMapper().writeValueAsString(new DeclarationModel(toCreate));
+
+        File fileToSave = new File("./testimg/hobbit.jpg");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("declaration", toCreateJson);
+        body.add("declarationfiles", fileToSave);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.postForEntity(
+                endpoint+"/addDeclaration", requestEntity,
+                DeclarationModel.class);
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
     @Test
     public void A22_SR13_GetAllDeclarationsEndpoint() {
-
-        declarationService.deleteAll();
-
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
@@ -73,9 +285,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void A32_SR8_ReadDeclarationEndpoint() {
-
-        declarationService.deleteAll();
-
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
@@ -112,9 +321,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG1_UpdateDeclarationEndpoint_Semantisch() throws IOException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.REJECTED;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
@@ -152,9 +358,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG2_UpdateDeclarationEndpoint_Semantisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
@@ -191,9 +394,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG4_UpdateDeclarationEndpoint_Semantisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
@@ -230,9 +430,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG7_UpdateDeclarationEndpoint_Semantisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.INPROGRESS;
         Declaration toCreate = new Declaration("Food", new Date(), 50,
@@ -269,9 +466,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG1_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
@@ -309,9 +503,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG2_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
@@ -349,9 +540,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG4_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
@@ -389,9 +577,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG7_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
@@ -431,9 +616,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US6_TG9_UpdateDeclarationEndpoint_Syntactisch() throws JsonProcessingException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
@@ -470,9 +652,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US1_EenBestandUploaden() throws IOException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,
@@ -496,9 +675,6 @@ public class DeclarationControllerTest {
 
     @Test
     public void US3_EenGeuploadBestandVerwijderen() throws IOException {
-
-        declarationService.deleteAll();
-
         // Prepare
         StateEnum currentState = StateEnum.SUBMITTED;
         Declaration toCreate = new Declaration("Gasoline", new Date(), 50,

@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
 import {RestEnum} from '../../models/RestEnum';
 import {MessageCreator} from '../../models/MessageCreator';
+import {NotificationService} from '../../services/notificationService/notification.service';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -31,7 +32,7 @@ export class DeclarationTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService,
-              private dialog: MatDialog, private router: Router) {
+              private dialog: MatDialog, private router: Router, private notificationService: NotificationService) {
   }
 
   getDeclarationsList() {
@@ -55,7 +56,7 @@ export class DeclarationTableComponent implements OnInit {
   createDeclaration() {
     this.router.navigateByUrl('/declarations/create');
     // this.router.navigateByUrl('/declarationcreate');
-    // this.router.navigate(['/declarationcreate']);
+    // this.router.navigate(['/declarationcreate']);w
   }
 
   // TODO
@@ -116,6 +117,7 @@ export class DeclarationTableComponent implements OnInit {
 
   private deleteDeclaration(declaration: Declaration) {
     this.declarationService.deleteDeclaration(declaration.id).subscribe(data => {
+      this.notificationService.deleteConfirmation();
       this.getDeclarationsList();
     }, (error) => {
       this.errorService.handleError(error);

@@ -35,9 +35,8 @@ public class DeclaratieApiApplicationIntegrationTests {
 	 * Hier wordt de integratie test uitgevoerd.
 	 * Voor de testen wordt gebruik gemaakt van H2 database.
 	 *
-	 * A = verwijst naar de acceptatie ID in het testrapport
 	 * US = User story als testbasis
-	 * TG = verwijst naar het testgeval in het testrapport
+	 * TG = verwijst naar het testgeval van de testbasis in het testrapport
 	 */
 
 	/***

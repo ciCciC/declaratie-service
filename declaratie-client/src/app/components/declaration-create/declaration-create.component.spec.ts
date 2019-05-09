@@ -38,22 +38,89 @@ describe(DeclarationCreateComponent.name, () => {
     expect(component).toBeTruthy();
   });
 
-  it('form should be valid', () => {
-    component.createForm.get('description').setValue('This is my description');
-    component.processDate = new Date();
-    component.createForm.get('amount').setValue(10);
-    component.createForm.get('empMessage').setValue('I like beer');
-    component.createForm.get('files').setValue(1);
+  describe('US7_MedewerkerKanEenDeclaratieIndienen', () => {
 
-    expect(component.createForm.valid).toEqual(true);
-    expect(component.createForm.get('description').value).toEqual('This is my description');
-  });
+    it('TG1', () => {
+      // Prepare
+      component.createForm.get('description').setValue('Food');
+      component.processDate = new Date();
+      component.createForm.get('amount').setValue(50);
+      component.createForm.get('empMessage').setValue('Employee message');
+      component.createForm.get('files').setValue(1);
 
-  it('form should be invalid', () => {
-    component.createForm.get('description').setValue('');
-    component.createForm.get('amount').setValue(-10);
+      // Assert
+      expect(component.createForm.valid).toEqual(true);
+    });
 
-    expect(component.createForm.valid).toEqual(false);
-    expect(component.createForm.get('description').value).toEqual('');
+    it('TG2', () => {
+      // Prepare
+      let beschrijving = 'Food';
+
+      for (let i = 0; i < 260; i++) {
+        beschrijving += 'z';
+      }
+
+      component.createForm.get('description').setValue(beschrijving);
+      component.processDate = new Date();
+      component.createForm.get('amount').setValue(50);
+      component.createForm.get('empMessage').setValue('Employee message');
+      component.createForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.createForm.valid).toEqual(false);
+    });
+
+    it('TG4', () => {
+      // Prepare
+      component.createForm.get('description').setValue('Food');
+      component.processDate = new Date();
+      component.createForm.get('amount').setValue(-50);
+      component.createForm.get('empMessage').setValue('Employee message');
+      component.createForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.createForm.valid).toEqual(false);
+    });
+
+    it('TG6', () => {
+      // Prepare
+      let empMessage = 'empMessage';
+
+      for (let i = 0; i < 260; i++) {
+        empMessage += 'z';
+      }
+      component.createForm.get('description').setValue('Food');
+      component.processDate = new Date();
+      component.createForm.get('amount').setValue(50);
+      component.createForm.get('empMessage').setValue(empMessage);
+      component.createForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.createForm.valid).toEqual(false);
+    });
+
+    it('TG9', () => {
+      // Prepare
+      component.createForm.get('description').setValue('');
+      component.processDate = new Date();
+      component.createForm.get('amount').setValue(50);
+      component.createForm.get('empMessage').setValue('Employee');
+      component.createForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.createForm.valid).toEqual(false);
+    });
+
+    it('TG10', () => {
+      // Prepare
+      component.createForm.get('description').setValue('Food');
+      component.processDate = new Date();
+      component.createForm.get('amount').setValue(150000);
+      component.createForm.get('empMessage').setValue('Employee');
+      component.createForm.get('files').setValue(1);
+
+      // Assert
+      expect(component.createForm.valid).toEqual(false);
+    });
   });
 });

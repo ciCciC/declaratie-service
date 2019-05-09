@@ -12,6 +12,7 @@ import {MessageCreator} from '../../models/MessageCreator';
 import {DeclarationFile} from '../../models/DeclarationFile';
 import {AuthenticationService} from '../../services/authservice/authentication.service';
 import {RoleEnum} from '../../models/RoleEnum';
+import {NotificationService} from '../../services/notificationService/notification.service';
 
 @Component({
   selector: 'app-declaration-update',
@@ -37,7 +38,8 @@ export class DeclarationUpdateComponent implements OnInit {
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationUpdateComponent>,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
               private declarationService: DeclarationService, private fb: FormBuilder,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private notificationService: NotificationService) {
     this.initForm();
     this.declarationId = data.id;
     this.declaration = data;
@@ -176,7 +178,7 @@ export class DeclarationUpdateComponent implements OnInit {
     };
 
     this.declarationService.updateDeclaration(declaration, this.declarationFiles).subscribe(data => {
-      // Todo met succes gewijzigd !!
+      this.notificationService.updateConfirmation();
     }, (error) => {
       this.errorService.handleError(error);
     });

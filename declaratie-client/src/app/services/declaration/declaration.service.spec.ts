@@ -31,7 +31,7 @@ describe(DeclarationService.name, () => {
 
   describe('Create call', () => {
 
-    it('A1_SR11_shouldAddDeclaration', () => {
+    it('US7_shouldAddDeclaration', () => {
       declarationService = new DeclarationService(undefined);
 
       let response;
@@ -45,7 +45,7 @@ describe(DeclarationService.name, () => {
       expect(response).toEqual(DECLARATIONS[0]);
     });
 
-    it('A1_SR11_shouldCallAddDeclaration', () => {
+    it('US7_shouldCallAddDeclaration', () => {
       // Arrange
       declarationService = new DeclarationService(undefined);
 

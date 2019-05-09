@@ -17,7 +17,6 @@ import {of} from 'rxjs';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
 
 describe(DeclarationTableComponent.name, () => {
 
@@ -71,7 +70,7 @@ describe(DeclarationTableComponent.name, () => {
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
       errorHandlerService as unknown as ErrorHandlerService,
-      matDialog as unknown as MatDialog, undefined);
+      matDialog as unknown as MatDialog, undefined, undefined);
 
     collaborator.getDeclarations = () => of(DECLARATIONS);
 
@@ -100,7 +99,7 @@ describe(DeclarationTableComponent.name, () => {
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
       errorHandlerService as unknown as ErrorHandlerService,
-      matDialog as unknown as MatDialog, undefined);
+      matDialog as unknown as MatDialog, undefined, undefined);
 
     const spy = spyOn(container, 'getDeclarationsList');
 

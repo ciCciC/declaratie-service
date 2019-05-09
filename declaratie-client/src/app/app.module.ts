@@ -21,6 +21,7 @@ import { DeclarationUpdateComponent } from './components/declaration-update/decl
 import { DeclarationfileUploadComponent } from './components/declarationfile-upload/declarationfile-upload.component';
 import { ImageDialogComponent } from './dialogs/image-dialog/image-dialog.component';
 import {AuthenticationService} from './services/authservice/authentication.service';
+import { NotificationDialogComponent } from './dialogs/notification-dialog/notification-dialog.component';
 
 // Dit is om de animatie uit te zetten
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -35,7 +36,8 @@ import {AuthenticationService} from './services/authservice/authentication.servi
     MessageDialogComponent,
     DeclarationUpdateComponent,
     DeclarationfileUploadComponent,
-    ImageDialogComponent
+    ImageDialogComponent,
+    NotificationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,8 +48,8 @@ import {AuthenticationService} from './services/authservice/authentication.servi
     BrowserAnimationsModule,
     MaterialModule,
   ],
-  entryComponents: [DeclarationTableComponent, DeclarationViewComponent,
-    ErrorDialogComponent, MessageDialogComponent, DeclarationUpdateComponent, ImageDialogComponent],
+  entryComponents: [DeclarationTableComponent, DeclarationViewComponent, ErrorDialogComponent,
+    MessageDialogComponent, DeclarationUpdateComponent, ImageDialogComponent, NotificationDialogComponent],
   providers: [ErrorHandlerService, DeclarationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
