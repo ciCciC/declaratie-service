@@ -26,8 +26,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -262,13 +264,16 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A22_SR13_GetAllDeclarationsEndpoint() {
+    public void US10_DeclaratiesLijstOphalenEndpoint() {
         // Prepare
-        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
-                "Employee", "Manager", StateEnum.SUBMITTED, 12);
-        toCreate.setManId(15);
+        Stream.of("Benzine", "Eten", "Boek", "Administratie", "Computer").forEach(description -> {
+            Declaration declaration = new Declaration(description, new Date(), 120,
+                    "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
+            declaration.setManId(15);
+            declarationService.create(new DeclarationModel(declaration));
+        });
 
-        declarationService.create(new DeclarationModel(toCreate));
+        int expected = 5;
 
         // Call
         ResponseEntity<List<DeclarationModel>> declaration = testRestTemplate
@@ -279,8 +284,7 @@ public class DeclarationControllerTest {
         });
 
         // Assert
-        assertThat(declaration.getBody()).size().isEqualTo(1);
-
+        assertThat(declaration.getBody()).size().isEqualTo(expected);
     }
 
     @Test

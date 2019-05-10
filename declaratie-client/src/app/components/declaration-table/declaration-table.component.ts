@@ -41,6 +41,10 @@ export class DeclarationTableComponent implements OnInit {
     }, (error) => {
       this.errorService.handleError(error);
     });
+
+    // this.declarationService.getMocks().subscribe(data => {
+    //   this.dataSource.data = data;
+    // });
   }
 
   checkStatus(statusToCheck: StatusEnum) {
@@ -61,26 +65,27 @@ export class DeclarationTableComponent implements OnInit {
 
   // TODO
   pageClick(event: PageEvent) {
-    console.log(event.previousPageIndex);
-    console.log(event.pageSize);
-    console.log(event.pageIndex);
-
-    const startVanaf = event.pageIndex * event.pageSize;
-    console.log('Start vanaf [i]: ' + startVanaf);
-
-    const amount = (startVanaf + event.pageSize);
-
-    if (amount < this.dataSource.data.length ) {
-      console.log('Aantal: ' + event.pageSize);
-    } else {
-      console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
-    }
-
-    const tot = event.pageSize;
-    console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
+    // console.log(event.previousPageIndex);
+    // console.log(event.pageSize);
+    // console.log(event.pageIndex);
+    //
+    // const startVanaf = event.pageIndex * event.pageSize;
+    // console.log('Start vanaf [i]: ' + startVanaf);
+    //
+    // const amount = (startVanaf + event.pageSize);
+    //
+    // if (amount < this.dataSource.data.length ) {
+    //   console.log('Aantal: ' + event.pageSize);
+    // } else {
+    //   console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
+    // }
+    //
+    // const tot = event.pageSize;
+    // console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
   }
 
   toDelete(declaration: Declaration) {
+    this.dialog.closeAll();
 
     if (declaration.status === StatusEnum.INPROGRESS || declaration.status === StatusEnum.APPROVED) {
       this.errorService.unableToProcess(declaration.status);

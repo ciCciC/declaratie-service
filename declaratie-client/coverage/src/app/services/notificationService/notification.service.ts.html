@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/app/services/authservice/authentication.service.ts</title>
+    <title>Code coverage report for src/app/services/notificationService/notification.service.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../../../index.html">All files</a> / <a href="index.html">src/app/services/authservice</a> authentication.service.ts
+      <a href="../../../../index.html">All files</a> / <a href="index.html">src/app/services/notificationService</a> notification.service.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">38.46% </span>
+        <span class="strong">72.73% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/13</span>
+        <span class='fraction'>8/11</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,21 +30,21 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">25% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>1/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">70% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/12</span>
+        <span class='fraction'>7/10</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -82,11 +82,9 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -96,62 +94,70 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {EMPLOYEE} from '../../mocks/mock-employee';
-import {Employee} from '../../models/Employee';
-import {RoleEnum} from '../../models/RoleEnum';
+import {MatDialog} from '@angular/material';
+import {NotificationDialogComponent} from '../../dialogs/notification-dialog/notification-dialog.component';
+import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 &nbsp;
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class NotificationService {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  constructor(private <span class="cstat-no" title="statement not covered" >h</span>ttp: H</span>ttpClient) {
+  private name = 'Message';
+&nbsp;
+  constructor(private dialog: MatDialog) { }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  createConfirmation(</span>) {
+    const conf: IMessageDialog = {
+      name: name,
+      message: 'Created succesfully'
+    }
+<span class="cstat-no" title="statement not covered" >    this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  checkUser(</span>id: number): Observable&lt;Employee&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.http.get&lt;Employee&gt;(environment.urlAddress + '/testget/' + id, {headers: this.generateHeaders(), observe: 'response'}).pipe(</span>
-      map(<span class="fstat-no" title="function not covered" >value </span>=&gt; {
-        const emp = &lt;Employee&gt;<span class="cstat-no" title="statement not covered" >JSON.parse(value.headers.get('user'));</span>
-        if (emp.role === RoleEnum.MEDEWERKER) {
-<span class="cstat-no" title="statement not covered" >          emp.role = true;</span>
-        } else if (emp.role === RoleEnum.MANAGER) {
-<span class="cstat-no" title="statement not covered" >          emp.role = false;</span>
-        }
-<span class="cstat-no" title="statement not covered" >        return emp;</span>
-      })
-    );
+<span class="fstat-no" title="function not covered" >  updateConfirmation(</span>) {
+    const conf: IMessageDialog = {
+      name: name,
+      message: 'Updated succesfully'
+    }
+<span class="cstat-no" title="statement not covered" >    this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  private g</span>enerateHeaders() {
-    const generated = <span class="cstat-no" title="statement not covered" >new HttpHeaders({'Content-Type': 'application/json', 'user': JSON.stringify(EMPLOYEE[0])});</span>
-<span class="cstat-no" title="statement not covered" >    return generated;</span>
+<span class="fstat-no" title="function not covered" >  deleteConfirmation(</span>) {
+    const conf: IMessageDialog = {
+      name: name,
+      message: 'Deleted succesfully'
+    }
+<span class="cstat-no" title="statement not covered" >    this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});</span>
   }
 }
 &nbsp;</pre></td></tr>

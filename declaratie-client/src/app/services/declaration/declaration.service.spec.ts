@@ -62,7 +62,7 @@ describe(DeclarationService.name, () => {
 
   describe('GetAll call', () => {
 
-    it('A6_SR12_shouldReturnListOfDeclarations', () => {
+    it('US10_shouldReturnListOfDeclarations', () => {
       declarationService = new DeclarationService(undefined);
 
       let response;
@@ -77,7 +77,7 @@ describe(DeclarationService.name, () => {
       expect(response.length).toBe(DECLARATIONS.length);
     });
 
-    it('A6_SR12_shouldCallGetDeclarations', () => {
+    it('US10_shouldCallGetDeclarations', () => {
       declarationService = new DeclarationService(undefined);
       const spy_getAll = spyOn(declarationService, 'getDeclarations').and.returnValues(of(DECLARATIONS));
 

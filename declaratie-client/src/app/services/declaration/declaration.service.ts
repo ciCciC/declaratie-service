@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {DeclarationFile} from '../../models/DeclarationFile';
 import {map} from 'rxjs/operators';
 import {EMPLOYEE} from '../../mocks/mock-employee';
+import {DECLARATIONS} from '../../mocks/mock-declarations';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,10 @@ export class DeclarationService {
 
     // return this.http.get<IDeclaration[]>(environment.urlAddress + '/', {headers: this.generateHeaders()});
     return toReturn;
+  }
+
+  getMocks(): Observable<IDeclaration[]> {
+    return of(DECLARATIONS);
   }
 
   private transformRetrievedFiles(data): DeclarationFile {

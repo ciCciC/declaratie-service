@@ -49,6 +49,12 @@ public class DeclarationServiceMockitoTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    /***
+     * Test de functionaliteit declaratie indienen
+     * US7 = verwijzing naar user story, de testbasis
+     * TG1 = verwijzing naar het testgeval in het testrapport
+     * Semantisch = soort testtechniek
+     */
     @Test
     public void US7_TG1_DeMedewerkerKanEenDeclaratieIndienen_Semantisch(){
         Declaration declaration = new Declaration("beschrijving", new Date(), 120,
@@ -488,44 +494,24 @@ public class DeclarationServiceMockitoTest {
     }
 
     @Test
-    public void A22_SR13_TG1_system_can_get_declaration_list() {
-        System.out.println("Test: A22_SR13_TG1_system_can_get_declaration_list");
-
+    public void US10_DeclaratiesLijstOphalen() {
+        // Prepare
         List<Declaration> declarationsList = new ArrayList<>();
-
         Stream.of("Benzine", "Eten", "Boek", "Administratie", "Computer").forEach(description -> {
             Declaration declaration = new Declaration(description, new Date(), 120,
                     "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
             declarationsList.add(declaration);
         });
 
-        when(declarationRepository.findAll(Sort.by("id").descending())).thenReturn(declarationsList);
-
-        List<DeclarationModel> result = null;
-
-        try{
-            result = declarationService.getAll();
-        }catch (ResponseStatusException ex){
-            System.out.println(ex.getReason());
-        }
-
         int expected = 5;
 
-        assertEquals(expected, result.size());
-
-        this.printStatus(expected, result.size());
-    }
-
-    @Test
-    public void A22_SR13_TG2_get_declaration_list_is_null() {
-        System.out.println("Test: A22_SR13_TG2_get_declaration_list_is_null");
-
-        // Prepare
-        when(declarationRepository.findAll()).thenReturn(null);
+        when(declarationRepository.findAll(Sort.by("id").descending())).thenReturn(declarationsList);
 
         // Action
+        List<DeclarationModel> result = result = declarationService.getAll();
+
         // Assert
-        assertThat(declarationService.getAll()).isNullOrEmpty();
+        assertEquals(expected, result.size());
     }
 
     @Test
