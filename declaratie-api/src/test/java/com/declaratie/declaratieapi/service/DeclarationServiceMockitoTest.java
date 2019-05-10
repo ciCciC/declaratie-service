@@ -515,51 +515,50 @@ public class DeclarationServiceMockitoTest {
     }
 
     @Test
-    public void A32_SR8_TG1_deMedewerkerKanEenDeclaratieOpvragen() {
-        System.out.println("Test: A32_SR8_TG1_deMedewerkerKanEenDeclaratieOpvragen");
-
+    public void US9_TG1_deMedewerkerKanEenDeclaratieOpvragen_Semantisch() {
+        // Prepare
+        Long declaratieId = 10L;
         Declaration dummyObject = new Declaration("Lolz", new Date(), 120,
                 "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
-        dummyObject.setId(1L);
+        dummyObject.setId(declaratieId);
 
         when(this.declarationRepository.existsById(dummyObject.getId())).thenReturn(true);
+        when(declarationRepository.findById(dummyObject.getId())).thenReturn(Optional.of(dummyObject));
 
         try {
-            when(declarationRepository.findById(dummyObject.getId())).thenReturn(Optional.of(dummyObject));
-
+            // Action
             DeclarationModel declaratie_bestaat = this.declarationService.read(dummyObject.getId());
 
+            // Assert
             assertThat(declaratie_bestaat, is(notNullValue()));
-
         } catch (ResponseStatusException e) {
             System.out.println("Message: " + e.getReason());
         }
     }
 
     @Test
-    public void A32_SR8_TG2_deMedewerkerKanEenDeclaratieOpvragen() {
-        System.out.println("Test: A32_SR8_TG2_deMedewerkerKanEenDeclaratieOpvragen");
+    public void US9_TG2_deMedewerkerKanEenDeclaratieOpvragen_Semantisch() {
+        // Prepare
+        Long declaratieId = -10L;
+        Declaration dummyObject = new Declaration("Lolz", new Date(), 120,
+                "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
+        dummyObject.setId(declaratieId);
 
-        Long dummyId = 1L;
-
-        when(this.declarationRepository.existsById(dummyId)).thenReturn(false);
-
-        DeclarationModel declaratie_bestaat = null;
+        when(this.declarationRepository.existsById(dummyObject.getId())).thenReturn(false);
 
         try {
-            declaratie_bestaat = this.declarationService.read(dummyId);
+            // Action
+            DeclarationModel declaratie_bestaat = this.declarationService.read(dummyObject.getId());
         } catch (ResponseStatusException e) {
             System.out.println("Message: " + e.getReason());
+            // Assert
+            assertThat(e.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
         }
-
-        assertNull(declaratie_bestaat);
     }
 
     @Test
-    public void A33_SR10_TG1_deMedewerkerKanEenDeclaratieVerwijderen() {
-        System.out.println("Test: A33_SR10_TG1_deMedewerkerKanEenDeclaratieVerwijderen");
-
-        Long dummyId = 1L;
+    public void US8_TG1_deMedewerkerKanEenDeclaratieVerwijderen_Semantisch() {
+        Long dummyId = 10L;
 
         DeclarationService declarationService = mock(DeclarationService.class);
 
@@ -576,13 +575,10 @@ public class DeclarationServiceMockitoTest {
     }
 
     @Test
-    public void A33_SR10_TG2_deMedewerkerKanEenDeclaratieVerwijderen() {
-        System.out.println("Test: A33_SR10_TG2_deMedewerkerKanEenDeclaratieVerwijderen");
-
+    public void US8_TG2_deMedewerkerKanEenDeclaratieVerwijderen_Semantisch() {
         DeclarationService declarationService = mock(DeclarationService.class);
 
-        // Deze declaratie bestaat niet.
-        Long dummyId = -100L;
+        Long dummyId = -10L;
 
         try {
             doThrow(ResponseStatusException.class).when(declarationService).delete(dummyId);
@@ -590,6 +586,69 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException e) {
             System.out.println("Message: " + e.getReason());
             System.out.println("Declaratie bestaat niet.");
+        }
+    }
+
+    @Test
+    public void US8_TG5_deMedewerkerKanEenDeclaratieVerwijderen_Semantisch() {
+        Long dummyId = 10L;
+
+        DeclarationService declarationService = mock(DeclarationService.class);
+
+        boolean declaratie_bestaat = true;
+
+        try {
+            doNothing().when(declarationService).delete(dummyId);
+            declarationService.delete(dummyId);
+        } catch (ResponseStatusException e) {
+            declaratie_bestaat = false;
+            System.out.println("Message: " + e.getReason());
+        }
+        assertTrue(declaratie_bestaat);
+    }
+
+    @Test
+    public void US8_TG6_deMedewerkerKanEenDeclaratieVerwijderen_Semantisch() {
+        DeclarationService declarationService = mock(DeclarationService.class);
+
+        Long dummyId = -10L;
+
+        try {
+            doThrow(ResponseStatusException.class).when(declarationService).delete(dummyId);
+            declarationService.delete(dummyId);
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
+            System.out.println("Declaratie bestaat niet.");
+        }
+    }
+
+    @Test
+    public void US8_TG7_deMedewerkerKanEenDeclaratieVerwijderen_Semantisch() {
+        DeclarationService declarationService = mock(DeclarationService.class);
+
+        Long dummyId = 10L;
+
+        try {
+            doThrow(ResponseStatusException.class).when(declarationService).delete(dummyId);
+            declarationService.delete(dummyId);
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
+            System.out.println("Declaratie kan niet verwijderd worden.");
+        }
+    }
+
+    @Test
+    public void US8_TG8_deMedewerkerKanEenDeclaratieVerwijderen_Semantisch() {
+        DeclarationService declarationService = mock(DeclarationService.class);
+
+        Long dummyId = 10L;
+
+        try {
+            doThrow(ResponseStatusException.class).when(declarationService).delete(dummyId);
+            declarationService.delete(dummyId);
+        } catch (ResponseStatusException e) {
+            System.out.println("Message: " + e.getReason());
+            System.out.println("Declaratie kan niet verwijderd worden.");
         }
     }
 

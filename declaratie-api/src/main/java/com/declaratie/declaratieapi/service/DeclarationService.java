@@ -188,7 +188,7 @@ public class DeclarationService {
 
         StateEnum currentState = declarationExist.get().getStatusEnum();
         if(currentState == StateEnum.INPROGRESS || currentState == StateEnum.APPROVED)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageFormat.format("Declaratie met id={0} is in behandeling", id));
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, MessageFormat.format("Declaratie met id={0} is in behandeling", id));
 
         this.declarationRepository.deleteById(id);
     }

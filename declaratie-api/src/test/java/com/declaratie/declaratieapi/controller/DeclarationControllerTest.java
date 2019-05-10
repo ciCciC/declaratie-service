@@ -288,7 +288,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A32_SR8_ReadDeclarationEndpoint() {
+    public void US9_TG1_DeclaratieOphalenEndpoint_Semantisch() {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
@@ -304,12 +304,11 @@ public class DeclarationControllerTest {
                 DeclarationModel.class);
 
         // Assert
-        assertThat(declarationModel.getBody().getId()).isEqualTo(toRead.getId());
         assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void A32_SR8_ReadDeclarationEndpointReturnNotFound() {
+    public void US9_TG2_DeclaratieOphalenEndpoint_Semantisch() {
 
         // Prepare
         Long toRead = -10L;
@@ -707,7 +706,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A33_SR10_DeleteDeclarationEndpoint() {
+    public void US8_TG1_DeleteDeclarationEndpoint_Semantisch() {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.SUBMITTED, 12);
@@ -728,7 +727,7 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A33_SR10_DeleteDeclarationNotFoundEndpoint() {
+    public void US8_TG2_DeleteDeclarationEndpoint_Semantisch() {
         // Prepare
         Long toDelete = -10L;
 
@@ -745,7 +744,45 @@ public class DeclarationControllerTest {
     }
 
     @Test
-    public void A33_SR10_DeleteDeclarationInProgressBadRequestEndpoint() {
+    public void US8_TG5_DeleteDeclarationEndpoint_Semantisch() {
+        // Prepare
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.REJECTED, 12);
+        toCreate.setManId(15);
+
+        DeclarationModel toDelete = declarationService.create(new DeclarationModel(toCreate));
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.exchange(endpoint+"/"+toDelete.getId(),
+                HttpMethod.DELETE,
+                null,
+                DeclarationModel.class,
+                new ParameterizedTypeReference<DeclarationModel>() {
+                });
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void US8_TG6_DeleteDeclarationEndpoint_Semantisch() {
+        // Prepare
+        Long toDelete = -10L;
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.exchange(endpoint+"/"+toDelete,
+                HttpMethod.DELETE,
+                null,
+                DeclarationModel.class,
+                new ParameterizedTypeReference<DeclarationModel>() {
+                });
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void US8_TG7_DeleteDeclarationEndpoint_Semantisch() {
         // Prepare
         Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
                 "Employee", "Manager", StateEnum.INPROGRESS, 12);
@@ -762,7 +799,28 @@ public class DeclarationControllerTest {
                 });
 
         // Assert
-        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    public void US8_TG8_DeleteDeclarationEndpoint_Semantisch() {
+        // Prepare
+        Declaration toCreate = new Declaration("Dit is mijn description", new Date(), 120,
+                "Employee", "Manager", StateEnum.APPROVED, 12);
+        toCreate.setManId(15);
+
+        DeclarationModel toDelete = declarationService.create(new DeclarationModel(toCreate));
+
+        // Do call
+        ResponseEntity<DeclarationModel> declarationModel = testRestTemplate.exchange(endpoint+"/"+toDelete.getId(),
+                HttpMethod.DELETE,
+                null,
+                DeclarationModel.class,
+                new ParameterizedTypeReference<DeclarationModel>() {
+                });
+
+        // Assert
+        assertThat(declarationModel.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
 }
