@@ -11,7 +11,7 @@ import {DeclarationService} from '../../services/declaration/declaration.service
 import {AuthenticationService} from '../../services/authservice/authentication.service';
 import {StateUtils} from '../../utils/StateUtils';
 import {RoleEnum} from '../../models/RoleEnum';
-import {NotificationService} from '../../services/notificationService/notification.service';
+import {DeclarationFile} from '../../models/DeclarationFile';
 
 
 @Component({
@@ -60,8 +60,14 @@ export class DeclarationViewComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openImage(declarationFile) {
-    this.dialog.open(ImageDialogComponent, {width: '40%', data: declarationFile});
+  openImage(declarationFile: DeclarationFile) {
+    if (declarationFile.file.type.split('/')[1] !== 'pdf') {
+      this.dialog.open(ImageDialogComponent, {width: '40%', data: declarationFile});
+    } else {
+      const objUrl = window.URL.createObjectURL(declarationFile.file);
+      window.open(objUrl, declarationFile.filename);
+      window.URL.revokeObjectURL(objUrl);
+    }
   }
 
   toDelete() {

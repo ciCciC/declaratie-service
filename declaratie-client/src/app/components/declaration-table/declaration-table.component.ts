@@ -60,7 +60,7 @@ export class DeclarationTableComponent implements OnInit {
   createDeclaration() {
     this.router.navigateByUrl('/declarations/create');
     // this.router.navigateByUrl('/declarationcreate');
-    // this.router.navigate(['/declarationcreate']);w
+    // this.router.navigate(['/declarationcreate']);
   }
 
   // TODO

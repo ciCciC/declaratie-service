@@ -16,7 +16,7 @@ export class NotificationService {
     const conf: IMessageDialog = {
       name: name,
       message: 'Created succesfully'
-    }
+    };
     this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});
   }
 
@@ -24,7 +24,7 @@ export class NotificationService {
     const conf: IMessageDialog = {
       name: name,
       message: 'Updated succesfully'
-    }
+    };
     this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});
   }
 
@@ -32,7 +32,7 @@ export class NotificationService {
     const conf: IMessageDialog = {
       name: name,
       message: 'Deleted succesfully'
-    }
+    };
     this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});
   }
 }

@@ -123,21 +123,21 @@ describe(DeclarationTableComponent.name, () => {
     expect(spy_create).toHaveBeenCalled();
   });
 
-  describe('testingDialogs', () => {
-
-    it('should open openDialog view', fakeAsync(() => {
-
-      spyOn(component, 'openDialog');
-      let openView = fixture.debugElement.nativeElement.querySelector('#openView');
-      openView.click();
-
-      fixture.detectChanges();
-
-      fixture.whenStable().then(() => {
-        expect(component.openDialog).toHaveBeenCalled();
-      });
-
-      }
-    ));
-  });
+  // describe('testingDialogs', () => {
+  //
+  //   it('should open openDialog view', fakeAsync(() => {
+  //
+  //     spyOn(component, 'openDialog');
+  //     let openView = fixture.debugElement.nativeElement.querySelector('#openView');
+  //     openView.click();
+  //
+  //     fixture.detectChanges();
+  //
+  //     fixture.whenStable().then(() => {
+  //       expect(component.openDialog).toHaveBeenCalled();
+  //     });
+  //
+  //     }
+  //   ));
+  // });
 });
