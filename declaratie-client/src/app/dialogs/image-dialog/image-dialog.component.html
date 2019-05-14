@@ -9,10 +9,7 @@
   </tr>
 </table>
 <div *ngIf="fileUrl">
-  <div *ngIf="fileType !== 'pdf'; else pdfFile">
+  <picture>
     <img class="fileImage" [src]="fileUrl">
-  </div>
-  <ng-template #pdfFile>
-    <embed class="filePdf" [src]="fileUrl" type="application/pdf">
-  </ng-template>
+  </picture>
 </div>

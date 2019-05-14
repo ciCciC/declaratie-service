@@ -11,6 +11,7 @@ import {DeclarationService} from '../../services/declaration/declaration.service
 import {AuthenticationService} from '../../services/authservice/authentication.service';
 import {StateUtils} from '../../utils/StateUtils';
 import {RoleEnum} from '../../models/RoleEnum';
+import {DeclarationFile} from '../../models/DeclarationFile';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class DeclarationViewComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<DeclarationViewComponent>,
               @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
-              private declarationService: DeclarationService, private authenticationService: AuthenticationService ) {
+              private declarationService: DeclarationService, private authenticationService: AuthenticationService) {
     this.declarationId = data.id;
     authenticationService.checkUser(data.id).subscribe(value => {
       this.empStatus = value.role;
@@ -59,8 +60,14 @@ export class DeclarationViewComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openImage(declarationFile) {
-    this.dialog.open(ImageDialogComponent, {width: '40%', data: declarationFile});
+  openImage(declarationFile: DeclarationFile) {
+    if (declarationFile.file.type.split('/')[1] !== 'pdf') {
+      this.dialog.open(ImageDialogComponent, {width: '40%', data: declarationFile});
+    } else {
+      const objUrl = window.URL.createObjectURL(declarationFile.file);
+      window.open(objUrl, declarationFile.filename);
+      window.URL.revokeObjectURL(objUrl);
+    }
   }
 
   toDelete() {

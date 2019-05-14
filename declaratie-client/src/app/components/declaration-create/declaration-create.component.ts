@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {EMPLOYEE} from '../../mocks/mock-employee';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {DeclarationFile} from '../../models/DeclarationFile';
+import {NotificationService} from '../../services/notificationService/notification.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class DeclarationCreateComponent implements OnInit {
   processDate = new Date();
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router,
-              private declarationService: DeclarationService, private errorService: ErrorHandlerService) {
+              private declarationService: DeclarationService, private errorService: ErrorHandlerService,
+              private notificationService: NotificationService) {
     this.createForm = this.fb.group({
       description: new FormControl('', [
         Validators.required,
@@ -37,7 +39,7 @@ export class DeclarationCreateComponent implements OnInit {
       lname: new FormControl({value: this.employee.lname, disabled: this.disabled}, [
         Validators.required, textInputValidator]),
       amount: new FormControl('', [
-        Validators.required, Validators.min(0)]),
+        Validators.required, Validators.min(0), Validators.max(100000)]),
       empMessage: new FormControl('', [
         Validators.maxLength(255),
         textInputValidator
@@ -82,6 +84,7 @@ export class DeclarationCreateComponent implements OnInit {
 
     if (this.declarationFiles.length > 0) {
       this.declarationService.addDeclaration(declaration, this.declarationFiles).subscribe(data => {
+        this.notificationService.createConfirmation();
         this.createForm.reset();
         this.backToList();
       }, error => {

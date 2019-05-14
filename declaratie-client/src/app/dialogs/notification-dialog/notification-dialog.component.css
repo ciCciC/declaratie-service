@@ -1,0 +1,13 @@
+.confirmationButton:hover{
+  background-color: mediumpurple;
+  color: white;
+}
+
+.confirmationButton{
+  width: 100%;
+}
+
+.notificationIcon{
+  width: 20%;
+  height: 20%;
+}

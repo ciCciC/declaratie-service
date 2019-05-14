@@ -13,7 +13,7 @@
           <th mat-header-cell *matHeaderCellDef></th>
         </ng-template>
         <td mat-cell *matCellDef="let element" id="{{colNames[i]}}">
-          <div *ngIf="col != actionValue; else elseAction" (click)="openDialog(element)">{{element[col]}}</div>
+          <div id="openView" *ngIf="col != actionValue; else elseAction" (click)="openDialog(element)">{{element[col]}}</div>
           <ng-template #elseAction>
             <mat-icon mat-mini-fab>
               <mat-icon *ngIf="checkStatus(element.status)" class="toDelete" matTooltip="Verwijder"

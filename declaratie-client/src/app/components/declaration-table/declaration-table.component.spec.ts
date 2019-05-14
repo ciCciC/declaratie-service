@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
 
 import { DeclarationTableComponent } from './declaration-table.component';
 import {
@@ -17,12 +17,19 @@ import {of} from 'rxjs';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {DebugElement, NgModule} from '@angular/core';
+import {By} from '@angular/platform-browser';
 import {DeclarationViewComponent} from '../declaration-view/declaration-view.component';
+import {by, element} from 'protractor';
 
 describe(DeclarationTableComponent.name, () => {
 
   let component, container: DeclarationTableComponent;
   let fixture: ComponentFixture<DeclarationTableComponent>;
+  let debugElement: DebugElement;
+  let element: HTMLElement;
+  let collaborator: DeclarationService;
+  let errorHandlerService: ErrorHandlerService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,7 +44,9 @@ describe(DeclarationTableComponent.name, () => {
         NoopAnimationsModule,
         RouterTestingModule
       ],
-      declarations: [ DeclarationTableComponent ]
+      declarations: [ DeclarationTableComponent ],
+      providers: [
+      ]
     })
     .compileComponents();
   }));
@@ -45,14 +54,18 @@ describe(DeclarationTableComponent.name, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DeclarationTableComponent);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
+    element = debugElement.nativeElement;
     fixture.detectChanges();
+    collaborator = new DeclarationService(undefined);
+    errorHandlerService = new ErrorHandlerService(undefined);
   });
 
-  it('A4_SR12_shouldCreate' + DeclarationTableComponent.name, () => {
+  it('US10_shouldCreate_' + DeclarationTableComponent.name, () => {
     expect(component).toBeTruthy();
   });
 
-  it('A6_SR12_shouldShowListOfDeclarations', () => {
+  it('US10_shouldShowListOfDeclarations', () => {
     /**
      * Hier wordt Stubs gebruikt, ook wel Spy genoemd. Enige verschil is Spy kijkt of
      * een functie is aangeroepen en hoe vaak.
@@ -62,16 +75,11 @@ describe(DeclarationTableComponent.name, () => {
      */
 
     // Arrange : undefined is dummy
-    // let collaborator: DeclarationService;
-    const collaborator = new DeclarationService(undefined);
-
-    // let errorHandlerService: ErrorHandlerService;
-    const errorHandlerService = new ErrorHandlerService(undefined);
 
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
       errorHandlerService as unknown as ErrorHandlerService,
-      matDialog as unknown as MatDialog, undefined);
+      matDialog as unknown as MatDialog, undefined, undefined);
 
     collaborator.getDeclarations = () => of(DECLARATIONS);
 
@@ -83,7 +91,7 @@ describe(DeclarationTableComponent.name, () => {
 
   });
 
-  it('A6_SR12_shouldGetListOfDeclarations', () => {
+  it('US10_shouldGetListOfDeclarations', () => {
     /**
      * Hier wordt Spy gebruikt om te testen of de methode wordt aangeroepen
      * van DeclarationTableComponent.
@@ -92,15 +100,11 @@ describe(DeclarationTableComponent.name, () => {
      */
 
     // Arrange : undefined is dummy
-    let collaborator: DeclarationService;
-    collaborator = new DeclarationService(undefined);
-
-    const errorHandlerService = new ErrorHandlerService(undefined);
 
     const matDialog = new MatDialog(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     container = new DeclarationTableComponent(collaborator as unknown as DeclarationService,
       errorHandlerService as unknown as ErrorHandlerService,
-      matDialog as unknown as MatDialog, undefined);
+      matDialog as unknown as MatDialog, undefined, undefined);
 
     const spy = spyOn(container, 'getDeclarationsList');
 
@@ -119,4 +123,21 @@ describe(DeclarationTableComponent.name, () => {
     expect(spy_create).toHaveBeenCalled();
   });
 
+  // describe('testingDialogs', () => {
+  //
+  //   it('should open openDialog view', fakeAsync(() => {
+  //
+  //     spyOn(component, 'openDialog');
+  //     let openView = fixture.debugElement.nativeElement.querySelector('#openView');
+  //     openView.click();
+  //
+  //     fixture.detectChanges();
+  //
+  //     fixture.whenStable().then(() => {
+  //       expect(component.openDialog).toHaveBeenCalled();
+  //     });
+  //
+  //     }
+  //   ));
+  // });
 });

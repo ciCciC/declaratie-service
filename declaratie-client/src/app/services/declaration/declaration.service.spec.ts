@@ -31,7 +31,7 @@ describe(DeclarationService.name, () => {
 
   describe('Create call', () => {
 
-    it('A1_SR11_shouldAddDeclaration', () => {
+    it('US7_shouldAddDeclaration', () => {
       declarationService = new DeclarationService(undefined);
 
       let response;
@@ -45,7 +45,7 @@ describe(DeclarationService.name, () => {
       expect(response).toEqual(DECLARATIONS[0]);
     });
 
-    it('A1_SR11_shouldCallAddDeclaration', () => {
+    it('US7_shouldCallAddDeclaration', () => {
       // Arrange
       declarationService = new DeclarationService(undefined);
 
@@ -62,7 +62,7 @@ describe(DeclarationService.name, () => {
 
   describe('GetAll call', () => {
 
-    it('A6_SR12_shouldReturnListOfDeclarations', () => {
+    it('US10_shouldReturnListOfDeclarations', () => {
       declarationService = new DeclarationService(undefined);
 
       let response;
@@ -77,7 +77,7 @@ describe(DeclarationService.name, () => {
       expect(response.length).toBe(DECLARATIONS.length);
     });
 
-    it('A6_SR12_shouldCallGetDeclarations', () => {
+    it('US10_shouldCallGetDeclarations', () => {
       declarationService = new DeclarationService(undefined);
       const spy_getAll = spyOn(declarationService, 'getDeclarations').and.returnValues(of(DECLARATIONS));
 

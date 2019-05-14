@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">49.02% </span>
+        <span class="strong">21.57% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>25/51</span>
+        <span class='fraction'>11/51</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">14.29% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/14</span>
+        <span class='fraction'>0/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45.45% </span>
+        <span class="strong">22.73% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>20/44</span>
+        <span class='fraction'>10/44</span>
       </div>
     </div>
     <p class="quiet">
@@ -161,7 +161,9 @@
 <a name='L113'></a><a href='#L113'>113</a>
 <a name='L114'></a><a href='#L114'>114</a>
 <a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,18 +185,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,6 +291,7 @@ import {DeclarationService} from '../../services/declaration/declaration.service
 import {AuthenticationService} from '../../services/authservice/authentication.service';
 import {StateUtils} from '../../utils/StateUtils';
 import {RoleEnum} from '../../models/RoleEnum';
+import {NotificationService} from '../../services/notificationService/notification.service';
 &nbsp;
 &nbsp;
 @Component({
@@ -298,18 +301,18 @@ import {RoleEnum} from '../../models/RoleEnum';
 })
 export class DeclarationViewComponent implements OnInit {
   private declarationId: number;
-  isLoadingResults = true;
+<span class="cstat-no" title="statement not covered" >  isLoadingResults = true;</span>
   declaration: Declaration;
-  employee = EMPLOYEE[0];
-  empStatus = false;
-  processStatus = false;
-  displayedColumns = ['file', 'download'];
+<span class="cstat-no" title="statement not covered" >  employee = EMPLOYEE[0];</span>
+<span class="cstat-no" title="statement not covered" >  empStatus = false;</span>
+<span class="cstat-no" title="statement not covered" >  processStatus = false;</span>
+<span class="cstat-no" title="statement not covered" >  displayedColumns = ['file', 'download'];</span>
 &nbsp;
-  constructor(private dialog: MatDialog, private dialogRef: MatDialogRef&lt;DeclarationViewComponent&gt;,
-              @Inject(MAT_DIALOG_DATA) private data: Declaration, private errorService: ErrorHandlerService,
-              private declarationService: DeclarationService, private authenticationService: AuthenticationService ) {
-    this.declarationId = data.id;
-    authenticationService.checkUser(data.id).subscribe(<span class="fstat-no" title="function not covered" >value </span>=&gt; {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  constructor(private <span class="cstat-no" title="statement not covered" >d</span></span>ialog: M</span>atDialog, private <span class="cstat-no" title="statement not covered" >dialogRef: M</span>atDialogRef&lt;DeclarationViewComponent&gt;,
+              @Inject(MAT_DIALOG_DATA) private <span class="cstat-no" title="statement not covered" >data: D</span>eclaration, private <span class="cstat-no" title="statement not covered" >errorService: E</span>rrorHandlerService,
+              private <span class="cstat-no" title="statement not covered" >declarationService: D</span>eclarationService, private <span class="cstat-no" title="statement not covered" >authenticationService: A</span>uthenticationService) {
+<span class="cstat-no" title="statement not covered" >    this.declarationId = data.id;</span>
+<span class="cstat-no" title="statement not covered" >    authenticationService.checkUser(data.id).subscribe(<span class="fstat-no" title="function not covered" >value </span>=&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      this.empStatus = value.role;</span>
 <span class="cstat-no" title="statement not covered" >      this.getDeclaration(data.id);</span>
     });
@@ -387,7 +390,7 @@ export class DeclarationViewComponent implements OnInit {
 <span class="cstat-no" title="statement not covered" >    alert('Upcoming user story: download !!');</span>
   }
 &nbsp;
-  ngOnInit() {
+<span class="fstat-no" title="function not covered" >  ngOnInit(</span>) {
   }
 &nbsp;
 }
@@ -397,7 +400,7 @@ export class DeclarationViewComponent implements OnInit {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Apr 25 2019 14:51:29 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri May 10 2019 22:07:10 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

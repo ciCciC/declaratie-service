@@ -1,10 +1,7 @@
 package com.declaratie.declaratieapi.model;
 
 import com.declaratie.declaratieapi.entity.Declaration;
-import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
-
-import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Collectors;
 

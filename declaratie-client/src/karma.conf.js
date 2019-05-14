@@ -25,6 +25,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
+    // autoWatch: true,
     browsers: ['ChromeNoSandbox'],
     // browsers: ['Chrome'],
     singleRun: true,

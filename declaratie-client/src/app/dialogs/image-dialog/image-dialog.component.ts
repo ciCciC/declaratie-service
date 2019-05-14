@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {DeclarationFile} from '../../models/DeclarationFile';
-import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-image-dialog',
@@ -10,13 +9,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class ImageDialogComponent implements OnInit {
 
-  private file: File;
+  readonly file: File;
   fileName: string;
   fileUrl: any;
-  fileType: string;
 
-  constructor(private dialogRef: MatDialogRef<ImageDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: DeclarationFile,
-              private sanitizer: DomSanitizer) {
+  constructor(private dialogRef: MatDialogRef<ImageDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: DeclarationFile) {
     this.file = data.file;
     this.fileName = data.filename;
   }
@@ -31,19 +28,8 @@ export class ImageDialogComponent implements OnInit {
     reader.readAsDataURL(this.file);
   }
 
-  private showPdf() {
-    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(this.file));
-  }
-
   ngOnInit() {
-    if (this.file) {
-      this.fileType = this.file.type.split('/')[1];
-      if (this.fileType !== 'pdf') {
-        this.showImage();
-      } else {
-        this.showPdf();
-      }
-    }
+    this.showImage();
   }
 
 }

@@ -150,7 +150,6 @@ public class DeclarationController {
     /***
      * Deletes a declaration
      * @param id of the declaration to delete
-     * @return returns response
      */
     @DeleteMapping("/{id}")
     public void deleteDeclaration(@PathVariable("id") Long id) {

@@ -49,7 +49,6 @@ export class ErrorHandlerService {
   }
 
   private handle400Error(error: HttpErrorResponse) {
-    console.log(error);
     this.createErrorMessage(error);
     this.dialog.open(ErrorDialogComponent, {data: this.dialogConfig});
   }

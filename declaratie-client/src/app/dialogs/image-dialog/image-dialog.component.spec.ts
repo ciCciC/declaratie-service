@@ -4,10 +4,20 @@ import { ImageDialogComponent } from './image-dialog.component';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatIconModule} from '@angular/material';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PlatformModule} from '@angular/cdk/platform';
+import {DeclarationFile} from '../../models/DeclarationFile';
 
 describe(ImageDialogComponent.name, () => {
   let component: ImageDialogComponent;
   let fixture: ComponentFixture<ImageDialogComponent>;
+
+  const fakeFile: File = new File([window.atob('fakeblob')], 'foto.jpg', { type: 'image/jpeg' });
+
+  const declarationFile: DeclarationFile = {
+    id: 123,
+    filename: 'foto.jpg',
+    file: fakeFile,
+    fileUrl: ''
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,7 +30,7 @@ describe(ImageDialogComponent.name, () => {
       ],
       providers: [{provide: MatDialogRef, useValue: {}}, {
         provide: MAT_DIALOG_DATA,
-        useValue: {}
+        useValue: declarationFile
       }],
       declarations: [ ImageDialogComponent ]
     })

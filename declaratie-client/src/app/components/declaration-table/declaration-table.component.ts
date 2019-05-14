@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {DeclarationUpdateComponent} from '../declaration-update/declaration-update.component';
 import {RestEnum} from '../../models/RestEnum';
 import {MessageCreator} from '../../models/MessageCreator';
+import {NotificationService} from '../../services/notificationService/notification.service';
 
 @Component ({
   selector: 'app-declaration-table',
@@ -31,7 +32,7 @@ export class DeclarationTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private declarationService: DeclarationService, private errorService: ErrorHandlerService,
-              private dialog: MatDialog, private router: Router) {
+              private dialog: MatDialog, private router: Router, private notificationService: NotificationService) {
   }
 
   getDeclarationsList() {
@@ -40,6 +41,10 @@ export class DeclarationTableComponent implements OnInit {
     }, (error) => {
       this.errorService.handleError(error);
     });
+
+    // this.declarationService.getMocks().subscribe(data => {
+    //   this.dataSource.data = data;
+    // });
   }
 
   checkStatus(statusToCheck: StatusEnum) {
@@ -60,26 +65,27 @@ export class DeclarationTableComponent implements OnInit {
 
   // TODO
   pageClick(event: PageEvent) {
-    console.log(event.previousPageIndex);
-    console.log(event.pageSize);
-    console.log(event.pageIndex);
-
-    const startVanaf = event.pageIndex * event.pageSize;
-    console.log('Start vanaf [i]: ' + startVanaf);
-
-    const amount = (startVanaf + event.pageSize);
-
-    if (amount < this.dataSource.data.length ) {
-      console.log('Aantal: ' + event.pageSize);
-    } else {
-      console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
-    }
-
-    const tot = event.pageSize;
-    console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
+    // console.log(event.previousPageIndex);
+    // console.log(event.pageSize);
+    // console.log(event.pageIndex);
+    //
+    // const startVanaf = event.pageIndex * event.pageSize;
+    // console.log('Start vanaf [i]: ' + startVanaf);
+    //
+    // const amount = (startVanaf + event.pageSize);
+    //
+    // if (amount < this.dataSource.data.length ) {
+    //   console.log('Aantal: ' + event.pageSize);
+    // } else {
+    //   console.log('Aantal: ' + (this.dataSource.data.length - event.pageSize));
+    // }
+    //
+    // const tot = event.pageSize;
+    // console.log('Start vanaf [i]: ' + String(event.pageIndex * event.pageSize));
   }
 
   toDelete(declaration: Declaration) {
+    this.dialog.closeAll();
 
     if (declaration.status === StatusEnum.INPROGRESS || declaration.status === StatusEnum.APPROVED) {
       this.errorService.unableToProcess(declaration.status);
@@ -116,6 +122,7 @@ export class DeclarationTableComponent implements OnInit {
 
   private deleteDeclaration(declaration: Declaration) {
     this.declarationService.deleteDeclaration(declaration.id).subscribe(data => {
+      this.notificationService.deleteConfirmation();
       this.getDeclarationsList();
     }, (error) => {
       this.errorService.handleError(error);

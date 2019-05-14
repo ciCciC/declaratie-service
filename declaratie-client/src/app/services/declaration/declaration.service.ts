@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {DeclarationFile} from '../../models/DeclarationFile';
 import {map} from 'rxjs/operators';
 import {EMPLOYEE} from '../../mocks/mock-employee';
+import {DECLARATIONS} from '../../mocks/mock-declarations';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,7 @@ export class DeclarationService {
     dataToPost.append('declaration', JSON.stringify(toSave));
 
     for (const file of files) {
-      dataToPost.append('declarationfiles', file.file, file.filename + '#noid');
-      console.log(file.filename + '#' + (file.id === undefined ? 'undefined' : file.id));
+      dataToPost.append('declarationfiles', file.file, file.filename);
     }
 
     return this.http.post<IDeclaration>(environment.urlAddress + '/addDeclaration', dataToPost);
@@ -65,6 +65,10 @@ export class DeclarationService {
 
     // return this.http.get<IDeclaration[]>(environment.urlAddress + '/', {headers: this.generateHeaders()});
     return toReturn;
+  }
+
+  getMocks(): Observable<IDeclaration[]> {
+    return of(DECLARATIONS);
   }
 
   private transformRetrievedFiles(data): DeclarationFile {
