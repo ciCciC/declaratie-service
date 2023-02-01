@@ -28,6 +28,7 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
         this.status = "";
         this.empId = 0L;
         this.manId = 0L;
+        this.files = new ArrayList<>();
     }
 
     public DeclarationModel(Declaration declaration){
@@ -175,7 +176,7 @@ public class DeclarationModel implements Comparable<DeclarationModel> {
                 ", manComment='" + manComment + '\'' +
                 ", state=" + status +
                 ", empId=" + empId +
-                ", files=" + files.size() +
+                ", files=" + (files == null ? 0 : files.size()) +
                 '}';
     }
 

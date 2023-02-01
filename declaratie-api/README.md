@@ -1,3 +1,8 @@
+#h2
+
+http://localhost:8080/h2-console
+
+
 <h2>Readme voor Postgresql</h2>
 
 <p>Voor het opslaan van bestanden in de database wordt er gebruik gemaakt van BLOB. Het probleem bij gebruik van BLOB is dat ze bij verwijderen of wijzigen alleen de referentie in tabel declarationfile wordt verwijderd of gewijzigd.
