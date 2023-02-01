@@ -6,12 +6,16 @@ import com.declaratie.declaratieapi.enums.StateEnum;
 
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,13 +26,16 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.assertj.core.api.Assertions.*;
+
+//import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DeclarationServiceMockitoTest {
 
     /***
@@ -44,7 +51,7 @@ public class DeclarationServiceMockitoTest {
     @InjectMocks
     private DeclarationService declarationService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
@@ -63,10 +70,11 @@ public class DeclarationServiceMockitoTest {
         when(this.declarationRepository.save(any(Declaration.class))).thenReturn(declaration);
 
         try{
-            assertThat(this.declarationService.create(new DeclarationModel(declaration)), is(notNullValue()));
+//            assertThat(this.declarationService.create(new DeclarationModel(declaration)), is(notNullValue()));
+            assertNotNull(this.declarationService.create(new DeclarationModel(declaration)));
         }catch (ResponseStatusException ex){
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -76,10 +84,11 @@ public class DeclarationServiceMockitoTest {
                 "Employee", "Manager houdt van bier", StateEnum.SUBMITTED, 12);
 
         try{
-            assertThat(this.declarationService.create(null), isNull());
+//            assertThat(this.declarationService.create(null), isNull());
+            assertNull(this.declarationService.create(null));
         }catch (ResponseStatusException ex){
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -96,10 +105,11 @@ public class DeclarationServiceMockitoTest {
         try {
             // Call
             // Assert
-            assertThat(this.declarationService.create(new DeclarationModel(declaration)), is(notNullValue()));
+//            assertThat(this.declarationService.create(new DeclarationModel(declaration)), is(notNullValue()));
+            assertNotNull(this.declarationService.create(new DeclarationModel(declaration)));
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -119,7 +129,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -139,7 +149,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -164,7 +174,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -185,7 +195,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -229,7 +239,7 @@ public class DeclarationServiceMockitoTest {
             DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
         }catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -254,7 +264,7 @@ public class DeclarationServiceMockitoTest {
             DeclarationModel afterUpdate = this.declarationService.update(1L, declarationModel);
         }catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -310,7 +320,7 @@ public class DeclarationServiceMockitoTest {
             Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -337,7 +347,7 @@ public class DeclarationServiceMockitoTest {
             Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -366,7 +376,7 @@ public class DeclarationServiceMockitoTest {
             Assertions.assertThat(declarationModel).isEqualTo(afterUpdate);
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -396,7 +406,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -426,7 +436,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -459,7 +469,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -489,7 +499,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getReason());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -530,7 +540,8 @@ public class DeclarationServiceMockitoTest {
             DeclarationModel declaratie_bestaat = this.declarationService.read(dummyObject.getId());
 
             // Assert
-            assertThat(declaratie_bestaat, is(notNullValue()));
+//            assertThat(declaratie_bestaat, is(notNullValue()));
+            assertNotNull(declaratie_bestaat);
         } catch (ResponseStatusException e) {
             System.out.println("Message: " + e.getReason());
         }
@@ -552,7 +563,7 @@ public class DeclarationServiceMockitoTest {
         } catch (ResponseStatusException e) {
             System.out.println("Message: " + e.getReason());
             // Assert
-            assertThat(e.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 

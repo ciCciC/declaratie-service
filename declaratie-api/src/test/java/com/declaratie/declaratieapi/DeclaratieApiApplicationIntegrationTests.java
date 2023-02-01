@@ -5,13 +5,16 @@ import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
-import com.declaratie.declaratieapi.util.H2TestJpaConfig;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+//import org.junit.Assert;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+import config.H2TestJpaConfig;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+//import org.springframework.test.context.junit4.SpringRunner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,9 +24,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {
 		DeclaratieApiApplication.class,
 		H2TestJpaConfig.class},
@@ -134,7 +138,7 @@ public class DeclaratieApiApplicationIntegrationTests {
 		/***
 		 * Controle op null waarde
 		 */
-		Assert.assertNull(nieuweDeclaratie);
+		assertNull(nieuweDeclaratie);
 
 		System.out.println("ID -> Expected: null" + ",\t"
 				+ "Actual: " + String.valueOf(nieuweDeclaratie));

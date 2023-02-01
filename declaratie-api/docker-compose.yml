@@ -6,13 +6,18 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - declaration-database
-  declaration-database:
-    image: postgres:latest
-    restart: always
-    ports:
-      - 32769:5432
+      - db
     environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/declarationdb
+      - SPRING_DATASOURCE_USERNAME=declarationdb
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    image: postgres:13.1-alpine
+    container_name: declaration-database
+    restart: always
+#    ports:
+#      - 5432:5432
+    environment:
+      - POSTGRES_USER=declarationdb
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=declarationdb

@@ -1,8 +1,12 @@
+com/declaratie/declaratieapi/controller/DeclarationControllerTest$7.class
+com/declaratie/declaratieapi/service/DeclarationServiceIntegrationTest.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest$6.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest$1.class
+config/H2TestJpaConfig.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest$2.class
 com/declaratie/declaratieapi/controller/DeclarationControllerTest$4.class
 com/declaratie/declaratieapi/controller/DeclarationControllerTest$3.class
 com/declaratie/declaratieapi/DeclaratieApiApplicationIntegrationTests.class
-com/declaratie/declaratieapi/controller/DeclarationControllerTest.class
-com/declaratie/declaratieapi/controller/DeclarationControllerTest$1.class
-com/declaratie/declaratieapi/controller/DeclarationControllerTest$2.class
-com/declaratie/declaratieapi/util/H2TestJpaConfig.class
+com/declaratie/declaratieapi/controller/DeclarationControllerTest$5.class
 com/declaratie/declaratieapi/service/DeclarationServiceMockitoTest.class

@@ -3,8 +3,8 @@ package com.declaratie.declaratieapi.exceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.TransactionSystemException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 public class RestExceptionHandler {
 

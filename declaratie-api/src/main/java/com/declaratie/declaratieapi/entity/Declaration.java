@@ -1,12 +1,13 @@
 package com.declaratie.declaratieapi.entity;
 import com.declaratie.declaratieapi.enums.StateEnum;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.*;
+
 
 @Entity
 @Table

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class DeclarationService {
 
-    private DeclarationRepository declarationRepository;
+    private final DeclarationRepository declarationRepository;
 
     @Autowired
     public DeclarationService(DeclarationRepository declarationRepository){

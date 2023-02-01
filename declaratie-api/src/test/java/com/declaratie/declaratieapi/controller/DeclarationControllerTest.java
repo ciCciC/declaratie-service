@@ -6,12 +6,14 @@ import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
 import com.declaratie.declaratieapi.model.DeclarationModel;
 import com.declaratie.declaratieapi.service.DeclarationService;
-import com.declaratie.declaratieapi.util.H2TestJpaConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import config.H2TestJpaConfig;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+//import org.junit.runner.RunWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -38,7 +40,8 @@ import static org.assertj.core.api.Assertions.*;
         DeclaratieApiApplication.class,
         H2TestJpaConfig.class},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 public class DeclarationControllerTest {
 
@@ -50,7 +53,7 @@ public class DeclarationControllerTest {
 
     private static String endpoint = "/api/declarations";
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         declarationService.deleteAll();
     }
@@ -94,7 +97,7 @@ public class DeclarationControllerTest {
         } catch (ResponseStatusException ex) {
             System.out.println(ex.getMessage());
             // Assert
-            assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 

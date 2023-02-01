@@ -1,8 +1,8 @@
-package com.declaratie.declaratieapi.util;
+package config;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import com.declaratie.declaratieapi.entity.Declaration;
@@ -49,7 +49,7 @@ public class H2TestJpaConfig {
         return em;
     }
 
-    @Bean
+//    @Bean
     JpaTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
