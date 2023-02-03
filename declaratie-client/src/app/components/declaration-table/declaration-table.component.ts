@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {IDeclaration} from '../../models/imodels/IDeclaration';
 import {DeclarationService} from '../../services/declaration/declaration.service';
 import {Declaration} from '../../models/Declaration';

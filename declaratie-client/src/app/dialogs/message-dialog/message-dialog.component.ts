@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 
 @Component({
@@ -11,7 +11,7 @@ export class MessageDialogComponent implements OnInit {
 
   private statusOfConfirmation = true;
 
-  constructor(private dialogRef: MatDialogRef<MessageDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: IMessageDialog) {}
+  constructor(private dialogRef: MatDialogRef<MessageDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: IMessageDialog) {}
 
   public closeDialog = () => {
     this.dialogRef.close();

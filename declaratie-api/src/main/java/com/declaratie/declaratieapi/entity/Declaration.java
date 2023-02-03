@@ -25,7 +25,6 @@ public class Declaration {
         this.state = state;
         this.empId = empId;
         this.manId = 0;
-        this.files = new ArrayList<>();
     }
 
     @Id
@@ -144,7 +143,10 @@ public class Declaration {
     }
 
     public void addDeclarationFile(DeclarationFile declarationFile){
-        this.getFiles().add(declarationFile);
+        if(this.files == null){
+            this.files = new ArrayList<>();
+        }
+        this.files.add(declarationFile);
         declarationFile.setDeclarationId(this);
     }
 

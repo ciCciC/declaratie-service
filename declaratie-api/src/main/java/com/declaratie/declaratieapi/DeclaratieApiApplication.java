@@ -1,6 +1,6 @@
 package com.declaratie.declaratieapi;
 
-import com.declaratie.declaratieapi.controller.DeclarationController;
+
 import com.declaratie.declaratieapi.entity.Declaration;
 import com.declaratie.declaratieapi.entity.DeclarationFile;
 import com.declaratie.declaratieapi.enums.StateEnum;
@@ -28,7 +28,6 @@ public class DeclaratieApiApplication {
 
 	public static void main(String[] args) {
 		logger.info("Started declaration process application.");
-//		--spring.profiles.active=dev
 		SpringApplication.run(DeclaratieApiApplication.class, args);
 	}
 
@@ -43,9 +42,7 @@ public class DeclaratieApiApplication {
 			List<String> descriptions = Arrays.asList("Benzine1", "Eten2", "Benzine3", "Drinken4", "Eten5", "Benzine6");
 
 			this.fillDatabase(1, 2, descriptions, rand, files, declarationService);
-
 			this.fillDatabase(2, 2, descriptions, rand, files, declarationService);
-
 //			this.fillDatabase(3, 4, descriptions, rand, files, declarationService);
 		};
 	}
@@ -55,8 +52,8 @@ public class DeclaratieApiApplication {
 		int count = 0;
 
 		for (String desc: descriptions) {
-			int randomChoice = rand.nextInt((3 - 0) + 1) + 0;
-			int randomFile = rand.nextInt((1 - 0) + 1) + 0;
+			int randomChoice = rand.nextInt((3 - 0) + 1);
+			int randomFile = rand.nextInt((1 - 0) + 1);
 
 			GregorianCalendar date = new GregorianCalendar(2019, 5 + count, 10);
 

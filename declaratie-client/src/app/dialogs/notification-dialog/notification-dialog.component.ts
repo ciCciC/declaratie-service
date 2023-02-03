@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+// import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 
 @Component({
@@ -9,7 +10,7 @@ import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 })
 export class NotificationDialogComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<NotificationDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: IMessageDialog) { }
+  constructor(private dialogRef: MatDialogRef<NotificationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: IMessageDialog) { }
 
   public closeDialog = () => {
     this.dialogRef.close();

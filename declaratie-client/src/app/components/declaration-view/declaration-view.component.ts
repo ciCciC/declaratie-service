@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Declaration} from '../../models/Declaration';
 import {EMPLOYEE} from '../../mocks/mock-employee';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {RestEnum} from '../../models/RestEnum';

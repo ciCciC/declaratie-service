@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {NotificationDialogComponent} from '../../dialogs/notification-dialog/notification-dialog.component';
 import {IMessageDialog} from '../../models/imodels/IMessageDialog';
 
@@ -14,7 +14,7 @@ export class NotificationService {
 
   createConfirmation() {
     const conf: IMessageDialog = {
-      name: name,
+      name: this.name,
       message: 'Created succesfully'
     };
     this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});
@@ -22,7 +22,7 @@ export class NotificationService {
 
   updateConfirmation() {
     const conf: IMessageDialog = {
-      name: name,
+      name: this.name,
       message: 'Updated succesfully'
     };
     this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});
@@ -30,7 +30,7 @@ export class NotificationService {
 
   deleteConfirmation() {
     const conf: IMessageDialog = {
-      name: name,
+      name: this.name,
       message: 'Deleted succesfully'
     };
     this.dialog.open(NotificationDialogComponent, {data: conf, disableClose: true});

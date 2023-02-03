@@ -1,7 +1,5 @@
 package com.declaratie.declaratieapi.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -89,9 +87,7 @@ public class DeclarationFile {
     public String toString() {
         return "DeclarationFile{" +
                 "id=" + id +
-                ", declaration=" + declaration +
                 ", fileName=" + fileName +
-                ", file=" + file.length +
                 '}';
     }
 }

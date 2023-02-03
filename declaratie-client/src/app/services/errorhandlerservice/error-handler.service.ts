@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorDialogComponent} from '../../dialogs/error-dialog/error-dialog.component';
 import {IErrorDialog} from '../../models/imodels/IErrorDialog';

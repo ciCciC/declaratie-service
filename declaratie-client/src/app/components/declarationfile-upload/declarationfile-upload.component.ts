@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
 import {MessageDialogComponent} from '../../dialogs/message-dialog/message-dialog.component';
 import {MessageCreator} from '../../models/MessageCreator';
 import {DeclarationFile} from '../../models/DeclarationFile';

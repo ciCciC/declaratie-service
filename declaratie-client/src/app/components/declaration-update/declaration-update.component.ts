@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Declaration} from '../../models/Declaration';
 import {ErrorHandlerService} from '../../services/errorhandlerservice/error-handler.service';
 import {EMPLOYEE} from '../../mocks/mock-employee';
@@ -26,11 +26,11 @@ export class DeclarationUpdateComponent implements OnInit {
   isLoadingResults = true;
   processDate = new Date();
   private disabledForAll = true;
-  private declaration: Declaration;
+  public declaration: Declaration;
   private declarationId: number;
   private declarationNotEditable: boolean;
   private declarationStatus: StatusEnum;
-  private declarationFiles: DeclarationFile[] = [];
+  public declarationFiles: DeclarationFile[] = [];
   private statusDisabledForMan: StatusEnum [] = [StatusEnum.REJECTED, StatusEnum.APPROVED];
   private statusChosen = StatusEnum.NONE;
   statusList: StatusEnum [] = [StatusEnum.NONE, StatusEnum.APPROVED, StatusEnum.REJECTED];
